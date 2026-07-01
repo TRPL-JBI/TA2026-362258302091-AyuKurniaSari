@@ -1,0 +1,112 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button" class="am-hamburger" data-action="open-sidebar" aria-label="Buka menu">☰</button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Import Data / {{type_label}}</div>
+
+      <div class="am-page-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h1 class="am-h1">Import Data {{type_label}}</h1>
+          <div class="am-sub">Upload file CSV untuk menambahkan akun pengguna secara massal ke Moodle.</div>
+        </div>
+        <a href="{{back_url}}" class="am-btn am-btn-secondary">Dashboard</a>
+      </div>
+
+      <div class="am-card" style="padding-bottom:0;">
+        <div style="display:flex;gap:0;border-bottom:2px solid #e5e7eb;">
+          <a href="{{url_siswa}}"
+             class="am-btn am-btn-sm"
+             style="border-radius:8px 8px 0 0;border-bottom:none;{{#is_siswa}}background:#3b82f6;color:#fff;{{/is_siswa}}{{^is_siswa}}background:#f1f5f9;color:#374151;{{/is_siswa}}">
+            Siswa
+          </a>
+          <a href="{{url_guru}}"
+             class="am-btn am-btn-sm"
+             style="border-radius:8px 8px 0 0;border-bottom:none;margin-left:4px;{{#is_guru}}background:#3b82f6;color:#fff;{{/is_guru}}{{^is_guru}}background:#f1f5f9;color:#374151;{{/is_guru}}">
+            Guru
+          </a>
+        </div>
+      </div>
+
+      {{#has_result}}
+      <div class="am-card" style="border-left:4px solid {{#is_success}}#22c55e{{/is_success}}{{#is_error}}#ef4444{{/is_error}};">
+        <p style="margin:0;font-weight:600;">{{result_msg}}</p>
+        {{#has_row_errors}}
+        <ul style="margin-top:10px;padding-left:20px;font-size:13px;color:#6b7280;">
+          {{#row_errors}}<li>{{msg}}</li>{{/row_errors}}
+        </ul>
+        {{/has_row_errors}}
+      </div>
+      {{/has_result}}
+
+      <div class="am-card">
+        <div class="am-section-title">Format CSV — {{type_label}}</div>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;font-family:monospace;font-size:13px;margin:12px 0;">
+          {{{csv_example}}}
+        </div>
+
+        {{#is_siswa}}
+        <div class="am-sub">
+          <strong>password</strong>: jika kosong akan menggunakan <code>Changeme@1</code>.<br>
+          Setelah akun dibuat, siswa tetap bisa dimasukkan ke kelas melalui menu <strong>Manajemen Kelas → Peserta</strong>.
+        </div>
+        {{/is_siswa}}
+
+        {{#is_walikelas}}
+        <div class="am-sub">
+          <strong>id_kelas</strong>: ID kelas yang akan diassign sebagai wali kelas (wajib).<br>
+          Akun akan diberi role <em>editingteacher</em> di level sistem.
+        </div>
+        {{/is_walikelas}}
+
+        {{#is_guru}}
+        <div class="am-sub">
+          Import ini hanya membuat atau memperbarui akun Moodle.<br>
+          Pengaturan role/enrolment guru ke course tetap dilakukan lewat menu Manajemen Kelas atau course Moodle agar tidak merusak hak akses.
+        </div>
+        {{/is_guru}}
+      </div>
+
+      <div class="am-card">
+        <div class="am-section-title">Upload File CSV</div>
+
+        <form method="post" action="{{action_url}}" enctype="multipart/form-data">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="type" value="{{type}}">
+
+          <div class="am-form-group" style="margin-bottom:16px;">
+            <label class="am-label">File CSV <span style="color:#ef4444;">*</span></label>
+            <input type="file" name="csvfile" class="am-input" accept=".csv,text/csv" required>
+          </div>
+
+          <div class="am-form-group" style="margin-bottom:20px;">
+            <label class="am-label">Jika username sudah ada</label>
+            <select name="dupmode" class="am-input" style="max-width:300px;">
+              <option value="skip">Lewati</option>
+              <option value="update">Perbarui nama &amp; email</option>
+            </select>
+          </div>
+
+          <button type="submit" class="am-btn am-btn-primary">Upload &amp; Import</button>
+        </form>
+      </div>
+
+      <div class="am-card">
+        <div class="am-section-title">Panduan</div>
+        <ul style="margin:0;padding-left:20px;color:#6b7280;line-height:2;">
+          <li>Simpan file Excel sebagai <strong>CSV UTF-8</strong>.</li>
+          <li>Username harus unik dan tanpa spasi. Gunakan format <code>nisn</code> untuk siswa.</li>
+          <li>Pastikan email tidak duplikat antar pengguna.</li>
+          <li>Jika field Moodle sudah diset di profil pengguna (mis. dari LDAP/SSO), cukup pastikan username cocok.</li>
+          <li>Setelah import siswa, enroll ke course melalui menu <strong>Manajemen Kelas → Peserta</strong>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>

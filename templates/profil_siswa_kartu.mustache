@@ -1,0 +1,55 @@
+<div class="akademikmonitor">
+  <div class="am-content" style="max-width:1100px;margin:0 auto;">
+    <div class="am-breadcrumb">/ Profil / Kartu Ujian</div>
+
+    <h2 class="am-h1">Kartu Ujian</h2>
+    <div class="am-sub">
+      Daftar kartu ujian yang sudah dipublish untuk {{nama_siswa}}.
+    </div>
+
+    <div class="am-card">
+      {{#has_items}}
+      <div class="am-table-wrap">
+        <table class="am-table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Ujian</th>
+              <th>Kelas</th>
+              <th>Semester</th>
+              <th>Tahun Ajaran</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {{#items}}
+            <tr>
+              <td data-label="No">{{no}}</td>
+              <td data-label="Nama Ujian"><strong>{{nama_ujian}}</strong></td>
+              <td data-label="Kelas">{{kelas}}</td>
+              <td data-label="Semester">{{semester}}</td>
+              <td data-label="Tahun Ajaran">{{tahun_ajaran}}</td>
+              <td data-label="Status">{{status}}</td>
+              <td data-label="Aksi">
+                <a class="am-btn am-btn-primary am-btn-sm"
+                   href="{{download_url}}">
+                  Download
+                </a>
+              </td>
+            </tr>
+            {{/items}}
+          </tbody>
+        </table>
+      </div>
+      {{/has_items}}
+
+      {{^has_items}}
+      <div class="am-empty-state">
+        Belum ada kartu ujian yang dipublish untuk siswa ini.
+      </div>
+      {{/has_items}}
+    </div>
+  </div>
+</div>

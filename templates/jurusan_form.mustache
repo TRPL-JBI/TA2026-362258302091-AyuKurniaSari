@@ -1,0 +1,66 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">{{breadcrumb}}</div>
+
+      <div class="am-page-heading">
+        <div>
+          <h2 class="am-h1">{{title}}</h2>
+          <div class="am-sub">
+            Isi kode dan nama jurusan yang akan digunakan sebagai dasar kelas, kurikulum, dan rombel.
+          </div>
+        </div>
+      </div>
+
+      <div class="am-card">
+        <form method="post" action="{{action_url}}">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="id" value="{{id}}">
+
+          <div class="am-form-group">
+            <label class="am-label">Kode Jurusan</label>
+            <input type="text"
+                   name="kode"
+                   class="am-input"
+                   value="{{kode}}"
+                   placeholder="Contoh: TKR / RPL / AKL"
+                   required>
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label">Nama Jurusan</label>
+            <input type="text"
+                   name="nama"
+                   class="am-input"
+                   value="{{nama}}"
+                   placeholder="Contoh: Teknik Kendaraan Ringan"
+                   required>
+          </div>
+
+          <div class="am-actions">
+            <button class="am-btn am-btn-primary" type="submit">
+              Simpan
+            </button>
+
+            <a href="{{back_url}}" class="am-btn am-btn-secondary">
+              Kembali
+            </a>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

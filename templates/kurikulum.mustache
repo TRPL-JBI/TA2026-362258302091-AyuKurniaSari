@@ -1,0 +1,129 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Kurikulum</div>
+
+      <div class="am-page-heading">
+        <div>
+          <h2 class="am-h1">Kurikulum</h2>
+          <div class="am-sub">
+            Kelola data kurikulum dan tentukan kurikulum yang sedang digunakan.
+          </div>
+        </div>
+      </div>
+
+      <div class="am-card">
+        <div class="am-list-header">
+          <div class="am-list-title">
+            DATA KURIKULUM
+          </div>
+
+          <div class="am-list-actions">
+            <form method="get" action="{{search_url}}" class="am-search-form">
+              <input type="text"
+                     name="q"
+                     value="{{q}}"
+                     class="am-search-input"
+                     placeholder="Cari kurikulum...">
+
+              <button type="submit"
+                      class="am-search-button"
+                      aria-label="Cari">
+                ⌕
+              </button>
+            </form>
+
+            <a href="{{tambah_url}}" class="am-btn am-btn-primary">
+              + Tambah
+            </a>
+          </div>
+        </div>
+
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Kurikulum</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#items}}
+              <tr>
+                <td>{{no}}</td>
+
+                <td>{{nama}}</td>
+
+                <td>
+                  <span class="am-badge {{status_class}}">
+                    {{status_label}}
+                  </span>
+                </td>
+
+                <td>
+                  <div class="am-row-actions">
+                    <a href="{{edit_url}}" class="am-btn am-btn-edit">
+                      Edit
+                    </a>
+
+                {{^is_active}}
+                <form method="post"
+                      action="{{aktif_url}}"
+                      style="display:inline;"
+                      onsubmit="return confirm('Aktifkan kurikulum ini?');">
+
+                    <input type="hidden"
+                          name="id"
+                          value="{{aktif_id}}">
+
+                    <input type="hidden"
+                          name="sesskey"
+                          value="{{aktif_sesskey}}">
+
+                    <button type="submit" class="am-btn am-btn-primary">
+                        Aktifkan
+                    </button>
+
+                </form>
+                {{/is_active}}
+
+                    {{#is_active}}
+                    <span class="am-badge on">
+                      Sedang Digunakan
+                    </span>
+                    {{/is_active}}
+                  </div>
+                </td>
+              </tr>
+              {{/items}}
+
+              {{^items}}
+              <tr>
+                <td colspan="4" class="am-empty-state">
+                  Belum ada data kurikulum.
+                </td>
+              </tr>
+              {{/items}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

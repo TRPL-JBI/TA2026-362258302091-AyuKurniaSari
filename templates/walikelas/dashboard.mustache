@@ -1,0 +1,128 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/walikelas/sidebar}}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-dashboard-hero">
+        <div class="am-dashboard-badge">Dashboard Wali Kelas</div>
+        <h1>{{welcometitle}}</h1>
+        <h2>{{welcomesubtitle}}</h2>
+        <p>{{welcomedesc}}</p>
+      </div>
+
+      {{#periodfilter}}
+        {{> local_akademikmonitor/walikelas/period_filter}}
+      {{/periodfilter}}
+      
+      <div class="am-dashboard-section">
+        <div class="am-dashboard-head">
+          <h3>Ringkasan Utama</h3>
+          <p>Informasi singkat mengenai kelas dan siswa yang Anda ampu.</p>
+        </div>
+
+        <div class="am-dashboard-grid am-dashboard-grid--summary">
+          {{#summarycards}}
+          <div class="am-dashboard-card am-dashboard-card--summary">
+            <div class="am-dashboard-icon">{{icon}}</div>
+            <div class="am-dashboard-body">
+              <h4>{{value}}</h4>
+              <p>{{label}}</p>
+            </div>
+          </div>
+          {{/summarycards}}
+        </div>
+      </div>
+
+      <div class="am-dashboard-section">
+        <div class="am-dashboard-head">
+          <h3>Menu Utama</h3>
+          <p>Pilih fitur yang ingin diakses dari dashboard wali kelas.</p>
+        </div>
+
+        <div class="am-dashboard-grid">
+          {{#cards}}
+          <a href="{{url}}" class="am-dashboard-card">
+            <div class="am-dashboard-icon">{{icon}}</div>
+            <div class="am-dashboard-body">
+              <h4>{{title}}</h4>
+              <p>{{desc}}</p>
+              <span>Buka menu →</span>
+            </div>
+          </a>
+          {{/cards}}
+        </div>
+      </div>
+
+      <div class="am-dashboard-section">
+        <div class="am-dashboard-head">
+          <h3>Ringkasan Kelas</h3>
+          <p>Data kelas dan siswa yang sedang Anda ampu.</p>
+        </div>
+
+        {{#has_kelas}}
+          {{#kelas}}
+          <div class="am-content-box am-class-card">
+            <div class="am-class-card-head">
+              <div>
+                <h4>{{nama}}</h4>
+                <p>Total siswa: <strong>{{totalsiswa}}</strong></p>
+              </div>
+            </div>
+
+            <div class="am-table-scroll">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Nama</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Mata Pelajaran</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#siswa}}
+                  <tr>
+                    <td>{{nama}}</td>
+                    <td>{{username}}</td>
+                    <td>{{email}}</td>
+                    <td class="am-course-col">
+                      {{#courses}}
+                        <div class="am-course">{{coursename}}</div>
+                      {{/courses}}
+                      {{^courses}}
+                        <span>-</span>
+                      {{/courses}}
+                    </td>
+                  </tr>
+                  {{/siswa}}
+                  {{^has_siswa}}
+                  <tr>
+                    <td colspan="4">Belum ada data siswa di kelas ini.</td>
+                  </tr>
+                  {{/has_siswa}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {{/kelas}}
+        {{/has_kelas}}
+
+        {{^has_kelas}}
+        <div class="am-content-box">
+          <p>Belum ada kelas yang terhubung dengan wali kelas ini.</p>
+        </div>
+        {{/has_kelas}}
+      </div>
+    </div>
+  </div>
+</div>

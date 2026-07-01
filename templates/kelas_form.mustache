@@ -1,0 +1,107 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">{{breadcrumb}}</div>
+
+      <div class="am-page-heading">
+        <div>
+          <h2 class="am-h1">{{title}}</h2>
+          <div class="am-sub">
+            Isi data kelas atau rombel yang akan digunakan untuk peserta kelas dan generate course Moodle.
+          </div>
+        </div>
+      </div>
+
+      <div class="am-card">
+        <form method="post" action="{{action_url}}">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="id" value="{{id}}">
+
+          <div class="am-form-group">
+            <label class="am-label">Nama Kelas</label>
+            <input type="text"
+                   name="nama"
+                   class="am-input"
+                   value="{{nama}}"
+                   placeholder="Contoh: XI RPL 1"
+                   required>
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label">Jurusan</label>
+            <select name="id_jurusan" class="am-input" required>
+              <option value="">Pilih jurusan</option>
+              {{#jurusan_options}}
+              <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                {{nama}}
+              </option>
+              {{/jurusan_options}}
+            </select>
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label">Tingkat</label>
+            <select name="tingkat" class="am-input" required>
+              <option value="">Pilih tingkat</option>
+              {{#tingkat_options}}
+              <option value="{{value}}" {{#selected}}selected{{/selected}}>
+                {{label}}
+              </option>
+              {{/tingkat_options}}
+            </select>
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label">Tahun Ajaran</label>
+            <select name="id_tahun_ajaran" class="am-input" required>
+              <option value="">Pilih tahun ajaran</option>
+              {{#tahun_ajaran_options}}
+              <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                {{nama}}
+              </option>
+              {{/tahun_ajaran_options}}
+            </select>
+          </div>
+
+
+          <div class="am-form-group">
+            <label class="am-label">Wali Kelas</label>
+            <select name="id_user"  class="am-input am-searchable">
+              <option value="">Pilih wali kelas</option>
+              {{#wali_options}}
+              <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                {{nama}}
+              </option>
+              {{/wali_options}}
+            </select>
+            <div class="am-sub" style="margin-top:6px;">Wali kelas ini nanti ikut dienrol sebagai guru saat course Moodle digenerate.</div>
+          </div>
+
+          <div class="am-actions">
+            <button class="am-btn am-btn-primary" type="submit">
+              {{#is_edit}}Update{{/is_edit}}
+              {{^is_edit}}Simpan{{/is_edit}}
+            </button>
+
+            <a href="{{back_url}}" class="am-btn am-btn-secondary">
+              Batal
+            </a>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

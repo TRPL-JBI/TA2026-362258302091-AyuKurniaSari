@@ -1,0 +1,32 @@
+<div class="am-sidebar-overlay" data-action="close-sidebar"></div>
+
+<aside class="am-sidebar" id="am-sidebar">
+  <div class="am-sidebar-header">
+    <div class="am-title">Menu Akademik</div>
+    <button type="button"
+            class="am-sidebar-close"
+            data-action="close-sidebar"
+            aria-label="Tutup menu">
+      ✕
+    </button>
+  </div>
+
+  <ul class="am-menu">
+    <li><a class="{{#is_dashboard}}active{{/is_dashboard}}" href="{{dashboard_url}}">Dashboard</a></li>
+    <li><a class="{{#is_monitoring_kelas}}active{{/is_monitoring_kelas}}" href="{{monitoring_kelas_url}}">Monitoring Kelas</a></li>
+    <li>
+      <a class="{{#is_monitoring_presensi}}active{{/is_monitoring_presensi}}" href="{{monitoring_presensi_url}}">
+        Monitoring Presensi
+      </a>
+    </li>
+    <li><a class="{{#is_ekskul_siswa}}active{{/is_ekskul_siswa}}" href="{{ekskul_siswa_url}}">Ekstrakurikuler Siswa</a></li>
+    {{#show_pkl_menu}}
+    <li>
+      <a class="{{#is_pkl_siswa}}active{{/is_pkl_siswa}}" href="{{pkl_siswa_url}}">
+        PKL Siswa
+      </a>
+    </li>
+    {{/show_pkl_menu}}
+    <li><a class="{{#is_raport}}active{{/is_raport}}" href="{{raport_url}}">Raport</a></li>
+  </ul>
+</aside>

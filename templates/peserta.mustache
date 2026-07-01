@@ -1,0 +1,245 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button" class="am-hamburger" data-action="open-sidebar" aria-label="Buka menu">☰</button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-page-head">
+        <div>
+          <div class="am-breadcrumb">Akademik / Manajemen Kelas / Peserta</div>
+          <h1 class="am-h1">Peserta Kelas: {{kelas}}</h1>
+          <div class="am-sub">
+            Pilih wali kelas dan siswa lewat checklist, lalu simpan sekali.
+          </div>
+        </div>
+
+        <a href="{{{back_url}}}" class="am-btn am-btn-secondary">← Kembali</a>
+      </div>
+
+      {{^has_wali_role}}
+      <div class="am-card" style="border-left:4px solid #f59e0b; margin-bottom:16px;">
+        <strong>Role Wali Kelas belum ditemukan.</strong>
+        <div class="am-sub" style="margin-top:4px;">
+          Sistem tetap bisa menyimpan wali kelas ke data kelas. Untuk daftar peserta,
+          role wali kelas sementara memakai role guru. Buat role dengan nama/shortname
+          yang memuat kata <strong>wali</strong> dan <strong>kelas</strong> agar terbaca otomatis.
+        </div>
+      </div>
+      {{/has_wali_role}}
+
+      <div class="am-card am-form-card">
+        <h3>Atur Peserta Kelas</h3>
+
+        <form method="post" action="{{{action_url}}}">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+
+          <div class="am-sub" style="margin-bottom:14px;">
+            Pilih maksimal satu <strong>{{role_wali_label}}</strong>. Siswa bisa dipilih banyak.
+            User yang sudah menjadi wali kelas atau siswa di kelas lain pada tahun ajaran yang sama
+            akan diberi tanda dan tidak bisa dipilih lagi.
+          </div>
+          <div style="display:flex; gap:10px; align-items:center; margin-bottom:14px; flex-wrap:wrap;">
+
+              <input type="text"
+                    id="am-peserta-search"
+                    placeholder="Cari nama, email, NISN, atau NPA..."
+                    style="width:100%; max-width:420px; padding:10px 12px; border:1px solid #dbe3ef; border-radius:10px; font-size:14px;">
+
+              <span class="am-sub" style="margin:0;">
+                  Ketik untuk menyaring daftar peserta.
+              </span>
+
+          </div>
+          <div class="am-table-wrap">
+            <table class="am-table">
+              <thead>
+                <tr>
+                  <th style="width:60px;">No</th>
+                  <th>Nama</th>
+                  <th>NISN/NPA</th>
+                  <th>Email</th>
+                  <th style="width:260px;">Status</th>
+                  <th style="text-align:center; width:130px;">{{role_wali_label}}</th>
+                  <th style="text-align:center; width:120px;">{{role_siswa_label}}</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {{#user_rows}}
+                <tr data-search="{{search_text}}"
+                    {{#row_muted}}style="opacity:.62; background:#f8fafc;"{{/row_muted}}>
+                  <td data-label="No">{{no}}</td>
+
+                  <td data-label="Nama">
+                    <strong>{{nama}}</strong>
+                  </td>
+                  <td data-label="NISN/NPA">
+                      <strong>NISN:</strong> {{nisn}}<br>
+                      <strong>NPA:</strong> {{npa}}
+                  </td>
+                  <td data-label="Email">{{email}}</td>
+
+                  <td data-label="Status">
+                    <div style="display:flex; flex-direction:column; gap:5px;">
+                      {{#status_list}}
+                        {{#type_available}}
+                        <span style="display:inline-flex; width:max-content; padding:3px 8px; border-radius:999px; font-size:12px; background:#dcfce7; color:#166534;">
+                          {{text}}
+                        </span>
+                        {{/type_available}}
+
+                        {{#type_current}}
+                        <span style="display:inline-flex; width:max-content; padding:3px 8px; border-radius:999px; font-size:12px; background:#dbeafe; color:#1e40af;">
+                          {{text}}
+                        </span>
+                        {{/type_current}}
+
+                        {{#type_conflict}}
+                        <span style="display:inline-flex; width:max-content; padding:3px 8px; border-radius:999px; font-size:12px; background:#fee2e2; color:#991b1b;">
+                          {{text}}
+                        </span>
+                        {{/type_conflict}}
+                      {{/status_list}}
+                    </div>
+                  </td>
+
+                  <td data-label="Wali Kelas" style="text-align:center;">
+                    <input type="radio"
+                           name="wali_userid"
+                           value="{{id}}"
+                           {{#wali_checked}}checked{{/wali_checked}}
+                           {{#wali_disabled}}disabled{{/wali_disabled}}>
+                  </td>
+
+                  <td data-label="Siswa" style="text-align:center;">
+                    <input type="checkbox"
+                           name="siswa_userids[]"
+                           value="{{id}}"
+                           {{#siswa_checked}}checked{{/siswa_checked}}
+                           {{#siswa_disabled}}disabled{{/siswa_disabled}}>
+                  </td>
+                </tr>
+                {{/user_rows}}
+
+                {{^user_rows}}
+                <tr>
+                  <td colspan="6" class="am-empty-state">
+                    Belum ada user aktif yang bisa dipilih.
+                  </td>
+                </tr>
+                {{/user_rows}}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="am-actions" style="margin-top:16px; justify-content:space-between;">
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#64748b;">
+              <input type="radio" name="wali_userid" value="0">
+              Kosongkan wali kelas
+            </label>
+
+            <button type="submit" class="am-btn am-btn-primary">
+              Simpan Peserta Kelas
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="am-card">
+        <h3>Daftar Peserta Tersimpan</h3>
+
+        <div class="am-sub" style="margin-bottom:14px;">
+          Daftar ini hanya menampilkan wali kelas dan siswa. Guru mata pelajaran dipilih pada halaman Course Moodle saat generate course.
+        </div>
+
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>NISN/NPA</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#items}}
+              <tr>
+                <td data-label="No">{{no}}</td>
+
+                <td data-label="Nama">
+                  <strong>{{nama}}</strong>
+                </td>
+               <td>
+                    <strong>NISN:</strong> {{nisn}}<br>
+                    <strong>NPA:</strong> {{npa}}
+                </td>
+                <td data-label="Email">{{email}}</td>
+ 
+
+                <td data-label="Role">{{role}}</td>
+
+                <td data-label="Aksi">
+                  <div class="am-row-actions">
+                    <a href="{{{delete_url}}}"
+                       class="am-btn am-btn-danger"
+                       onclick="return confirm('Hapus peserta ini?')">
+                      Hapus
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              {{/items}}
+
+              {{^items}}
+              <tr>
+                <td colspan="5" class="am-empty-state">
+                  Belum ada peserta di kelas ini.
+                </td>
+              </tr>
+              {{/items}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function() {
+
+    var input = document.getElementById('am-peserta-search');
+
+    if (!input) {
+        return;
+    }
+
+    input.addEventListener('input', function() {
+
+        var keyword =
+            (input.value || '').toLowerCase().trim();
+
+        var rows =
+            document.querySelectorAll('tr[data-search]');
+
+        rows.forEach(function(row) {
+
+            var text =
+                row.getAttribute('data-search') || '';
+
+            row.style.display =
+                text.indexOf(keyword) !== -1
+                    ? ''
+                    : 'none';
+        });
+    });
+
+})();
+</script>

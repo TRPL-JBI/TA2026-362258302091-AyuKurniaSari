@@ -1,0 +1,47 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Tahun Ajaran / Form</div>
+      <h2 class="am-h1">Form Tahun Ajaran</h2>
+      <div class="am-sub">Isi data tahun ajaran yang akan digunakan pada sistem akademik.</div>
+
+      <div class="am-card">
+        <form method="post" action="{{action_url}}" class="am-form">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="id" value="{{id}}">
+
+          <label class="am-label" for="nama">Nama Tahun Ajaran</label>
+          <input type="text"
+                id="nama"
+                name="nama"
+                class="am-input"
+                value="{{nama}}"
+                placeholder="Contoh: 2025/2026"
+                required>
+
+          <div class="am-actions">
+            <button type="submit" class="am-btn am-btn-primary">
+              Simpan
+            </button>
+
+            <a href="{{back_url}}" class="am-btn am-btn-secondary">
+              Kembali
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="akademikmonitor">
+  <div class="am-layout">
+    {{> local_akademikmonitor/walikelas/sidebar}}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Raport Kelas</div>
+      <h2 class="am-h1">Raport Kelas</h2>
+      <div class="am-sub">
+        Data raport siswa untuk kelas {{kelas}}.
+      </div>
+
+      <form method="post" action="{{save_sikap_url}}">
+        <input type="hidden" name="sesskey" value="{{sesskey}}">
+        <input type="hidden" name="kelasid" value="{{kelasid}}">
+
+        <div class="am-card">
+          <div class="am-table-wrap">
+            <table class="am-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama</th>
+                  <th>NISN</th>
+                  <th>Rata-rata</th>
+                  <th>Nilai Sikap</th>
+                  <th>Jumlah</th>
+                  <th>Peringkat</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#rows}}
+                <tr>
+                  <td>{{no}}</td>
+                  <td>{{nama}}</td>
+                  <td>{{nisn}}</td>
+                  <td>{{rata_rata}}</td>
+                  <td>
+                    <select name="sikap[{{userid}}]" class="am-input">
+                      <option value="A" {{#sikap_a}}selected{{/sikap_a}}>A</option>
+                      <option value="B" {{#sikap_b}}selected{{/sikap_b}}>B</option>
+                      <option value="C" {{#sikap_c}}selected{{/sikap_c}}>C</option>
+                      <option value="D" {{#sikap_d}}selected{{/sikap_d}}>D</option>
+                    </select>
+                  </td>
+                  <td>{{jumlah}}</td>
+                  <td>{{ranking}}</td>
+                  <td>
+                    <a href="{{detail_url}}" class="am-btn am-btn-primary">Detail</a>
+                  </td>
+                </tr>
+                {{/rows}}
+
+                {{^rows}}
+                <tr>
+                  <td colspan="8" class="am-empty-state">
+                    Belum ada data raport siswa.
+                  </td>
+                </tr>
+                {{/rows}}
+              </tbody>
+            </table>
+
+            
+            <div style="margin-top:16px; display:flex; justify-content:flex-end;">
+              <button type="submit" class="am-btn am-btn-primary">
+                Simpan Nilai Sikap
+              </button>
+            </div>
+            
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

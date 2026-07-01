@@ -1,0 +1,87 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-page-heading">
+        <div>
+          <h2 class="am-h1">Set Kurikulum Jurusan</h2>
+
+          <div class="am-sub">
+            Jurusan:
+            <strong>{{jurusan_nama}}</strong>
+            {{#jurusan_kode}}({{jurusan_kode}}){{/jurusan_kode}}
+          </div>
+
+          <div class="am-sub">
+            Tahun ajaran:
+            <strong>{{tahun_ajaran}}</strong>
+          </div>
+        </div>
+
+        <div class="am-actions" style="margin-top:0;">
+          <a href="{{back_url}}" class="am-btn am-btn-secondary">Kembali</a>
+          <a href="{{set_mapel_url}}" class="am-btn am-btn-primary">Lihat Mapel</a>
+        </div>
+      </div>
+
+      {{^has_selected}}
+      <div class="am-alert am-alert-warning">
+        Jurusan ini belum memiliki kurikulum yang diset. Silakan atur kurikulum dari menu pengaturan kurikulum sebelumnya.
+      </div>
+      {{/has_selected}}
+
+      <div class="am-card">
+        <div class="am-list-header">
+          <div>
+            <div class="am-list-title">DAFTAR KURIKULUM</div>
+            <div class="am-sub">
+              Halaman ini hanya menampilkan status kurikulum yang sudah diset untuk jurusan ini.
+            </div>
+          </div>
+        </div>
+
+        <div class="am-table-wrap">
+          <table class="am-table am-table-setkurikulum">
+            <thead>
+              <tr>
+                <th style="width:70px;">No</th>
+                <th>Nama Kurikulum</th>
+                <th style="width:220px;">Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#has_items}}
+                {{#items}}
+                <tr>
+                  <td data-label="No">{{no}}</td>
+
+                  <td data-label="Nama Kurikulum">
+                    <strong>{{nama}}</strong>
+                  </td>
+
+                  <td data-label="Status">
+                    <span class="am-badge {{status_class}}">
+                      {{status_label}}
+                    </span>
+                  </td>
+                </tr>
+                {{/items}}
+              {{/has_items}}
+
+              {{^has_items}}
+              <tr>
+                <td colspan="3" class="am-empty-state" style="text-align:center;">
+                  Belum ada data kurikulum.
+                </td>
+              </tr>
+              {{/has_items}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

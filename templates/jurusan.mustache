@@ -1,0 +1,106 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-page-heading">
+        <div>
+          <h2 class="am-h1">Manajemen Jurusan</h2>
+          <div class="am-sub">
+            Kelola jurusan, kurikulum, mata pelajaran, CP, dan TP sebelum course kelas dibuat.
+          </div>
+        </div>
+
+        <div class="am-actions" style="margin-top:0;">
+          <a href="{{tambah_url}}" class="am-btn am-btn-primary">+ Tambah Jurusan</a>
+        </div>
+      </div>
+
+      <div class="am-card">
+        <div class="am-table-wrap">
+          <table class="am-table am-table-jurusan">
+            <thead>
+              <tr>
+                <th style="width:60px;">No</th>
+                <th style="width:100px;">Kode</th>
+                <th style="width:180px;">Nama Jurusan</th>
+                <th style="width:190px;">Ringkasan</th>
+                <th class="am-col-actions">Aksi</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#has_items}}
+                {{#items}}
+                <tr>
+                  <td data-label="No">{{no}}</td>
+                  <td data-label="Kode">{{kode}}</td>
+                  <td data-label="Nama Jurusan">
+                    <strong>{{nama}}</strong>
+                  </td>
+
+                  <td data-label="Ringkasan">
+                    <div class="am-summary-badges">
+                      <span class="am-badge am-badge-mapel">Mapel: {{total_mapel}}</span>
+                      <span class="am-badge am-badge-cp">CP: {{total_cp}}</span>
+                      <span class="am-badge am-badge-tp">TP: {{total_tp}}</span>
+                    </div>
+                  </td>
+
+                  <td data-label="Aksi" class="am-cell-actions">
+                    <div class="am-action-list">
+                      <a href="{{set_kurikulum_url}}" class="am-btn am-btn-secondary">
+                        Lihat Kurikulum
+                      </a>
+
+                      <a href="{{set_mapel_url}}" class="am-btn am-btn-primary">
+                        Set Mapel
+                      </a>
+
+                      <a href="{{detail_url}}" class="am-btn am-btn-soft">
+                        Detail
+                      </a>
+
+                      <a href="{{edit_url}}" class="am-btn am-btn-edit">
+                        Edit
+                      </a>
+
+                    <form method="post"
+                          action="{{delete_action}}"
+                          style="display:inline;"
+                          onsubmit="return confirm('Yakin hapus jurusan ini?');">
+
+                        <input type="hidden"
+                              name="id"
+                              value="{{delete_id}}">
+
+                        <input type="hidden"
+                              name="sesskey"
+                              value="{{delete_sesskey}}">
+
+                        <button type="submit"
+                                class="am-btn am-btn-danger">
+                            Hapus
+                        </button>
+
+                    </form>
+                    </div>
+                  </td>
+                </tr>
+                {{/items}}
+              {{/has_items}}
+
+              {{^has_items}}
+              <tr>
+                <td colspan="5" class="am-empty-state" style="text-align:center;">
+                  Belum ada data jurusan.
+                </td>
+              </tr>
+              {{/has_items}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="akademikmonitor">
+    <div class="am-page">
+        <div class="am-layout">
+
+            {{> local_akademikmonitor/walikelas/sidebar}}
+
+            <div class="am-content">
+                <div class="am-mobile-topbar">
+                    <button type="button"
+                            class="am-hamburger"
+                            data-action="open-sidebar"
+                            aria-label="Buka menu">☰</button>
+                    <div class="am-mobile-title">Menu Akademik</div>
+                </div>
+
+                <h3>Monitoring Kelas {{kelas}}</h3>
+
+
+
+                <form method="get"
+                      action="/local/akademikmonitor/pages/walikelas/monitoring/monitoring.php"
+                      class="filter-section"
+                      style="margin-top:12px;">
+
+                    <input type="hidden" name="semester" value="{{selectedsemester}}">
+                    <input type="hidden" name="tahunajaranid" value="{{selectedtahunajaranid}}">
+
+                    <select id="filter-mapel"
+                            name="courseid"
+                            class="form-control"
+                            onchange="this.form.submit()">
+
+                        {{^mapel}}
+                            <option value="">Belum ada course mapel</option>
+                        {{/mapel}}
+
+                        {{#mapel}}
+                            <option value="{{id}}" {{#is_selected}}selected{{/is_selected}}>
+                                {{nama_mapel}}
+                            </option>
+                        {{/mapel}}
+                    </select>
+                </form>
+
+                <div style="margin:10px 0 12px 0; font-size:13px; color:#475569;">
+                    Mapel dipilih:
+                    <strong>{{selected_mapel_name}}</strong>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Nama</th>
+                                {{#groups}}
+                                    <th colspan="{{count}}">{{name}}</th>
+                                {{/groups}}
+                            </tr>
+
+                            <tr>
+                                {{#columns}}
+                                    <th>{{.}}</th>
+                                {{/columns}}
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {{#rows}}
+                                <tr>
+                                    <td>{{nama}}</td>
+                                        {{#nilai_list}}
+                                        <td>
+                                            {{#isbelowkktp}}
+                                                <span class="nilai-kurang">{{text}}</span>
+                                            {{/isbelowkktp}}
+
+                                            {{#isabovekktp}}
+                                                <span class="nilai-baik">{{text}}</span>
+                                            {{/isabovekktp}}
+
+                                            {{^isbelowkktp}}
+                                                {{^isabovekktp}}
+                                                    {{text}}
+                                                {{/isabovekktp}}
+                                            {{/isbelowkktp}}
+                                        </td>
+                                        {{/nilai_list}}
+                                </tr>
+                            {{/rows}}
+
+                            {{^rows}}
+                                <tr>
+                                    <td colspan="100%" style="text-align:center;">
+                                        Tidak ada data siswa atau nilai untuk mapel ini.
+                                    </td>
+                                </tr>
+                            {{/rows}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

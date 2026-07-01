@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/akademikmonitor/db" VERSION="2026021600" COMMENT="Akademik &amp; Monitoring">
+  <TABLES>
+    <TABLE NAME="kurikulum" COMMENT="Master kurikulum">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="nama" TYPE="char" LENGTH="255" NOTNULL="true"/>
+        <FIELD NAME="is_active" TYPE="char" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="tahun_ajaran" COMMENT="Master tahun ajaran">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="tahun_ajaran" TYPE="char" LENGTH="50" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="mata_pelajaran" COMMENT="Master mata pelajaran">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="nama_mapel" TYPE="char" LENGTH="255" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_mapel_nama" UNIQUE="false" FIELDS="nama_mapel"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="jurusan" COMMENT="Master jurusan">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="nama_jurusan" TYPE="char" LENGTH="255" NOTNULL="true"/>
+        <FIELD NAME="kode_jurusan" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="kelas" COMMENT="Master kelas (wali kelas: id_user -> core user.id)">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="nama" TYPE="char" LENGTH="255" NOTNULL="true"/>
+        <FIELD NAME="tingkat" TYPE="char" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_jurusan" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_tahun_ajaran" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_user" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_kelas_jurusan" TYPE="foreign" FIELDS="id_jurusan" REFTABLE="jurusan" REFFIELDS="id"/>
+        <KEY NAME="fk_kelas_tahunajaran" TYPE="foreign" FIELDS="id_tahun_ajaran" REFTABLE="tahun_ajaran" REFFIELDS="id"/>
+        <KEY NAME="fk_kelas_walikelas" TYPE="foreign" FIELDS="id_user" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_kelas_jur" UNIQUE="false" FIELDS="id_jurusan"/>
+        <INDEX NAME="idx_kelas_ta" UNIQUE="false" FIELDS="id_tahun_ajaran"/>
+        <INDEX NAME="idx_kelas_user" UNIQUE="false" FIELDS="id_user"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="kurikulum_jurusan" COMMENT="Relasi kurikulum - jurusan - tahun ajaran">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_jurusan" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_kurikulum" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_tahun_ajaran" TYPE="int" LENGTH="10" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_kj_jurusan" TYPE="foreign" FIELDS="id_jurusan" REFTABLE="jurusan" REFFIELDS="id"/>
+        <KEY NAME="fk_kj_kurikulum" TYPE="foreign" FIELDS="id_kurikulum" REFTABLE="kurikulum" REFFIELDS="id"/>
+        <KEY NAME="fk_kj_tahunajaran" TYPE="foreign" FIELDS="id_tahun_ajaran" REFTABLE="tahun_ajaran" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_kj_jur" UNIQUE="false" FIELDS="id_jurusan"/>
+        <INDEX NAME="idx_kj_kur" UNIQUE="false" FIELDS="id_kurikulum"/>
+        <INDEX NAME="idx_kj_ta" UNIQUE="false" FIELDS="id_tahun_ajaran"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="kurikulum_mapel" COMMENT="Mapel per kurikulum_jurusan + tingkat + KKTP">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_kurikulum_jurusan" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_mapel" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <!-- DBML: time. Disimpan sebagai HH:MM:SS -->
+        <FIELD NAME="jam_pelajaran" TYPE="char" LENGTH="8" NOTNULL="false"/>
+        <FIELD NAME="tingkat_kelas" TYPE="char" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="kktp" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_km_kj" TYPE="foreign" FIELDS="id_kurikulum_jurusan" REFTABLE="kurikulum_jurusan" REFFIELDS="id"/>
+        <KEY NAME="fk_km_mapel" TYPE="foreign" FIELDS="id_mapel" REFTABLE="mata_pelajaran" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_km_kj" UNIQUE="false" FIELDS="id_kurikulum_jurusan"/>
+        <INDEX NAME="idx_km_mapel" UNIQUE="false" FIELDS="id_mapel"/>
+        <INDEX NAME="idx_km_tingkat" UNIQUE="false" FIELDS="tingkat_kelas"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="capaian_pembelajaran" COMMENT="CP per kurikulum_mapel">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="deskripsi" TYPE="text" NOTNULL="true"/>
+        <FIELD NAME="id_kurikulum_mapel" TYPE="int" LENGTH="10" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_cp_km" TYPE="foreign" FIELDS="id_kurikulum_mapel" REFTABLE="kurikulum_mapel" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_cp_km" UNIQUE="false" FIELDS="id_kurikulum_mapel"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="tujuan_pembelajaran" COMMENT="TP per CP">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <!-- DBML: varchar -->
+        <FIELD NAME="deskripsi" TYPE="char" LENGTH="255" NOTNULL="true"/>
+        <FIELD NAME="konten" TYPE="char" LENGTH="100" NOTNULL="false"/>
+        <FIELD NAME="kompetensi" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="atp" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="dpl" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="id_capaian_pembelajaran" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0"/>
+        <FIELD NAME="status" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="aktif"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_tp_cp" TYPE="foreign" FIELDS="id_capaian_pembelajaran" REFTABLE="capaian_pembelajaran" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_tp_cp" UNIQUE="false" FIELDS="id_capaian_pembelajaran"/>
+        <INDEX NAME="idx_tp_course" UNIQUE="false" FIELDS="id_course"/>
+        <INDEX NAME="idx_tp_status" UNIQUE="false" FIELDS="status"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="peserta_kelas" COMMENT="Peserta kelas (id_user -> core user.id, id_role -> core role.id)">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_kelas" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_user" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_role" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_pk_kelas" TYPE="foreign" FIELDS="id_kelas" REFTABLE="kelas" REFFIELDS="id"/>
+        <KEY NAME="fk_pk_user" TYPE="foreign" FIELDS="id_user" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_pk_role" TYPE="foreign" FIELDS="id_role" REFTABLE="role" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_pk_kelas" UNIQUE="false" FIELDS="id_kelas"/>
+        <INDEX NAME="idx_pk_user" UNIQUE="false" FIELDS="id_user"/>
+        <INDEX NAME="idx_pk_role" UNIQUE="false" FIELDS="id_role"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="course_mapel" COMMENT="Relasi course Moodle (core course) ke kurikulum_mapel">
+      <FIELDS>
+        <FIELD NAME="id_course" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_kurikulum_mapel" TYPE="int" LENGTH="10" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id_course,id_kurikulum_mapel"/>
+
+        <KEY NAME="fk_cm_course" TYPE="foreign" FIELDS="id_course" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="fk_cm_km" TYPE="foreign" FIELDS="id_kurikulum_mapel" REFTABLE="kurikulum_mapel" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_cm_km" UNIQUE="false" FIELDS="id_kurikulum_mapel"/>
+      </INDEXES>
+    </TABLE>
+
+    <!-- =======================
+         PEMETAAN TP KE ITEM/AKTIVITAS (core)
+         ======================= -->
+
+    <TABLE NAME="grade_items_tp" COMMENT="Relasi grade_items (core) ke TP">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_grade_items" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_tp" TYPE="int" LENGTH="10" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_gitp_gi" TYPE="foreign" FIELDS="id_grade_items" REFTABLE="grade_items" REFFIELDS="id"/>
+        <KEY NAME="fk_gitp_tp" TYPE="foreign" FIELDS="id_tp" REFTABLE="tujuan_pembelajaran" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_gitp_gi" UNIQUE="false" FIELDS="id_grade_items"/>
+        <INDEX NAME="idx_gitp_tp" UNIQUE="false" FIELDS="id_tp"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="assignment_tp" COMMENT="Relasi assign (core) ke TP">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_assignment" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_tp" TYPE="int" LENGTH="10" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_atp_assign" TYPE="foreign" FIELDS="id_assignment" REFTABLE="assign" REFFIELDS="id"/>
+        <KEY NAME="fk_atp_tp" TYPE="foreign" FIELDS="id_tp" REFTABLE="tujuan_pembelajaran" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_atp_assign" UNIQUE="false" FIELDS="id_assignment"/>
+        <INDEX NAME="idx_atp_tp" UNIQUE="false" FIELDS="id_tp"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="quiz_tp" COMMENT="Relasi quiz (core) ke TP">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_quiz" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_tp" TYPE="int" LENGTH="10" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_qtp_quiz" TYPE="foreign" FIELDS="id_quiz" REFTABLE="quiz" REFFIELDS="id"/>
+        <KEY NAME="fk_qtp_tp" TYPE="foreign" FIELDS="id_tp" REFTABLE="tujuan_pembelajaran" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_qtp_quiz" UNIQUE="false" FIELDS="id_quiz"/>
+        <INDEX NAME="idx_qtp_tp" UNIQUE="false" FIELDS="id_tp"/>
+      </INDEXES>
+    </TABLE>
+
+    <!-- =======================
+         TELEGRAM & NOTIFIKASI
+         ======================= -->
+
+    <TABLE NAME="setting_telegram" COMMENT="Setting bot telegram">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="bot_token" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="bot_username" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="is_enabled" TYPE="char" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="token_verified_at" TYPE="char" LENGTH="50" NOTNULL="false"/>
+        <!-- Moodle convention: int unix timestamp -->
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="telegram_user_link" COMMENT="Link user Moodle (core user) ke Telegram">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="moodle_userid" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="telegram_chat_id" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="telegram_username" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="is_linked" TYPE="char" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="linked_at" TYPE="char" LENGTH="50" NOTNULL="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_tul_user" TYPE="foreign" FIELDS="moodle_userid" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_tul_user" UNIQUE="false" FIELDS="moodle_userid"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="notif_rule" COMMENT="Rule notifikasi otomatis">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="rule_kode" TYPE="char" LENGTH="80" NOTNULL="true"/>
+        <FIELD NAME="is_enabled" TYPE="char" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="offset_days" TYPE="char" LENGTH="10" NOTNULL="false"/>
+        <!-- DBML: time. Disimpan sebagai HH:MM:SS -->
+        <FIELD NAME="send_time" TYPE="char" LENGTH="8" NOTNULL="false"/>
+        <FIELD NAME="recipients" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="event_keyword" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_rule_kode" UNIQUE="false" FIELDS="rule_kode"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="log_pengiriman_pesan" COMMENT="Log pengiriman notifikasi (relasi ke user/course/assign/event core)">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="moodle_userid" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="rule_code" TYPE="char" LENGTH="80" NOTNULL="false"/>
+        <FIELD NAME="assignid" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="eventid" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="context_title" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="scheduled_at" TYPE="char" LENGTH="50" NOTNULL="false"/>
+        <FIELD NAME="sent_at" TYPE="char" LENGTH="50" NOTNULL="false"/>
+        <FIELD NAME="status" TYPE="char" LENGTH="50" NOTNULL="false"/>
+        <FIELD NAME="telegram_chat_id" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <!-- DBML: varchar (dipakai ringkasan). -->
+        <FIELD NAME="message_preview" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="error_message" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_log_user" TYPE="foreign" FIELDS="moodle_userid" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_log_course" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="fk_log_assign" TYPE="foreign" FIELDS="assignid" REFTABLE="assign" REFFIELDS="id"/>
+        <KEY NAME="fk_log_event" TYPE="foreign" FIELDS="eventid" REFTABLE="event" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_log_user" UNIQUE="false" FIELDS="moodle_userid"/>
+        <INDEX NAME="idx_log_course" UNIQUE="false" FIELDS="courseid"/>
+        <INDEX NAME="idx_log_assign" UNIQUE="false" FIELDS="assignid"/>
+        <INDEX NAME="idx_log_event" UNIQUE="false" FIELDS="eventid"/>
+      </INDEXES>
+    </TABLE>
+
+    <!-- =======================
+         RAPOR, EKSKUL, PKL
+         ======================= -->
+
+    <TABLE NAME="rapor_catatan_akademik" COMMENT="Catatan rapor per siswa (core user) pada kelas">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_kelas" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="semester" TYPE="int" LENGTH="4" NOTNULL="true"/>
+        <FIELD NAME="catatan" TYPE="text" NOTNULL="false"/>
+        <FIELD NAME="kokurikuler" TYPE="text" NOTNULL="false"/>
+        <FIELD NAME="id_wali_kelas" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="id_siswa" TYPE="int" LENGTH="10" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_rca_kelas" TYPE="foreign" FIELDS="id_kelas" REFTABLE="kelas" REFFIELDS="id"/>
+        <KEY NAME="fk_rca_wali" TYPE="foreign" FIELDS="id_wali_kelas" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_rca_siswa" TYPE="foreign" FIELDS="id_siswa" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_rca_siswa" UNIQUE="false" FIELDS="id_siswa"/>
+        <INDEX NAME="idx_rca_kelas" UNIQUE="false" FIELDS="id_kelas"/>
+        <INDEX NAME="idx_rca_wali" UNIQUE="false" FIELDS="id_wali_kelas"/>
+        <INDEX NAME="ux_rca_siswa_kelas_sem" UNIQUE="true" FIELDS="id_siswa,id_kelas,semester"/>
+      </INDEXES>
+    </TABLE>
+
+    <!-- MASTER MITRA/DUDI (BARU) -->
+    <TABLE NAME="mitra_dudi" COMMENT="Master mitra/dudi untuk PKL">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="nama" TYPE="char" LENGTH="255" NOTNULL="true"/>
+        <FIELD NAME="alamat" TYPE="text" NOTNULL="false"/>
+        <FIELD NAME="kontak" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="is_active" TYPE="char" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="ux_mitra_nama" UNIQUE="true" FIELDS="nama"/>
+        <INDEX NAME="idx_mitra_active" UNIQUE="false" FIELDS="is_active"/>
+      </INDEXES>
+    </TABLE>
+
+    <!-- PKL (REVISI: pakai id_mitra_dudi, unique (id_siswa,id_kelas,semester)) -->
+    <TABLE NAME="pkl" COMMENT="PKL (id_mitra_dudi -> mitra_dudi)">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_siswa" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_kelas" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="semester" TYPE="int" LENGTH="4" NOTNULL="true"/>
+        <FIELD NAME="id_mitra_dudi" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <!-- DBML: date. Disimpan sebagai YYYY-MM-DD -->
+        <FIELD NAME="waktu_mulai" TYPE="char" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="waktu_selesai" TYPE="char" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="nilai" TYPE="char" LENGTH="50" NOTNULL="false"/>
+        <FIELD NAME="id_penginput" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_pkl_siswa" TYPE="foreign" FIELDS="id_siswa" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_pkl_kelas" TYPE="foreign" FIELDS="id_kelas" REFTABLE="kelas" REFFIELDS="id"/>
+        <KEY NAME="fk_pkl_penginput" TYPE="foreign" FIELDS="id_penginput" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_pkl_mitra" TYPE="foreign" FIELDS="id_mitra_dudi" REFTABLE="mitra_dudi" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_pkl_siswa" UNIQUE="false" FIELDS="id_siswa"/>
+        <INDEX NAME="idx_pkl_kelas" UNIQUE="false" FIELDS="id_kelas"/>
+        <INDEX NAME="idx_pkl_mitra" UNIQUE="false" FIELDS="id_mitra_dudi"/>
+        <INDEX NAME="ux_pkl_siswa_kelas_sem" UNIQUE="true" FIELDS="id_siswa,id_kelas,semester"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="ekskul" COMMENT="Ekstrakurikuler (id_pembina -> core user)">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="nama" TYPE="char" LENGTH="255" NOTNULL="true"/>
+        <FIELD NAME="id_pembina" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="is_active" TYPE="char" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_ekskul_pembina" TYPE="foreign" FIELDS="id_pembina" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_ekskul_active" UNIQUE="false" FIELDS="is_active"/>
+        <INDEX NAME="idx_ekskul_pembina" UNIQUE="false" FIELDS="id_pembina"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="ekskul_rapor" COMMENT="Nilai ekskul di rapor">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_ekskul" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_siswa" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_kelas" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="semester" TYPE="int" LENGTH="4" NOTNULL="true"/>
+        <FIELD NAME="predikat" TYPE="char" LENGTH="50" NOTNULL="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_er_ekskul" TYPE="foreign" FIELDS="id_ekskul" REFTABLE="ekskul" REFFIELDS="id"/>
+        <KEY NAME="fk_er_siswa" TYPE="foreign" FIELDS="id_siswa" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_er_kelas" TYPE="foreign" FIELDS="id_kelas" REFTABLE="kelas" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_er_siswa" UNIQUE="false" FIELDS="id_siswa"/>
+        <INDEX NAME="idx_er_kelas" UNIQUE="false" FIELDS="id_kelas"/>
+        <INDEX NAME="idx_er_ekskul" UNIQUE="false" FIELDS="id_ekskul"/>
+        <INDEX NAME="ux_er_siswa_kelas_ekskul_sem" UNIQUE="true" FIELDS="id_siswa,id_kelas,id_ekskul,semester"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="rapor_ketidakhadiran" COMMENT="Ketidakhadiran rapor">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_siswa" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_kelas" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="semester" TYPE="int" LENGTH="4" NOTNULL="true"/>
+        <FIELD NAME="sakit" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="izin" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="alfa" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="id_penginput" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_rk_siswa" TYPE="foreign" FIELDS="id_siswa" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_rk_kelas" TYPE="foreign" FIELDS="id_kelas" REFTABLE="kelas" REFFIELDS="id"/>
+        <KEY NAME="fk_rk_penginput" TYPE="foreign" FIELDS="id_penginput" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_rk_siswa" UNIQUE="false" FIELDS="id_siswa"/>
+        <INDEX NAME="idx_rk_kelas" UNIQUE="false" FIELDS="id_kelas"/>
+        <INDEX NAME="idx_rk_penginput" UNIQUE="false" FIELDS="id_penginput"/>
+        <INDEX NAME="ux_rk_siswa_kelas_sem" UNIQUE="true" FIELDS="id_siswa,id_kelas,semester"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="rapor_kenaikan_kelas" COMMENT="Keputusan naik kelas">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_siswa" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_kelas" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="keputusan" TYPE="char" LENGTH="50" NOTNULL="false"/>
+        <FIELD NAME="id_penginput" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_rkk_siswa" TYPE="foreign" FIELDS="id_siswa" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_rkk_kelas" TYPE="foreign" FIELDS="id_kelas" REFTABLE="kelas" REFFIELDS="id"/>
+        <KEY NAME="fk_rkk_penginput" TYPE="foreign" FIELDS="id_penginput" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_rkk_siswa" UNIQUE="false" FIELDS="id_siswa"/>
+        <INDEX NAME="idx_rkk_kelas" UNIQUE="false" FIELDS="id_kelas"/>
+        <INDEX NAME="idx_rkk_penginput" UNIQUE="false" FIELDS="id_penginput"/>
+        <INDEX NAME="ux_rkk_siswa_kelas" UNIQUE="true" FIELDS="id_siswa,id_kelas"/>
+      </INDEXES>
+    </TABLE>
+
+
+    <TABLE NAME="kelas_member" COMMENT="Snapshot anggota kelas dari data Moodle/user">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_kelas" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_user" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_km_kelas" TYPE="foreign" FIELDS="id_kelas" REFTABLE="kelas" REFFIELDS="id"/>
+        <KEY NAME="fk_km_user" TYPE="foreign" FIELDS="id_user" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_kelas_member_kelas" UNIQUE="false" FIELDS="id_kelas"/>
+        <INDEX NAME="idx_kelas_member_user" UNIQUE="false" FIELDS="id_user"/>
+        <INDEX NAME="ux_kelas_member_kelas_user" UNIQUE="true" FIELDS="id_kelas,id_user"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="kartu_ujian" COMMENT="Master kartu ujian per kelas dan tahun ajaran">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="nama_ujian" TYPE="char" LENGTH="255" NOTNULL="true"/>
+        <FIELD NAME="id_kelas" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_tahun_ajaran" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_kurikulum" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="semester" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="Ganjil"/>
+        <FIELD NAME="penandatangan" TYPE="char" LENGTH="255" NOTNULL="false"/>
+        <FIELD NAME="status" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="draft"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_ku_kelas" TYPE="foreign" FIELDS="id_kelas" REFTABLE="kelas" REFFIELDS="id"/>
+        <KEY NAME="fk_ku_tahun" TYPE="foreign" FIELDS="id_tahun_ajaran" REFTABLE="tahun_ajaran" REFFIELDS="id"/>
+        <KEY NAME="fk_ku_kurikulum" TYPE="foreign" FIELDS="id_kurikulum" REFTABLE="kurikulum" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_kartu_ujian_kelas" UNIQUE="false" FIELDS="id_kelas"/>
+        <INDEX NAME="idx_kartu_ujian_tahun" UNIQUE="false" FIELDS="id_tahun_ajaran"/>
+        <INDEX NAME="idx_kartu_ujian_status" UNIQUE="false" FIELDS="status"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="kartu_ujian_siswa" COMMENT="Daftar siswa penerima kartu ujian">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_kartu_ujian" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_user" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_kus_kartu" TYPE="foreign" FIELDS="id_kartu_ujian" REFTABLE="kartu_ujian" REFFIELDS="id"/>
+        <KEY NAME="fk_kus_user" TYPE="foreign" FIELDS="id_user" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_ku_siswa_kartu" UNIQUE="false" FIELDS="id_kartu_ujian"/>
+        <INDEX NAME="idx_ku_siswa_user" UNIQUE="false" FIELDS="id_user"/>
+        <INDEX NAME="ux_ku_siswa_kartu_user" UNIQUE="true" FIELDS="id_kartu_ujian,id_user"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="rapor_nilai_sikap" COMMENT="Nilai sikap rapor per siswa, kelas, semester, dan tahun ajaran">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_siswa" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_kelas" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="semester" TYPE="int" LENGTH="4" NOTNULL="true"/>
+        <FIELD NAME="id_tahun_ajaran" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="nilai_sikap" TYPE="char" LENGTH="1" NOTNULL="true" DEFAULT="A"/>
+        <FIELD NAME="id_penginput" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_rns_siswa" TYPE="foreign" FIELDS="id_siswa" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_rns_kelas" TYPE="foreign" FIELDS="id_kelas" REFTABLE="kelas" REFFIELDS="id"/>
+        <KEY NAME="fk_rns_tahun" TYPE="foreign" FIELDS="id_tahun_ajaran" REFTABLE="tahun_ajaran" REFFIELDS="id"/>
+        <KEY NAME="fk_rns_penginput" TYPE="foreign" FIELDS="id_penginput" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_rns_siswa" UNIQUE="false" FIELDS="id_siswa"/>
+        <INDEX NAME="idx_rns_kelas" UNIQUE="false" FIELDS="id_kelas"/>
+        <INDEX NAME="ux_rns_siswa_kelas_sem_ta" UNIQUE="true" FIELDS="id_siswa,id_kelas,semester,id_tahun_ajaran"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="rapor_lock" COMMENT="Lock rapor per siswa">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_siswa" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="id_kelas" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="semester" TYPE="int" LENGTH="4" NOTNULL="true"/>
+        <FIELD NAME="is_locked" TYPE="int" LENGTH="1" NOTNULL="false"/>
+        <!-- DBML: timestamp. Moodle convention: int unix timestamp -->
+        <FIELD NAME="locked_at" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="locked_by" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+
+        <KEY NAME="fk_rl_siswa" TYPE="foreign" FIELDS="id_siswa" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_rl_kelas" TYPE="foreign" FIELDS="id_kelas" REFTABLE="kelas" REFFIELDS="id"/>
+        <KEY NAME="fk_rl_lockedby" TYPE="foreign" FIELDS="locked_by" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="idx_rl_siswa" UNIQUE="false" FIELDS="id_siswa"/>
+        <INDEX NAME="idx_rl_kelas" UNIQUE="false" FIELDS="id_kelas"/>
+        <INDEX NAME="idx_rl_lockedby" UNIQUE="false" FIELDS="locked_by"/>
+      </INDEXES>
+    </TABLE>
+
+  </TABLES>
+</XMLDB>

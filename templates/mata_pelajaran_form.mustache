@@ -1,0 +1,102 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">{{breadcrumb}}</div>
+
+      <h2 class="am-h1">{{title}}</h2>
+
+      <div class="am-sub">
+        Isi data mata pelajaran sesuai kategori yang digunakan pada sistem akademik.
+      </div>
+
+      <div class="am-card">
+        <form method="post" action="{{action_url}}" class="am-form">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="id" value="{{id}}">
+
+          <div class="am-form-group">
+            <label class="am-label" for="kategoriSelect">Kategori</label>
+
+            <select name="kategori"
+                    id="kategoriSelect"
+                    class="am-input"
+                    onchange="toggleKategori()"
+                    required>
+              <option value="umum" {{#is_umum}}selected{{/is_umum}}>Umum</option>
+              <option value="kejuruan" {{#is_kejuruan}}selected{{/is_kejuruan}}>Kejuruan</option>
+              <option value="lainnya" {{#is_lainnya}}selected{{/is_lainnya}}>Lainnya</option>
+            </select>
+          </div>
+
+          <div class="am-form-group" id="kategoriCustomWrap" style="{{^is_lainnya}}display:none;{{/is_lainnya}}">
+            <label class="am-label" for="kategoriCustom">Kategori Lainnya</label>
+
+            <input type="text"
+                   name="kategori_custom"
+                   id="kategoriCustom"
+                   class="am-input"
+                   value="{{kategori_custom}}"
+                   placeholder="Contoh: muatan lokal">
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label" for="nama">Nama Mata Pelajaran</label>
+
+            <input type="text"
+                   id="nama"
+                   name="nama"
+                   class="am-input"
+                   value="{{nama}}"
+                   placeholder="Contoh: Bahasa Indonesia"
+                   required>
+          </div>
+
+          <div class="am-actions">
+            <button type="submit" class="am-btn am-btn-primary">
+              Simpan
+            </button>
+
+            <a href="{{back_url}}" class="am-btn am-btn-secondary">
+              Kembali
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleKategori() {
+    var select = document.getElementById('kategoriSelect');
+    var wrap = document.getElementById('kategoriCustomWrap');
+    var custom = document.getElementById('kategoriCustom');
+
+    if (!select || !wrap || !custom) {
+        return;
+    }
+
+    if (select.value === 'lainnya') {
+        wrap.style.display = 'block';
+        custom.required = true;
+    } else {
+        wrap.style.display = 'none';
+        custom.required = false;
+        custom.value = '';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', toggleKategori);
+</script>

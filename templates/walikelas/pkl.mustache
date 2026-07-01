@@ -1,0 +1,267 @@
+<div class="akademikmonitor">
+  <div class="am-layout">
+    {{> local_akademikmonitor/walikelas/sidebar}}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      {{#kelas}}
+      <div class="am-breadcrumb">/ PKL Siswa</div>
+      <h2 class="am-h1">PKL Siswa</h2>
+
+      <div class="am-sub">
+        Kelola data PKL siswa untuk kelas {{nama}}.
+      </div>
+
+
+
+      {{#readonlyperiod}}
+      <div class="am-alert am-alert-info">
+        Tahun ajaran ini berada dalam mode arsip. Data PKL dapat dilihat, tetapi tidak dapat diubah.
+      </div>
+      {{/readonlyperiod}}
+
+      <div class="am-toolbar">
+        <div class="am-toolbar-left">
+          {{#caneditperiod}}
+          <button type="button"
+                  class="am-btn am-btn-primary"
+                  data-action="open-import">
+            Import CSV
+          </button>
+          {{/caneditperiod}}
+
+          <a class="am-btn am-btn-template"
+             href="/local/akademikmonitor/pages/walikelas/pkl/download_template.php">
+            Download Template CSV
+          </a>
+
+          <a class="am-btn am-btn-template"
+             href="/local/akademikmonitor/pages/walikelas/pkl/export_excel.php?kelasid={{currentkelasid}}&semester={{selectedsemester}}&tahunajaranid={{selected_tahunajaranid}}&sesskey={{sesskey}}">
+            Export Excel
+          </a>
+        </div>
+
+        {{#caneditperiod}}
+        <div class="am-actions">
+          <button type="button"
+                  class="am-btn am-btn-primary"
+                  data-action="open-add"
+                  data-kelasid="{{kelasid}}">
+            Tambah PKL Siswa
+          </button>
+        </div>
+        {{/caneditperiod}}
+      </div>
+
+      <div class="am-card">
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>NISN</th>
+                <th>Mitra</th>
+                <th>Alamat</th>
+                <th>Kontak</th>
+                <th>Waktu Mulai</th>
+                <th>Waktu Selesai</th>
+                <th>Nilai</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#siswa}}
+                {{#pkllist}}
+                <tr>
+                  {{#isfirst}}
+                    <td rowspan="{{rowspan}}" data-label="No">{{siswa_no}}</td>
+                    <td rowspan="{{rowspan}}" data-label="Nama">{{siswa_nama}}</td>
+                    <td rowspan="{{rowspan}}" data-label="NISN">{{siswa_nisn}}</td>
+                  {{/isfirst}}
+
+                  <td data-label="Mitra">{{nama}}</td>
+                  <td data-label="Alamat">{{alamat}}</td>
+                  <td data-label="Kontak">{{kontak}}</td>
+                  <td data-label="Waktu Mulai">{{waktu_mulai}}</td>
+                  <td data-label="Waktu Selesai">{{waktu_selesai}}</td>
+                  <td data-label="Nilai">{{nilai}}</td>
+                  <td data-label="Aksi">
+                    <div class="am-row-actions">
+                      {{#caneditperiod}}
+                      <button class="am-btn am-btn-edit"
+                              type="button"
+                              data-action="edit"
+                              data-pklid="{{pklid}}"
+                              data-userid="{{userid}}"
+                              data-kelasid="{{kelasid}}"
+                              data-mitraid="{{mitraid}}"
+                              data-waktu_mulai="{{waktu_mulai}}"
+                              data-waktu_selesai="{{waktu_selesai}}"
+                              data-nilai="{{nilai}}"
+                              data-nisn="{{siswa_nisn}}"
+                              data-semester="{{semester}}">
+                        Edit
+                      </button>
+                      {{/caneditperiod}}
+                    </div>
+                  </td>
+                </tr>
+                {{/pkllist}}
+              {{/siswa}}
+
+              {{^siswa}}
+              <tr>
+                <td colspan="10" class="am-empty-state">
+                  Belum ada data PKL siswa.
+                </td>
+              </tr>
+              {{/siswa}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <input type="hidden" id="am-ajaxurl" value="{{ajaxurl}}">
+      <input type="hidden" id="am-sesskey" value="{{sesskey}}">
+
+      {{#caneditperiod}}
+      <div class="am-modal-overlay" id="am-modal">
+        <div class="am-modal">
+          <div class="am-modal-header">
+            <h3 class="am-modal-title" id="m-title">Tambah PKL Siswa</h3>
+            <button class="am-close"
+                    type="button"
+                    data-action="close-modal">✕</button>
+          </div>
+
+          <div class="am-grid">
+            <div>
+              <label class="am-label">Nama Siswa</label>
+              <select class="am-input" id="m-userid">
+                <option value="">-- Pilih Siswa --</option>
+                {{#siswa_options}}
+                  <option value="{{id}}" data-nisn="{{nisn}}">{{nama}}</option>
+                {{/siswa_options}}
+              </select>
+            </div>
+
+            <div>
+              <label class="am-label">NISN</label>
+              <input class="am-input" id="m-nisn" readonly>
+            </div>
+
+            <div>
+              <label class="am-label">Mitra</label>
+              <select class="am-input" id="m-mitraid">
+                <option value="">-- Pilih Mitra --</option>
+                {{#mitra_options}}
+                  <option value="{{id}}">{{nama}}</option>
+                {{/mitra_options}}
+              </select>
+            </div>
+
+            <div>
+              <label class="am-label">Waktu Mulai</label>
+              <input class="am-input" id="m-waktu_mulai" type="date">
+            </div>
+
+            <div>
+              <label class="am-label">Waktu Selesai</label>
+              <input class="am-input" id="m-waktu_selesai" type="date">
+            </div>
+
+            <div>
+              <label class="am-label">Nilai</label>
+              <input class="am-input" id="m-nilai" type="text">
+            </div>
+          </div>
+
+          <div class="am-modal-actions">
+            <button class="am-btn am-btn-ghost"
+                    type="button"
+                    data-action="close-modal">
+              Batal
+            </button>
+
+            <button class="am-btn am-btn-primary"
+                    type="button"
+                    data-action="save_pkl">
+              Simpan
+            </button>
+          </div>
+
+          <input type="hidden" id="m-pklid" value="">
+          <input type="hidden" id="m-kelasid" value="">
+          <input type="hidden" id="m-semester" value="{{selectedsemester}}">
+        </div>
+      </div>
+
+      <div class="am-modal-overlay" id="am-import-modal">
+        <div class="am-modal am-modal-sm">
+          <div class="am-modal-header">
+            <h3 class="am-modal-title">Import Data PKL Siswa</h3>
+            <button class="am-close"
+                    type="button"
+                    data-action="close-import">✕</button>
+          </div>
+
+          <form method="post"
+                action="/local/akademikmonitor/pages/walikelas/pkl/import_csv.php"
+                enctype="multipart/form-data"
+                class="am-import-modal-form">
+            <input type="hidden" name="sesskey" value="{{sesskey}}">
+            <input type="hidden" name="kelasid" value="{{currentkelasid}}">
+            <input type="hidden" name="semester" value="{{selectedsemester}}">
+            <input type="hidden" name="tahunajaranid" value="{{selected_tahunajaranid}}">
+
+            <div class="am-field">
+              <label class="am-label">Pilih File CSV</label>
+              <input type="file"
+                     name="csvfile"
+                     class="am-input-file"
+                     accept=".csv"
+                     required>
+            </div>
+
+            <div class="am-modal-actions">
+              <button type="button"
+                      class="am-btn am-btn-ghost"
+                      data-action="close-import">
+                Batal
+              </button>
+
+              <button type="submit"
+                      class="am-btn am-btn-primary">
+                Upload & Import
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      {{/caneditperiod}}
+      {{/kelas}}
+
+      {{#nokelas}}
+      <div class="am-breadcrumb">/ PKL Siswa</div>
+      <h2 class="am-h1">PKL Siswa</h2>
+
+      <div class="am-card">
+        <div class="am-empty-state">
+          {{only_xii_message}}
+        </div>
+      </div>
+      {{/nokelas}}
+    </div>
+  </div>
+</div>

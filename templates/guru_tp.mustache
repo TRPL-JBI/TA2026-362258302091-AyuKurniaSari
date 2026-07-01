@@ -1,0 +1,319 @@
+<style>
+.local-guru-tp-page {
+  display: block !important;
+  width: 100% !important;
+}
+
+.local-guru-tp-container {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 24px 32px !important;
+}
+
+.local-guru-tp-container > .am-card,
+.local-guru-tp-container > .am-page-heading,
+.local-guru-tp-container > .am-breadcrumb {
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.local-guru-info-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(140px, 1fr));
+  gap: 20px;
+}
+
+.local-guru-tp-form-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 900px) {
+  .local-guru-info-grid,
+  .local-guru-tp-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+
+<div class="akademikmonitor local-guru-tp-page">
+  <div class="local-guru-tp-container">
+
+    <div class="am-breadcrumb">/ Course / Capaian & Tujuan Pembelajaran</div>
+
+    <div class="am-page-heading" style="display:flex !important;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
+      <div>
+        <h1 class="am-h1" style="margin:0 0 6px;">Tujuan Pembelajaran Saya</h1>
+        <div class="am-sub">Tambah Tujuan Pembelajaran berdasarkan CP yang dipilih.</div>
+      </div>
+
+      <a href="{{back_url}}" class="am-btn am-btn-secondary">Kembali ke Course</a>
+    </div>
+
+    <div class="am-card" style="background:#eef8ff;border-left:4px solid #3b82f6;margin-bottom:20px;">
+      <div class="local-guru-info-grid">
+        <div>
+          <div class="am-sub">Mata Pelajaran</div>
+          <strong>{{nama_mapel}}</strong>
+        </div>
+        <div>
+          <div class="am-sub">Jurusan</div>
+          <strong>{{nama_jurusan}}</strong>
+        </div>
+        <div>
+          <div class="am-sub">Tingkat</div>
+          <strong>{{tingkat}}</strong>
+        </div>
+        <div>
+          <div class="am-sub">Course</div>
+          <strong>{{course_name}}</strong>
+        </div>
+        <div>
+          <div class="am-sub">Status</div>
+          <strong>Guru</strong>
+        </div>
+      </div>
+    </div>
+
+    {{^has_cp}}
+    <div class="am-card" style="border-left:4px solid #f59e0b;background:#fffbeb;margin-bottom:20px;">
+      <p style="margin:0;font-weight:600;color:#92400e;">Belum ada Capaian Pembelajaran</p>
+      <p style="margin:8px 0 0;font-size:13px;color:#78350f;">
+        Admin belum menambahkan CP untuk mata pelajaran ini. Hubungi Admin untuk menambahkan CP terlebih dahulu.
+      </p>
+    </div>
+    {{/has_cp}}
+
+    {{#has_cp}}
+    <div class="am-card" style="background:#f0fdf4;border-left:4px solid #22c55e;margin-bottom:20px;">
+      <p style="margin:0;font-size:13px;color:#166534;">
+        <strong>Catatan:</strong> CP ditentukan oleh Admin dan sama untuk semua guru pada mata pelajaran ini.
+        TP yang Anda buat adalah milik Anda sendiri dan dapat disesuaikan dengan karakter kelas yang Anda ampu.
+      </p>
+    </div>
+
+    <div class="am-card" style="margin-bottom:20px;">
+      <div class="am-section-title">Capaian Pembelajaran</div>
+      <div class="am-sub" style="margin-bottom:14px;">
+        Pilih CP untuk melihat atau menambahkan Tujuan Pembelajaran.
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;width:100%;">
+        {{#cp_list}}
+        <div style="border:1px solid {{#selected}}#3b82f6{{/selected}}{{^selected}}#e5e7eb{{/selected}};
+                    border-radius:10px;
+                    padding:16px;
+                    background:{{#selected}}#eff6ff{{/selected}}{{^selected}}#fff{{/selected}};">
+          <div style="line-height:1.6;margin-bottom:12px;">
+            {{deskripsi}}
+          </div>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <a href="{{{tp_url}}}" class="am-btn am-btn-primary am-btn-sm">
+              {{#selected}}Lihat / Tambah TP{{/selected}}{{^selected}}Pilih CP{{/selected}}
+            </a>
+
+            <a href="{{{import_url}}}" class="am-btn am-btn-secondary am-btn-sm">
+              Import TP CSV
+            </a>
+          </div>
+        </div>
+        {{/cp_list}}
+      </div>
+    </div>
+    {{/has_cp}}
+
+    {{#has_result}}
+    <div class="am-card" style="margin-bottom:20px;border-left:4px solid {{#is_success}}#22c55e{{/is_success}}{{#is_error}}#ef4444{{/is_error}};">
+      <p style="margin:0;font-weight:600;">{{result_msg}}</p>
+      {{#has_row_errors}}
+      <ul style="margin-top:10px;padding-left:20px;font-size:13px;color:#6b7280;">
+        {{#row_errors}}<li>{{msg}}</li>{{/row_errors}}
+      </ul>
+      {{/has_row_errors}}
+    </div>
+    {{/has_result}}
+
+    {{#show_tp_form}}
+    <div class="am-card" style="margin-bottom:20px;">
+      <div class="am-section-title">Capaian Pembelajaran</div>
+
+      <p style="line-height:1.7;margin-bottom:20px;">
+        {{selected_cp_deskripsi}}
+      </p>
+
+      <div class="am-section-title">Tambah TP Baru Manual</div>
+
+      <form method="post" action="{{action_url}}">
+        <input type="hidden" name="sesskey" value="{{sesskey}}">
+        <input type="hidden" name="cpid" value="{{cpid}}">
+        <input type="hidden" name="postaction" value="manual">
+
+        <div id="guru-tp-container">
+          <div class="guru-tp-item">
+            <div class="local-guru-tp-form-grid">
+              <input type="text" name="konten[]" class="am-input" placeholder="Konten">
+              <input type="text" name="kompetensi[]" class="am-input" placeholder="Kompetensi">
+              <input type="text" name="dpl[]" class="am-input" placeholder="DPL">
+              <input type="text" name="atp[]" class="am-input" placeholder="ATP">
+            </div>
+
+            <textarea name="deskripsi[]" class="am-input" placeholder="Tujuan Pembelajaran" style="width:100%;min-height:90px;"></textarea>
+          </div>
+        </div>
+
+        <div class="am-actions" style="margin-top:18px;display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;">
+          <button type="button" onclick="guruAddTP()" class="am-btn am-btn-secondary">+ Tambah Baris</button>
+          <button type="submit" class="am-btn am-btn-primary">Simpan TP</button>
+        </div>
+      </form>
+    </div>
+
+    {{#has_existing_tp}}
+    <div class="am-card" style="margin-bottom:20px;">
+      <div class="am-section-title">TP yang Sudah Ada pada CP Ini</div>
+
+      <div class="am-table-wrap">
+        <table class="am-table">
+          <thead>
+            <tr>
+              <th style="width:50px;">No</th>
+              <th>Konten</th>
+              <th>Kompetensi</th>
+              <th>DPL</th>
+              <th>ATP</th>
+              <th>Tujuan Pembelajaran</th>
+              <th style="width:160px;">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#existing_tp}}
+            <tr>
+              <td data-label="No">{{no}}</td>
+              <td data-label="Konten">{{konten}}</td>
+              <td data-label="Kompetensi">{{kompetensi}}</td>
+              <td data-label="DPL">{{dpl}}</td>
+              <td data-label="ATP"><strong>{{atp}}</strong></td>
+              <td data-label="Tujuan">{{deskripsi}}</td>
+              <td data-label="Aksi">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                  <a href="{{{edit_url}}}" class="am-btn am-btn-primary am-btn-sm">
+                    Edit
+                  </a>
+
+                  {{#can_delete}}
+                  <form method="post"
+                        action="{{delete_url}}"
+                        style="display:inline;"
+                        onsubmit="return confirm('Yakin ingin menghapus TP ini?');">
+
+                      <input type="hidden" name="sesskey" value="{{sesskey}}">
+                      <input type="hidden" name="id" value="{{id}}">
+                      <input type="hidden" name="courseid" value="{{courseid}}">
+                      <input type="hidden" name="cpid" value="{{cpid}}">
+
+                      <button type="submit" class="am-btn am-btn-danger am-btn-sm">
+                          Hapus
+                      </button>
+
+                  </form>
+                  {{/can_delete}}
+                  {{^can_delete}}
+                  <span class="am-btn am-btn-sm"
+                    style="background:#e5e7eb;color:#9ca3af;cursor:not-allowed;"
+                    title="TP sudah memiliki nilai di gradebook">
+                    Hapus
+                  </span>
+                  {{/can_delete}}
+                </div>
+              </td>
+            </tr>
+            {{/existing_tp}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {{/has_existing_tp}}
+
+    {{^has_existing_tp}}
+    <div class="am-card am-empty-state" style="margin-bottom:20px;text-align:center;">
+      Belum ada TP untuk CP ini. Tambahkan melalui form di atas atau import CSV.
+    </div>
+    {{/has_existing_tp}}
+    {{/show_tp_form}}
+
+    {{#show_import_form}}
+    <div class="am-card" style="margin-bottom:20px;">
+      <div class="am-section-title">Capaian Pembelajaran</div>
+      <p style="line-height:1.7;margin-bottom:20px;">{{selected_cp_deskripsi}}</p>
+
+      <div class="am-section-title">Import TP via CSV</div>
+
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;font-family:monospace;font-size:13px;margin-bottom:16px;overflow-x:auto;">
+        konten;kompetensi;dpl;atp;deskripsi;status<br>
+        Pemrograman Dasar;Memahami variabel;Penalaran Kritis;ATP-1;Peserta didik dapat mendefinisikan variabel;aktif
+      </div>
+
+      <div style="margin-bottom:16px;">
+        <a href="data:text/csv;charset=utf-8,konten%3Bkompetensi%3Bdpl%3Batp%3Bdeskripsi%0APemrograman%20Dasar%3BMemahami%20variabel%3B3.1%3BATP-1%3BPeserta%20didik%20dapat%20mendefinisikan%20variabel"
+           download="template_tp_guru.csv"
+           class="am-btn am-btn-secondary am-btn-sm">
+          Download Template CSV
+        </a>
+      </div>
+
+      <form method="post" action="{{action_url}}" enctype="multipart/form-data">
+        <input type="hidden" name="sesskey" value="{{sesskey}}">
+        <input type="hidden" name="cpid" value="{{cpid}}">
+        <input type="hidden" name="postaction" value="import">
+
+        <div class="am-form-group" style="margin-bottom:16px;">
+          <label class="am-label">File CSV <span style="color:#ef4444;">*</span></label>
+          <input type="file" name="csvfile" class="am-input" accept=".csv,text/csv" required>
+        </div>
+
+        <div class="am-form-group" style="margin-bottom:20px;">
+          <label class="am-label">Jika TP sudah ada</label>
+          <select name="dupmode" class="am-input" style="max-width:320px;">
+            <option value="skip">Lewati data duplikat</option>
+            <option value="update">Perbarui data duplikat</option>
+          </select>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;">
+          <button type="submit" class="am-btn am-btn-primary">Upload & Import TP</button>
+          <a href="/local/akademikmonitor/pages/guru/tp.php?courseid={{courseid}}&cpid={{cpid}}" class="am-btn am-btn-secondary">Batal</a>
+        </div>
+      </form>
+    </div>
+    {{/show_import_form}}
+
+  </div>
+</div>
+
+<script>
+function guruAddTP() {
+    var container = document.getElementById('guru-tp-container');
+    if (!container) {
+        return;
+    }
+
+    var html = `
+    <div class="guru-tp-item" style="margin-top:18px;border-top:1px solid #e5e7eb;padding-top:18px;">
+      <div class="local-guru-tp-form-grid">
+        <input type="text" name="konten[]" class="am-input" placeholder="Konten">
+        <input type="text" name="kompetensi[]" class="am-input" placeholder="Kompetensi">
+        <input type="text" name="dpl[]" class="am-input" placeholder="DPL">
+        <input type="text" name="atp[]" class="am-input" placeholder="ATP">
+      </div>
+      <textarea name="deskripsi[]" class="am-input" placeholder="Tujuan Pembelajaran" style="width:100%;min-height:90px;"></textarea>
+    </div>`;
+
+    container.insertAdjacentHTML('beforeend', html);
+}
+</script>

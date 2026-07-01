@@ -1,0 +1,42 @@
+ <div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+        <div class="am-dashboard-hero">
+            <div class="am-dashboard-badge">Dashboard Admin</div>
+            <h1>{{welcometitle}}</h1>
+            <h2>{{welcomesubtitle}}</h2>
+            <p>{{welcomedesc}}</p>
+        </div>
+
+        <div class="am-dashboard-section">
+            <div class="am-dashboard-head">
+                <h3>Menu Utama</h3>
+                <p>Pilih fitur yang ingin dikelola dari dashboard ini.</p>
+            </div>
+
+            <div class="am-dashboard-grid">
+                {{#cards}}
+                <a href="{{url}}" class="am-dashboard-card">
+                    <div class="am-dashboard-icon">{{icon}}</div>
+                    <div class="am-dashboard-body">
+                        <h4>{{title}}</h4>
+                        <p>{{desc}}</p>
+                        <span>Buka menu →</span>
+                    </div>
+                </a>
+                {{/cards}}
+            </div>
+        </div>
+    </div>
+</div>

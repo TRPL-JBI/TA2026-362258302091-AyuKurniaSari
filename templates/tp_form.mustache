@@ -1,0 +1,58 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button" class="am-hamburger" data-action="open-sidebar" aria-label="Buka menu">☰</button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Manajemen Jurusan / Tujuan Pembelajaran / Form</div>
+      <h1 class="am-h1">Form Tujuan Pembelajaran</h1>
+
+      <div class="am-card">
+        <p class="am-sub">{{cp}}</p>
+
+        <form method="post" action="{{{action_url}}}">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="id" value="{{id}}">
+          <input type="hidden" name="cpid" value="{{cpid}}">
+
+          <div class="am-form-group">
+            <label class="am-label">Konten</label>
+            <input type="text" name="konten" class="am-input" value="{{konten}}">
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label">Kompetensi</label>
+            <input type="text" name="kompetensi" class="am-input" value="{{kompetensi}}">
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label">DPL</label>
+            <input type="text" name="dpl" class="am-input" value="{{dpl}}">
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label">ATP</label>
+            <input type="text" name="atp" class="am-input" value="{{atp}}">
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label">Tujuan Pembelajaran</label>
+            <textarea name="deskripsi" class="am-input" rows="4" required>{{deskripsi}}</textarea>
+          </div>
+
+          <div class="am-actions">
+            <button class="am-btn am-btn-primary" type="submit">
+              {{#is_edit}}Update{{/is_edit}}
+              {{^is_edit}}Simpan{{/is_edit}}
+            </button>
+            <a href="{{{cancel_url}}}" class="am-btn am-btn-secondary">Batal</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,239 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button" class="am-hamburger" data-action="open-sidebar" aria-label="Buka menu">☰</button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-page-head">
+        <div>
+          <div class="am-breadcrumb">Akademik / Manajemen Kelas / Course Moodle</div>
+          <h1 class="am-h1">Course Moodle Kelas</h1>
+          <div class="am-sub">
+            Kelola dan generate course Moodle untuk rombel {{kelas_label}}.
+          </div>
+        </div>
+
+        <a href="{{{back_url}}}" class="am-btn am-btn-secondary">← Kembali</a>
+      </div>
+
+      <div class="am-grid" style="grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom:16px;">
+        <div class="am-card">
+          <div class="am-sub">Rombel</div>
+          <h3 style="margin:6px 0 0;">{{kelas_label}}</h3>
+        </div>
+
+        <div class="am-card">
+          <div class="am-sub">Jurusan</div>
+          <h3 style="margin:6px 0 0;">{{jurusan_nama}}</h3>
+        </div>
+
+        <div class="am-card">
+          <div class="am-sub">Tahun Ajaran</div>
+          <h3 style="margin:6px 0 0;">{{tahun_ajaran}}</h3>
+        </div>
+
+        <div class="am-card">
+          <div class="am-sub">Wali Kelas</div>
+          <h3 style="margin:6px 0 0;">{{wali_nama}}</h3>
+        </div>
+      </div>
+
+      <div class="am-card" style="margin-bottom:16px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+          <div>
+            <h3 style="margin:0;">Semester: {{selected_semester_label}}</h3>
+            <div class="am-sub" style="margin-top:4px;">
+              Tombol <strong>Generate Semua</strong> hanya membuat course untuk semester yang sedang dipilih.
+            </div>
+          </div>
+
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <a href="{{{semester_ganjil_url}}}"
+               class="am-btn {{#is_semester_ganjil}}am-btn-primary{{/is_semester_ganjil}}{{^is_semester_ganjil}}am-btn-secondary{{/is_semester_ganjil}}">
+              Ganjil
+            </a>
+
+            <a href="{{{semester_genap_url}}}"
+               class="am-btn {{#is_semester_genap}}am-btn-primary{{/is_semester_genap}}{{^is_semester_genap}}am-btn-secondary{{/is_semester_genap}}">
+              Genap
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="am-grid" style="grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom:16px;">
+        <div class="am-card">
+          <div class="am-sub">Total Mapel</div>
+          <h2 style="margin:6px 0 0;">{{total_mapel}}</h2>
+        </div>
+
+        <div class="am-card">
+          <div class="am-sub">Course Semester Ini</div>
+          <h2 style="margin:6px 0 0;">{{total_course}}</h2>
+        </div>
+
+        <div class="am-card">
+          <div class="am-sub">Sudah Dibuat</div>
+          <h2 style="margin:6px 0 0;">{{total_sudah}}</h2>
+        </div>
+
+        <div class="am-card">
+          <div class="am-sub">Belum Dibuat</div>
+          <h2 style="margin:6px 0 0;">{{total_belum}}</h2>
+        </div>
+      </div>
+
+      {{^has_teacher_options}}
+      <div class="am-card" style="border-left:4px solid #ef4444; margin-bottom:16px;">
+        <strong>Belum ada guru yang bisa dipilih.</strong>
+        <div class="am-sub" style="margin-top:4px;">
+          Pastikan user guru sudah memiliki custom profile field
+          <strong>jenis_pengguna</strong> dengan nilai <strong>guru</strong> atau <strong>wali_kelas</strong>.
+        </div>
+      </div>
+      {{/has_teacher_options}}
+
+      <div class="am-card">
+        <div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start; flex-wrap:wrap; margin-bottom:14px;">
+          <div>
+            <h3 style="margin:0;">Daftar Course Moodle</h3>
+            <div class="am-sub" style="margin-top:4px;">
+              Struktur hasil generate:
+              <strong>Tahun Ajaran → Jurusan → Rombel → Semester → Course Mapel</strong>.
+            </div>
+          </div>
+
+          {{#has_items}}
+          <div class="am-sub">
+            Semester aktif: <strong>{{selected_semester_label}}</strong>
+          </div>
+          {{/has_items}}
+        </div>
+
+        <form method="post" action="{{{generate_action}}}">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="kelasid" value="{{kelas_id}}">
+          <input type="hidden" name="semester" value="{{selected_semester}}">
+
+          <div class="am-table-wrap">
+            <table class="am-table">
+              <thead>
+                <tr>
+                  <th style="width:60px;">No</th>
+                  <th>Mata Pelajaran</th>
+                  <th>Semester</th>
+                  <th>KKTP</th>
+                  <th>Nama Course</th>
+                  <th>ID Number</th>
+                  <th style="width:220px;">Guru Pengampu</th>
+                  <th>Guru Saat Ini</th>
+                  <th style="width:110px;">Status</th>
+                  <th style="width:130px;">Aksi</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {{#items}}
+                <tr>
+                  <td data-label="No">{{no}}</td>
+
+                  <td data-label="Mata Pelajaran">
+                    <strong>{{nama_mapel}}</strong>
+                    <div class="am-sub" style="margin-top:3px;">Tingkat {{tingkat}}</div>
+                  </td>
+
+                  <td data-label="Semester">{{semester}}</td>
+
+                  <td data-label="KKTP">{{kktp}}</td>
+
+                  <td data-label="Nama Course">
+                    <strong>{{nama_course}}</strong>
+                  </td>
+
+                  <td data-label="ID Number">
+                    <code>{{idnumber}}</code>
+                  </td>
+
+                  <td data-label="Guru Pengampu">
+                    <select 
+                    name="{{teacher_field_name}}" 
+                    class="form-control am-searchable" 
+                    style="min-width:190px;">
+                      <option value="0">-- Pilih Guru --</option>
+                      {{#teacher_options}}
+                      <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                          {{name}}
+                      </option>
+                      {{/teacher_options}}
+                    </select>
+                  </td>
+
+                  <td data-label="Guru Saat Ini">
+                    {{teacher_existing}}
+                  </td>
+
+                  <td data-label="Status">
+                    {{#sudah}}
+                      <span style="display:inline-flex; padding:4px 9px; border-radius:999px; font-size:12px; background:#dcfce7; color:#166534;">
+                        Sudah
+                      </span>
+                    {{/sudah}}
+
+                    {{#belum}}
+                      <span style="display:inline-flex; padding:4px 9px; border-radius:999px; font-size:12px; background:#fee2e2; color:#991b1b;">
+                        Belum
+                      </span>
+                    {{/belum}}
+                  </td>
+
+                  <td data-label="Aksi">
+                    {{#sudah}}
+                      <a href="{{{course_url}}}" class="am-btn am-btn-secondary" target="_blank">
+                        Lihat
+                      </a>
+                    {{/sudah}}
+
+                    {{#belum}}
+                      <button type="submit"
+                              name="generate_one"
+                              value="{{generate_value}}"
+                              class="am-btn am-btn-primary">
+                        Generate
+                      </button>
+                    {{/belum}}
+                  </td>
+                </tr>
+                {{/items}}
+
+                {{^items}}
+                <tr>
+                  <td colspan="10" class="am-empty-state">
+                    Belum ada mata pelajaran untuk kelas ini.
+                  </td>
+                </tr>
+                {{/items}}
+              </tbody>
+            </table>
+          </div>
+
+          {{#has_items}}
+          <div class="am-actions" style="margin-top:16px; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+            <div class="am-sub">
+              Generate Semua akan memproses semua mapel pada semester
+              <strong>{{selected_semester_label}}</strong> saja.
+            </div>
+
+            <button type="submit" class="am-btn am-btn-primary">
+              Generate Semua Semester {{selected_semester_label}}
+            </button>
+          </div>
+          {{/has_items}}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

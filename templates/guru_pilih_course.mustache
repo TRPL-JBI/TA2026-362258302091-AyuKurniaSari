@@ -1,0 +1,59 @@
+<div class="akademikmonitor">
+  <div style="width:100%;max-width:none;margin:0;padding:24px 32px;display:block;">
+
+    <div class="am-page-heading" style="margin-bottom:24px;">
+      <h1 class="am-h1">Capaian & Tujuan Pembelajaran</h1>
+      <div class="am-sub">
+        Pilih course (mata pelajaran) yang ingin Anda kelola Tujuan Pembelajaran-nya.
+      </div>
+    </div>
+
+    {{#has_courses}}
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      {{#courses}}
+      <div class="am-card" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:16px 20px;">
+        <div>
+          <div style="font-weight:600;font-size:15px;color:#1e293b;">{{nama_clean}}</div>
+          <div style="font-size:12px;color:#9ca3af;margin-top:2px;">{{nama}}</div>
+          {{^mapped}}
+          <div style="font-size:12px;color:#f59e0b;margin-top:4px;">
+            ⚠ Belum dipetakan ke mata pelajaran — hubungi Admin
+          </div>
+          {{/mapped}}
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          {{#mapped}}
+          <a href="{{{tp_url}}}" class="am-btn am-btn-primary am-btn-sm">
+            📝 Kelola TP
+          </a>
+          {{/mapped}}
+          {{^mapped}}
+          <span class="am-btn am-btn-sm"
+                style="background:#e5e7eb;color:#9ca3af;cursor:not-allowed;"
+                title="Course belum dipetakan ke mata pelajaran">
+            📝 Kelola TP
+          </span>
+          {{/mapped}}
+          <a href="{{{course_url}}}" class="am-btn am-btn-secondary am-btn-sm">
+            Buka Course
+          </a>
+        </div>
+      </div>
+      {{/courses}}
+    </div>
+    {{/has_courses}}
+
+    {{^has_courses}}
+    <div class="am-card" style="text-align:center;padding:40px;color:#6b7280;">
+      <div style="font-size:40px;margin-bottom:12px;">📚</div>
+      <div style="font-weight:600;margin-bottom:8px;">Belum ada course yang diajar</div>
+      <div style="font-size:13px;">Hubungi Admin untuk menetapkan Anda sebagai Teacher di course yang sesuai.</div>
+    </div>
+    {{/has_courses}}
+
+    <div style="margin-top:20px;">
+      <a href="{{home_url}}" class="am-btn am-btn-secondary">← Kembali ke Beranda</a>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,181 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-breadcrumb">/ Monitoring Presensi</div>
+
+      <div class="am-page-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h1 class="am-h1">Monitoring Presensi</h1>
+          <div class="am-sub">
+            Pantau presensi siswa berdasarkan tahun ajaran, kelas, dan course dari plugin Attendance.
+          </div>
+        </div>
+      </div>
+
+      <div class="am-card">
+        <form method="get"
+              action="{{filter_action}}"
+              style="display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:12px;align-items:end;">
+
+          <div>
+            <label for="am-filter-ta" style="font-weight:600;margin-bottom:6px;display:block;">
+              Tahun Ajaran
+            </label>
+
+            <select id="am-filter-ta"
+                    name="tahunajaranid"
+                    class="am-input"
+                    onchange="this.form.courseid.value='0'; this.form.kelasid.value='0'; this.form.submit();">
+
+              {{#tahun_options}}
+                <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                  {{nama}}
+                </option>
+              {{/tahun_options}}
+
+              {{^tahun_options}}
+                <option value="0">Belum ada tahun ajaran</option>
+              {{/tahun_options}}
+            </select>
+          </div>
+
+          <div>
+            <label for="am-filter-semester" style="font-weight:600;margin-bottom:6px;display:block;">
+              Semester
+            </label>
+
+            <select id="am-filter-semester"
+                    name="semester"
+                    class="am-input"
+                    onchange="this.form.courseid.value='0'; this.form.submit();">
+
+              <option value="1" {{#is_semester_1}}selected{{/is_semester_1}}>Ganjil</option>
+              <option value="2" {{#is_semester_2}}selected{{/is_semester_2}}>Genap</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="am-filter-kelas" style="font-weight:600;margin-bottom:6px;display:block;">
+              Kelas
+            </label>
+
+            <select id="am-filter-kelas"
+                    name="kelasid"
+                    class="am-input"
+                    onchange="this.form.courseid.value='0'; this.form.submit();">
+
+              {{#kelas_options}}
+                <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                  {{nama}}
+                </option>
+              {{/kelas_options}}
+
+              {{^kelas_options}}
+                <option value="0">Belum ada kelas</option>
+              {{/kelas_options}}
+            </select>
+          </div>
+
+          <div>
+            <label for="am-filter-course" style="font-weight:600;margin-bottom:6px;display:block;">
+              Course / Mapel
+            </label>
+
+            <select id="am-filter-course"
+                    name="courseid"
+                    class="am-input"
+                    onchange="this.form.submit();">
+
+              {{#course_options}}
+                <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                  {{nama_mapel}}
+                </option>
+              {{/course_options}}
+
+              {{^course_options}}
+                <option value="0">Belum ada course</option>
+              {{/course_options}}
+            </select>
+          </div>
+        </form>
+      </div>
+
+      <div class="am-card" style="margin-top:14px;">
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="font-size:13px;color:#64748b;">Filter aktif</div>
+            <div style="font-weight:700;">
+              {{selected_kelas_name}} - {{selected_course_name}}
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <div class="am-mini-stat">
+              <div class="am-mini-stat-label">Jumlah Siswa</div>
+              <div class="am-mini-stat-value">{{total_students}}</div>
+            </div>
+
+            <div class="am-mini-stat">
+              <div class="am-mini-stat-label">Jumlah Pertemuan</div>
+              <div class="am-mini-stat-value">{{total_sessions}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="am-card" style="margin-top:14px;">
+        <div class="am-table-wrap">
+          <table class="am-table am-presensi-table">
+            <thead>
+              <tr>
+                <th class="am-sticky-name">Nama Siswa</th>
+                {{#columns}}
+                <th>
+                  {{description}}<br>
+                  <small>{{date_label}}</small>
+                </th>
+                {{/columns}}
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#rows}}
+                <tr>
+                  <td data-label="Nama Siswa" class="am-sticky-name">
+                    <strong>{{nama}}</strong>
+                  </td>
+
+                  {{#presensi_list}}
+                  <td>
+                      <span class="am-presensi-badge {{class}}">
+                          {{text}}
+                      </span>
+                  </td>
+                  {{/presensi_list}}
+                  
+                </tr>
+              {{/rows}}
+
+              {{^rows}}
+                <tr>
+                  <td colspan="100%" class="am-empty-state" style="text-align:center;padding:24px;">
+                    Belum ada data siswa untuk filter ini.
+                  </td>
+                </tr>
+              {{/rows}}
+            </tbody>
+          </table>
+        </div>
+
+        {{^columns}}
+          <div class="am-empty-state" style="margin-top:12px;">
+            Belum ada sesi presensi pada course yang dipilih.
+            Tambahkan sesi presensi terlebih dahulu melalui aktivitas Attendance di course Moodle.
+          </div>
+        {{/columns}}
+      </div>
+    </div>
+  </div>
+</div>

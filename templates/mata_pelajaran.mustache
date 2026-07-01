@@ -1,0 +1,131 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Mata Pelajaran</div>
+
+      <div class="am-page-heading">
+        <div>
+          <h2 class="am-h1">Mata Pelajaran</h2>
+          <div class="am-sub">
+            Kelola daftar mata pelajaran berdasarkan kategori umum, kejuruan, atau kategori lainnya.
+          </div>
+        </div>
+      </div>
+
+      <div class="am-card">
+        <div class="am-list-header">
+          <div class="am-list-title">
+            DATA MATA PELAJARAN
+          </div>
+
+          <div class="am-list-actions">
+            <form method="get" action="{{search_url}}" class="am-search-form">
+              <input type="text"
+                     name="q"
+                     value="{{q}}"
+                     class="am-search-input"
+                     placeholder="Cari mata pelajaran...">
+
+              <button type="submit"
+                      class="am-search-button"
+                      aria-label="Cari">
+                ⌕
+              </button>
+            </form>
+
+            <a href="{{import_url}}" class="am-btn am-btn-secondary">
+              ↑ Import CSV
+            </a>
+
+            <a href="{{tambah_url}}" class="am-btn am-btn-primary">
+              + Tambah
+            </a>
+          </div>
+        </div>
+
+        {{#kategori_list}}
+          <div class="am-section-title">
+            Mata Pelajaran {{nama_kategori}}
+          </div>
+
+          <div class="am-table-wrap">
+            <table class="am-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Mata Pelajaran</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {{#items}}
+                <tr>
+                  <td>{{no}}</td>
+
+                  <td>{{nama}}</td>
+
+                  <td>
+                    <div class="am-row-actions">
+                      <a href="{{edit_url}}" class="am-btn am-btn-edit">
+                        Edit
+                      </a>
+
+                      <form method="post"
+                          action="{{delete_action}}"
+                          style="display:inline;"
+                          onsubmit="return confirm('Yakin hapus mata pelajaran ini?');">
+
+                        <input type="hidden"
+                              name="id"
+                              value="{{delete_id}}">
+
+                        <input type="hidden"
+                              name="sesskey"
+                              value="{{delete_sesskey}}">
+
+                        <button type="submit"
+                                class="am-btn am-btn-danger">
+                            Hapus
+                        </button>
+
+                    </form>
+                    </div>
+                  </td>
+                </tr>
+                {{/items}}
+
+                {{^items}}
+                <tr>
+                  <td colspan="3" class="am-empty-state">
+                    Belum ada data.
+                  </td>
+                </tr>
+                {{/items}}
+              </tbody>
+            </table>
+          </div>
+        {{/kategori_list}}
+
+        {{^kategori_list}}
+          <div class="am-empty-state">
+            Belum ada data mata pelajaran.
+          </div>
+        {{/kategori_list}}
+      </div>
+
+    </div>
+  </div>
+</div>

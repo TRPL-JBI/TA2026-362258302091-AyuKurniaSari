@@ -1,0 +1,171 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Manajemen Kelas / Generate Course</div>
+
+      <div class="am-page-heading">
+        <div>
+          <h2 class="am-h1">Generate Course Moodle</h2>
+          <div class="am-sub">
+            Preview dan generate course Moodle berdasarkan kelas, jurusan, kurikulum, tingkat, dan tahun ajaran.
+          </div>
+        </div>
+      </div>
+
+      {{#has_errors}}
+      <div class="am-alert am-alert-danger">
+        <strong>Generate belum bisa dilanjutkan.</strong>
+        <ul>
+          {{#errors}}
+          <li>{{message}}</li>
+          {{/errors}}
+        </ul>
+      </div>
+      {{/has_errors}}
+
+      {{#has_generated}}
+      <div class="am-alert am-alert-success">
+        <strong>Course berhasil dibuat:</strong>
+        <ul>
+          {{#generated}}
+          <li>
+            <a href="{{course_url}}" target="_blank">{{course_fullname}}</a>
+          </li>
+          {{/generated}}
+        </ul>
+      </div>
+      {{/has_generated}}
+
+      {{#has_skipped}}
+      <div class="am-alert am-alert-warning">
+        <strong>Course yang sudah ada:</strong>
+        <ul>
+          {{#skipped}}
+          <li>
+            <a href="{{course_url}}" target="_blank">{{course_fullname}}</a>
+            — {{reason}}
+          </li>
+          {{/skipped}}
+        </ul>
+      </div>
+      {{/has_skipped}}
+
+      <div class="am-card">
+        <div class="am-section-title">Informasi Kelas</div>
+
+        <div class="am-info-grid">
+          <div class="am-info-item">
+            <div class="am-info-label">Nama Kelas</div>
+            <div class="am-info-value">{{nama_kelas}}</div>
+          </div>
+
+          <div class="am-info-item">
+            <div class="am-info-label">Jurusan</div>
+            <div class="am-info-value">{{nama_jurusan}}</div>
+          </div>
+
+          <div class="am-info-item">
+            <div class="am-info-label">Tingkat</div>
+            <div class="am-info-value">{{tingkat}}</div>
+          </div>
+
+          <div class="am-info-item">
+            <div class="am-info-label">Tahun Ajaran</div>
+            <div class="am-info-value">{{tahun_ajaran}}</div>
+          </div>
+
+          <div class="am-info-item">
+            <div class="am-info-label">Jumlah Peserta</div>
+            <div class="am-info-value">{{jumlah_peserta}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="am-card">
+        <div class="am-list-header">
+          <div>
+            <div class="am-list-title">PREVIEW COURSE YANG AKAN DIBUAT</div>
+            <div class="am-sub">
+              Course diambil dari mata pelajaran yang terhubung dengan kurikulum jurusan dan tingkat kelas ini.
+            </div>
+          </div>
+
+          <div class="am-list-actions">
+            <a href="{{back_url}}" class="am-btn am-btn-secondary">
+              Kembali
+            </a>
+
+            {{#has_mapels}}
+            <form method="post"
+                  action="{{generate_url}}"
+                  style="display:inline;"
+                  onsubmit="return confirm('Yakin generate course Moodle untuk kelas ini?')">
+
+                <input type="hidden" name="sesskey" value="{{sesskey}}">
+
+                <button type="submit" class="am-btn am-btn-primary">
+                    Generate Course
+                </button>
+
+            </form>
+            {{/has_mapels}}
+          </div>
+        </div>
+
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Mata Pelajaran</th>
+                <th>Kurikulum</th>
+                <th>Tingkat</th>
+                <th>KKTP</th>
+                <th>Nama Course</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#mapels}}
+              <tr>
+                <td data-label="No">{{no}}</td>
+                <td data-label="Mata Pelajaran">{{nama_mapel}}</td>
+                <td data-label="Kurikulum">{{nama_kurikulum}}</td>
+                <td data-label="Tingkat">{{tingkat}}</td>
+                <td data-label="KKTP">{{kktp}}</td>
+                <td data-label="Nama Course">{{course_name}}</td>
+                <td data-label="Status">
+                  <span class="am-badge {{status_class}}">{{status}}</span>
+                </td>
+              </tr>
+              {{/mapels}}
+
+              {{^mapels}}
+              <tr>
+                <td colspan="7" class="am-empty-state">
+                  Belum ada mata pelajaran yang bisa digenerate.
+                  Pastikan jurusan sudah memiliki kurikulum dan mapel sesuai tingkat kelas.
+                </td>
+              </tr>
+              {{/mapels}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

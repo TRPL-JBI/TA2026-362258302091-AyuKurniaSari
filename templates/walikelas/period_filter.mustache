@@ -1,0 +1,40 @@
+<form method="get"
+      action="{{{action_url}}}"
+      class="am-period-filter"
+      style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:8px 0 10px 0;">
+
+    {{#extra_params}}
+        <input type="hidden" name="{{name}}" value="{{value}}">
+    {{/extra_params}}
+
+    <select name="semester"
+            class="form-control"
+            style="max-width:140px;"
+            onchange="this.form.submit()">
+
+        {{#semester_options}}
+            <option value="{{value}}" {{#selected}}selected{{/selected}}>
+                {{label}}
+            </option>
+        {{/semester_options}}
+    </select>
+
+    <select name="tahunajaranid"
+            class="form-control"
+            style="max-width:160px;"
+            onchange="this.form.submit()">
+
+        {{#tahunajaran_options}}
+            <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                {{label}}
+            </option>
+        {{/tahunajaran_options}}
+    </select>
+</form>
+
+<div style="margin:4px 0 10px 0; font-size:13px; color:#475569;">
+    Semester:
+    <strong>{{semester_label}}</strong>
+    · Tahun ajaran:
+    <strong>{{tahunajaran_label}}</strong>
+</div>

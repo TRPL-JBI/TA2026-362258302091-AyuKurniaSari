@@ -1,0 +1,89 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button" class="am-hamburger" data-action="open-sidebar" aria-label="Buka menu">☰</button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Manajemen Jurusan / Capaian Pembelajaran</div>
+
+      <div class="am-page-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h1 class="am-h1">Capaian Pembelajaran</h1>
+          <div class="am-sub">Kelola CP untuk mata pelajaran ini sebelum membuat TP.</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <a href="/local/akademikmonitor/pages/jurusan/import_cp.php?kmid={{kmid}}"
+             class="am-btn am-btn-primary">
+            ⬆ Import CP
+          </a>
+          <a href="{{back_url}}" class="am-btn am-btn-secondary">Kembali</a>
+        </div>
+        
+      </div>
+
+      <div class="am-card">
+        <p><b>{{jurusan}}</b></p>
+        <p>{{mapel}}</p>
+
+        <form method="post" action="{{action_url}}">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="editid" value="{{editid}}">
+          <input type="hidden" name="kmid" value="{{kmid}}">
+
+          <div class="am-form-group" style="margin-top:10px;">
+            <label class="am-label">Deskripsi CP</label>
+            <textarea name="deskripsi" class="am-input" placeholder="Tulis capaian pembelajaran..." required>{{deskripsi}}</textarea>
+          </div>
+
+          <div class="am-actions">
+            <button type="submit" class="am-btn am-btn-primary">
+              {{#is_edit}}Update{{/is_edit}}
+              {{^is_edit}}Simpan{{/is_edit}}
+            </button>
+            {{#is_edit}}<a href="{{cancel_url}}" class="am-btn am-btn-secondary">Batal</a>{{/is_edit}}
+          </div>
+        </form>
+      </div>
+
+      <div class="am-card">
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th style="width:60px;">No</th>
+                <th>Deskripsi</th>
+                <th style="width:260px;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#items}}
+              <tr>
+                <td data-label="No">{{no}}</td>
+                <td data-label="Deskripsi">{{deskripsi}}</td>
+                <td data-label="Aksi">
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                    <a href="{{{edit_url}}}" class="am-btn am-btn-edit am-btn-sm">Edit</a>
+                    <a href="{{{tp_url}}}" class="am-btn am-btn-primary am-btn-sm">Set TP</a>
+                    <a href="{{{delete_url}}}" class="am-btn am-btn-danger am-btn-sm" onclick="return confirm('Hapus CP ini beserta seluruh TP di dalamnya?')">Hapus</a>
+                  </div>
+                </td>
+              </tr>
+              {{/items}}
+
+              {{^items}}
+              <tr>
+                <td colspan="3" class="am-empty-state" style="text-align:center;">Belum ada data CP.</td>
+              </tr>
+              {{/items}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

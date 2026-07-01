@@ -1,0 +1,87 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<div class="container-fluid py-3">
+  <div style="max-width: 760px; margin: 0 auto;">
+    <div class="card shadow-sm" style="border-radius: 12px; overflow: hidden;">
+      <div class="card-body" style="padding: 24px;">
+
+        <div style="margin-bottom: 18px;">
+          <div style="font-size: 13px; color: #6b7280; margin-bottom: 6px;">
+            <a href="{{config.wwwroot}}/my">Dashboard</a> / Pengaturan Notifikasi
+          </div>
+          <h3 style="margin: 0 0 8px 0;">Hubungkan Telegram dengan Moodle</h3>
+          <div style="color: #4b5563;">
+            Ayo hubungkan akun telegram kamu untuk menerima notifikasi otomatis tugas dan
+            peringatan nilai langsung di DM Telegram.
+          </div>
+        </div>
+
+        <div style="margin-bottom: 16px; padding: 14px 16px; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 10px;">
+          <div><strong>Nama:</strong> {{fullname}}</div>
+          <div><strong>User ID Moodle:</strong> {{userid}}</div>
+        </div>
+
+        <div style="margin-bottom: 16px; padding: 14px 16px; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 10px; color: #4b5563;">
+          Klik tombol dibawah untuk menghubungkan akun Telegram kamu dengan Moodle.
+          Aman, bot kami hanya akan mengirim pesan, tidak bisa baca chat kamu.
+        </div>
+
+        <ol style="margin: 0 0 18px 20px; padding: 0;">
+          <li>Klik tombol <strong>Hubungkan Telegram</strong>.</li>
+          <li>Tekan <strong>Start</strong> di Telegram.</li>
+          <li>Selesai! Notifikasi tugas dan nilai akan otomatis terkirim ke Telegram kamu.</li>
+        </ol>
+
+{{#hasbot}}
+  <div style="text-align:center; margin-bottom: 20px;">
+    <a href="{{connect_url}}" target="_blank" rel="noopener"
+      style="display:inline-flex; align-items:center; justify-content:center; gap:10px; min-width:380px; text-align:center; padding:16px 24px; background:#e8f3f3; color:#4b7edb; text-decoration:none; border-radius:6px; font-weight:700; font-size:18px;">
+      
+      <i class="fa-solid fa-paper-plane" style="font-size:20px; line-height:1; transform:rotate(-8deg);"></i>
+      <span>Hubungkan Telegram</span>
+    </a>
+  </div>
+{{/hasbot}}
+
+        {{^hasbot}}
+          <div class="alert alert-warning" style="margin-bottom:20px;">
+            Bot Telegram belum dikonfigurasi oleh admin. Hubungi admin dulu ya.
+          </div>
+        {{/hasbot}}
+
+        <div style="margin-top: 10px;">
+          <div style="font-weight:600; margin-bottom:10px;">Status koneksi</div>
+          <div style="border:1px solid #e5e7eb; border-radius:10px; overflow:hidden;">
+            <table class="table table-bordered mb-0">
+              <tbody>
+                <tr>
+                  <th style="width:220px;">Status</th>
+                  <td>
+                    {{#isconnected}}<span class="badge bg-success">Terhubung</span>{{/isconnected}}
+                    {{#isnotconnected}}<span class="badge bg-secondary">Belum terhubung</span>{{/isnotconnected}}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Bot Telegram</th>
+                  <td>{{#hasbot}}@{{bot_username}}{{/hasbot}}{{^hasbot}}-{{/hasbot}}</td>
+                </tr>
+                <tr>
+                  <th>Username Telegram</th>
+                  <td>{{telegram_username}}</td>
+                </tr>
+                <tr>
+                  <th>Chat ID</th>
+                  <td>{{telegram_chat_id}}</td>
+                </tr>
+                <tr>
+                  <th>Tersambung pada</th>
+                  <td>{{linked_at}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

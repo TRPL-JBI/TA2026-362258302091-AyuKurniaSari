@@ -1,0 +1,53 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">{{breadcrumb}}</div>
+
+      <h2 class="am-h1">{{title}}</h2>
+
+      <div class="am-sub">
+        Isi nama kurikulum yang digunakan pada sistem akademik.
+      </div>
+
+      <div class="am-card">
+        <form method="post" action="{{action_url}}" class="am-form">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="id" value="{{id}}">
+
+          <div class="am-form-group">
+            <label class="am-label" for="nama">Nama Kurikulum</label>
+            <input type="text"
+                   id="nama"
+                   name="nama"
+                   class="am-input"
+                   value="{{nama}}"
+                   placeholder="Contoh: Kurikulum Merdeka"
+                   required>
+          </div>
+
+          <div class="am-actions">
+            <button type="submit" class="am-btn am-btn-primary">
+              Simpan
+            </button>
+
+            <a href="{{back_url}}" class="am-btn am-btn-secondary">
+              Kembali
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

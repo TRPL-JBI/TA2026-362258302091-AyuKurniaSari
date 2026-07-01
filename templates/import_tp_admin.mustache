@@ -1,0 +1,126 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button" class="am-hamburger" data-action="open-sidebar" aria-label="Buka menu">☰</button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Manajemen Jurusan / Tujuan Pembelajaran / Import CSV</div>
+
+      <div class="am-page-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h1 class="am-h1">Import Tujuan Pembelajaran via CSV</h1>
+          <div class="am-sub">
+            Tambah TP secara massal untuk <strong>{{nama_mapel}}</strong> — Jurusan <strong>{{nama_jurusan}}</strong>, Tingkat <strong>{{tingkat}}</strong>.
+          </div>
+        </div>
+        <a href="{{back_url}}" class="am-btn am-btn-secondary">Kembali ke Daftar TP</a>
+      </div>
+
+      {{! Info CP }}
+      <div class="am-card" style="background:#f0f9ff;border-left:4px solid #3b82f6;padding:14px 18px;">
+        <div style="font-size:12px;color:#6b7280;margin-bottom:4px;">Capaian Pembelajaran (CP)</div>
+        <div style="font-size:14px;font-weight:600;">{{cp_deskripsi}}</div>
+      </div>
+
+      {{#has_result}}
+      <div class="am-card" style="border-left:4px solid {{#is_success}}#22c55e{{/is_success}}{{#is_error}}#ef4444{{/is_error}};">
+        <p style="margin:0;font-weight:600;">{{result_msg}}</p>
+        {{#has_row_errors}}
+        <ul style="margin-top:10px;padding-left:20px;font-size:13px;color:#6b7280;">
+          {{#row_errors}}<li>{{msg}}</li>{{/row_errors}}
+        </ul>
+        {{/has_row_errors}}
+      </div>
+      {{/has_result}}
+
+      {{! Format CSV }}
+      <div class="am-card">
+        <div class="am-section-title">Format CSV</div>
+        <div class="am-sub" style="margin-bottom:12px;">
+          File CSV harus memiliki header di baris pertama. Kolom yang didukung:
+        </div>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;font-family:monospace;font-size:13px;margin-bottom:16px;overflow-x:auto;">
+          konten;kompetensi;dpl;atp;deskripsi;status<br>
+          Pemrograman Dasar;Memahami variabel dan tipe data;Penalaran Kritis;ATP-1;Peserta didik dapat mendefinisikan variabel dengan benar;aktif<br>
+          Pemrograman Dasar;Membuat percabangan;Penalaran Kritis;ATP-2;Peserta didik dapat membuat struktur if-else;aktif
+        </div>
+        <div class="am-sub" style="line-height:1.9;">
+          <strong>konten</strong> — nama konten/tema (dikelompokkan di tabel TP)<br>
+          <strong>kompetensi</strong> — kompetensi yang ingin dicapai<br>
+          <strong>dpl</strong> — Dimensi Profil Lulusan<br>
+          <strong>atp</strong> — kode Alur Tujuan Pembelajaran<br>
+          <strong>deskripsi</strong> — teks Tujuan Pembelajaran (wajib diisi)<br>
+          <strong>status</strong> — aktif/nonaktif, boleh dikosongkan dan otomatis menjadi aktif
+        </div>
+        <div style="margin-top:14px;">
+          <a href="data:text/csv;charset=utf-8,konten%3Bkompetensi%3Bdpl%3Batp%3Bdeskripsi%3Bstatus%0APemrograman%20Dasar%3BMemahami%20variabel%3B3.1%3BATP-1%3BPeserta%20didik%20dapat%20mendefinisikan%20variabel%3Baktif"
+             download="template_tp.csv"
+             class="am-btn am-btn-secondary am-btn-sm">
+            ⬇ Download Template CSV
+          </a>
+        </div>
+      </div>
+
+      {{! Form upload }}
+      <div class="am-card">
+        <div class="am-section-title">Upload File CSV</div>
+
+        <form method="post" action="{{action_url}}" enctype="multipart/form-data">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="kmid" value="{{kmid}}">
+          <input type="hidden" name="cpid" value="{{cpid}}">
+
+          <div class="am-form-group" style="margin-bottom:16px;">
+            <label class="am-label">Pilih Course / Kelas / Guru Pengampu <span style="color:#ef4444;">*</span></label>
+            {{#has_courses}}
+            <select name="courseid" class="am-input" required>
+              <option value="">-- Pilih course tujuan TP --</option>
+              {{#course_options}}
+              <option value="{{id}}" {{#selected}}selected{{/selected}}>{{label}}</option>
+              {{/course_options}}
+            </select>
+            <div class="am-sub" style="margin-top:6px;">Course sudah mewakili kelas, mata pelajaran, dan guru pengampu. TP hasil import akan tersimpan khusus untuk course ini.</div>
+            {{/has_courses}}
+            {{^has_courses}}
+            <div class="am-card" style="background:#fffbeb;border-left:4px solid #f59e0b;margin-top:8px;">
+              Belum ada course yang terhubung dengan mata pelajaran ini. Generate course terlebih dahulu di Manajemen Kelas.
+            </div>
+            {{/has_courses}}
+          </div>
+
+          <div class="am-form-group" style="margin-bottom:16px;">
+            <label class="am-label">File CSV <span style="color:#ef4444;">*</span></label>
+            <input type="file" name="csvfile" class="am-input" accept=".csv,text/csv" required>
+          </div>
+
+          <div class="am-form-group" style="margin-bottom:20px;">
+            <label class="am-label">Jika TP sudah ada (deskripsi sama persis)</label>
+            <select name="dupmode" class="am-input" style="max-width:300px;">
+              <option value="skip">Lewati (biarkan data lama)</option>
+              <option value="update">Perbarui data yang sudah ada</option>
+            </select>
+          </div>
+
+          <button type="submit" class="am-btn am-btn-primary" {{^has_courses}}disabled{{/has_courses}}>Upload & Import TP</button>
+        </form>
+      </div>
+
+      {{! Panduan }}
+      <div class="am-card">
+        <div class="am-section-title">Panduan</div>
+        <ul style="margin:0;padding-left:20px;color:#6b7280;line-height:2;">
+          <li>Import TP dilakukan <strong>per CP dan per course</strong>. Pilih course tujuan supaya TP tidak bercampur antar guru/kelas.</li>
+          <li>Kolom <strong>deskripsi</strong> wajib diisi; kolom lain (konten; kompetensi; dpl; atp) boleh kosong.</li>
+          <li>Setelah import berhasil, TP otomatis tersinkron ke <strong>gradebook</strong> course yang terhubung.</li>
+          <li>Guru juga bisa menambah TP mandiri melalui menu khusus guru yang tersinkron ke sini.</li>
+          <li>TP yang sudah terhubung ke gradebook dan memiliki nilai <strong>tidak bisa dihapus</strong>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>

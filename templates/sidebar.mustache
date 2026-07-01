@@ -1,0 +1,45 @@
+<div class="am-sidebar-overlay" data-action="close-sidebar"></div>
+
+<aside class="am-sidebar" id="am-sidebar">
+  <div class="am-sidebar-header">
+    <div class="am-title">Menu Akademik</div>
+    <button type="button"
+            class="am-sidebar-close"
+            data-action="close-sidebar"
+            aria-label="Tutup menu">
+      ✕
+    </button>
+  </div>
+
+  <ul class="am-menu">
+    <li><a class="{{#is_dashboard}}active{{/is_dashboard}}" href="{{dashboard_url}}">Dashboard</a></li>
+    <li><a class="{{#is_tahun_ajaran}}active{{/is_tahun_ajaran}}" href="{{tahun_ajaran_url}}">Tahun Ajaran</a></li>
+    <li><a class="{{#is_kurikulum}}active{{/is_kurikulum}}" href="{{kurikulum_url}}">Kurikulum</a></li>
+    <li><a class="{{#is_matpel}}active{{/is_matpel}}" href="{{matpel_url}}">Mata Pelajaran</a></li>
+    <li><a class="{{#is_manajemen_jurusan}}active{{/is_manajemen_jurusan}}" href="{{manajemen_jurusan_url}}">Manajemen Jurusan</a></li>
+    <li><a class="{{#is_manajemen_kelas}}active{{/is_manajemen_kelas}}" href="{{manajemen_kelas_url}}">Manajemen Kelas</a></li>
+    <li>
+      <a class="{{#is_monitoring_presensi}}active{{/is_monitoring_presensi}}"
+        href="/local/akademikmonitor/pages/presensi/index.php">
+        Monitoring Presensi
+      </a>
+    </li>
+    <li>
+      <a class="{{#is_monitoring_presensi_guru}}active{{/is_monitoring_presensi_guru}}"
+        href="/local/akademikmonitor/pages/presensi_guru/index.php">
+        Monitoring Presensi Guru
+      </a>
+</li>
+    
+    <li><a class="{{#is_kktp}}active{{/is_kktp}}" href="{{kktp_url}}">Pengaturan KKTP</a></li>
+    <li><a class="{{#is_notif}}active{{/is_notif}}" href="{{notif_url}}">Pengaturan Notifikasi</a></li>
+    <li><a class="{{#is_ekskul}}active{{/is_ekskul}}" href="{{ekskul_url}}">Ekstrakurikuler</a></li>
+    <li><a class="{{#is_mitra}}active{{/is_mitra}}" href="{{mitra_url}}">Mitra</a></li>
+    <li>
+      <a class="{{#is_kartu_ujian}}active{{/is_kartu_ujian}}"
+         href="/local/akademikmonitor/pages/kartu_ujian/index.php">
+        Kartu Ujian
+      </a>
+    </li>
+  </ul>
+</aside>

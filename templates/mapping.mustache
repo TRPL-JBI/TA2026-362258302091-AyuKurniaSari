@@ -1,0 +1,194 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Manajemen Jurusan / Set Mapel Course</div>
+
+      <div class="am-page-heading">
+        <div>
+          <h2 class="am-h1">Mapping Course ke Mata Pelajaran</h2>
+
+          {{#has_jurusan}}
+          <div class="am-sub">
+            Jurusan: <strong>{{nama_jurusan}}</strong>
+            {{#kode_jurusan}}({{kode_jurusan}}){{/kode_jurusan}}
+          </div>
+          {{/has_jurusan}}
+
+          {{^has_jurusan}}
+          <div class="am-sub">
+            Hubungkan course Moodle dengan mata pelajaran kurikulum.
+          </div>
+          {{/has_jurusan}}
+        </div>
+
+        <div class="am-list-actions">
+          <a href="{{back_url}}" class="am-btn am-btn-secondary">
+            Kembali
+          </a>
+        </div>
+      </div>
+
+      <div class="am-alert am-alert-info">
+        <strong>Catatan penting:</strong>
+        Mapping ini mengikuti alur wali kelas. Nama course sebaiknya memuat tingkat, jurusan, dan semester.
+        Contoh aman: <strong>Matematika - X SIPIL 1 - Semester Ganjil - 2025/2026</strong>.
+        Dengan begitu filter raport Ganjil/Genap bisa membaca course dengan benar.
+      </div>
+
+      <div class="am-card">
+        <div class="am-section-title">Tambah / Ubah Mapping</div>
+
+        {{#has_courses}}
+          {{#has_kmapel}}
+          <form method="post" action="{{form_action}}" class="am-form">
+            <input type="hidden" name="sesskey" value="{{sesskey}}">
+            <input type="hidden" name="action" value="save">
+
+            <div class="am-form-grid">
+              <div class="am-form-group">
+                <label for="courseid">Course Moodle</label>
+                <select id="courseid" name="courseid" class="form-control am-searchable" required>
+                  <option value="">Pilih Course</option>
+                  {{#courses}}
+                  <option value="{{id}}">
+                    {{fullname}} {{#shortname}}({{shortname}}){{/shortname}} - {{semester_label}}
+                  </option>
+                  {{/courses}}
+                </select>
+                <div class="am-help">
+                  Pilih course yang mewakili satu mata pelajaran pada satu kelas dan satu semester.
+                </div>
+              </div>
+
+              <div class="am-form-group">
+                <label for="kmid">Mata Pelajaran Kurikulum</label>
+                <select id="kmid" name="kmid" class="form-control am-searchable" required>
+                  <option value="">Pilih Mata Pelajaran</option>
+                  {{#kmapel}}
+                  <option value="{{id}}">
+                    {{label}}
+                  </option>
+                  {{/kmapel}}
+                </select>
+                <div class="am-help">
+                  Jika halaman dibuka dari tombol Set Mapel di jurusan, pilihan ini sudah difilter berdasarkan jurusan tersebut.
+                </div>
+              </div>
+            </div>
+
+            <div class="am-list-actions" style="margin-top:16px;">
+              <button type="submit" class="am-btn am-btn-primary">
+                Simpan Mapping
+              </button>
+            </div>
+          </form>
+          {{/has_kmapel}}
+
+          {{^has_kmapel}}
+          <div class="am-empty-state">
+            Belum ada mata pelajaran kurikulum untuk jurusan ini.
+            Isi kurikulum dan mata pelajaran jurusan terlebih dahulu.
+          </div>
+          {{/has_kmapel}}
+        {{/has_courses}}
+
+        {{^has_courses}}
+        <div class="am-empty-state">
+          Belum ada course Moodle yang bisa dimapping.
+        </div>
+        {{/has_courses}}
+      </div>
+
+      <div class="am-card">
+        <div class="am-list-header">
+          <div>
+            <div class="am-list-title">DAFTAR MAPPING TERSIMPAN</div>
+            <div class="am-sub">
+              Data ini dipakai untuk menghubungkan course Moodle dengan mapel, KKTP, jurusan, dan kurikulum.
+            </div>
+          </div>
+        </div>
+
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Course Moodle</th>
+                <th>Shortname</th>
+                <th>Semester</th>
+                <th>Mata Pelajaran Kurikulum</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#mappings}}
+              <tr>
+                <td data-label="No">{{no}}</td>
+
+                <td data-label="Course Moodle">
+                  <strong>{{coursefullname}}</strong>
+                  {{#courseidnumber}}
+                  <div class="am-sub">{{courseidnumber}}</div>
+                  {{/courseidnumber}}
+                </td>
+
+                <td data-label="Shortname">
+                  {{courseshortname}}
+                </td>
+
+                <td data-label="Semester">
+                  {{#semester_warning}}
+                  <span class="am-badge am-badge-warning">{{semester_label}}</span>
+                  <div class="am-sub">
+                    Tambahkan kata Ganjil atau Genap di nama course agar filter raport lebih aman.
+                  </div>
+                  {{/semester_warning}}
+
+                  {{^semester_warning}}
+                  <span class="am-badge am-badge-success">{{semester_label}}</span>
+                  {{/semester_warning}}
+                </td>
+
+                <td data-label="Mata Pelajaran Kurikulum">
+                  {{mapellabel}}
+                </td>
+
+                <td data-label="Aksi">
+                  <a href="{{delete_url}}"
+                     class="am-btn am-btn-danger am-btn-sm"
+                     onclick="return confirm('Yakin hapus mapping course ini?')">
+                    Hapus
+                  </a>
+                </td>
+              </tr>
+              {{/mappings}}
+
+              {{^mappings}}
+              <tr>
+                <td colspan="6" class="am-empty-state">
+                  Belum ada mapping course untuk jurusan ini.
+                </td>
+              </tr>
+              {{/mappings}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

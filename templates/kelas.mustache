@@ -1,0 +1,136 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-breadcrumb">/ Manajemen Kelas</div>
+
+      <div class="am-page-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h1 class="am-h1">Manajemen Kelas</h1>
+          <div class="am-sub">Kelola rombel, peserta kelas, generate course Moodle, dan proses naik kelas.</div>
+        </div>
+        <a href="{{add_url}}" class="am-btn am-btn-primary">+ Tambah Kelas</a>
+      </div>
+
+      <div class="am-card">
+        {{#has_tahun_options}}
+        <form method="get" action="{{filter_action}}" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
+          <label for="am-filter-ta" style="font-weight:600;">Tahun Ajaran</label>
+          <select id="am-filter-ta" name="ta" class="am-input" onchange="this.form.submit()" style="max-width:260px;">
+            <option value="0">Semua Tahun Ajaran</option>
+            {{#tahun_options}}
+              <option value="{{id}}" {{#selected}}selected{{/selected}}>{{nama}}</option>
+            {{/tahun_options}}
+          </select>
+        </form>
+        {{/has_tahun_options}}
+
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Kelas</th>
+                <th>Jurusan</th>
+                <th>Tingkat</th>
+                <th>Tahun Ajaran</th>
+                <th>Wali Kelas</th>
+                <th>Peserta</th>
+                <th style="width:430px;">Aksi</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#items}}
+              <tr>
+                <td data-label="No">{{no}}</td>
+                <td data-label="Nama Kelas"><strong>{{nama}}</strong></td>
+                <td data-label="Jurusan">{{jurusan}}</td>
+                <td data-label="Tingkat">{{tingkat}}</td>
+                <td data-label="Tahun Ajaran">{{tahun_ajaran}}</td>
+                <td data-label="Wali Kelas">{{wali_nama}}</td>
+                <td data-label="Peserta">{{jumlah_peserta}}</td>
+
+                <td data-label="Aksi">
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                    <a href="{{peserta_url}}" class="am-btn am-btn-secondary am-btn-sm">Peserta</a>
+                    <a href="{{coursemoodle_url}}" class="am-btn am-btn-primary am-btn-sm">Course</a>
+                    <a href="{{edit_url}}" class="am-btn am-btn-edit am-btn-sm">Edit</a>
+                    <form method="post"
+                          action="{{delete_url}}"
+                          style="display:inline;"
+                          onsubmit="return confirm('Yakin hapus kelas ini?');">
+
+                        <input type="hidden" name="sesskey" value="{{delete_sesskey}}">
+                        <input type="hidden" name="id" value="{{delete_id}}">
+
+                        <button type="submit"
+                                class="am-btn am-btn-danger am-btn-sm">
+                            Hapus
+                        </button>
+
+                    </form>
+
+                    {{#is_lulus_status}}
+                      <span class="am-btn am-btn-sm"
+                            style="background:#fee2e2;color:#991b1b;cursor:not-allowed;">
+                        LULUS
+                      </span>
+                    {{/is_lulus_status}}
+
+
+                    {{#show_naik_action}}
+                      {{#is_lulus}}
+                      <form method="post"
+                            action="{{naik_url}}"
+                            style="display:inline;"
+                            onsubmit="return confirm('Yakin ingin meluluskan kelas ini?')">
+
+                          <input type="hidden" name="id" value="{{naik_id}}">
+                          <input type="hidden" name="sesskey" value="{{naik_sesskey}}">
+
+                          <button type="submit"
+                                  class="am-btn am-btn-primary am-btn-sm">
+                              Luluskan
+                          </button>
+                      </form>
+                      {{/is_lulus}}
+
+                      {{^is_lulus}}
+                    <form method="post"
+                          action="{{naik_url}}"
+                          style="display:inline;"
+                          onsubmit="return confirm('Proses {{naik_label}} untuk kelas ini? Wali kelas baru akan dikosongkan dan siswa akan disalin ke kelas tahun ajaran berikutnya.')">
+
+                        <input type="hidden" name="id" value="{{naik_id}}">
+                        <input type="hidden" name="sesskey" value="{{naik_sesskey}}">
+
+                        <button type="submit"
+                                class="am-btn am-btn-primary am-btn-sm">
+                            {{naik_label}}
+                        </button>
+                    </form>
+                    {{/is_lulus}}
+                    {{/show_naik_action}}
+
+                    <a href="{{histori_url}}" class="am-btn am-btn-secondary am-btn-sm">Histori</a>
+                  </div>
+                </td>
+              </tr>
+              {{/items}}
+
+              {{^items}}
+              <tr>
+                <td colspan="8" class="am-empty-state" style="text-align:center;padding:24px;">
+                  Belum ada data kelas.
+                </td>
+              </tr>
+              {{/items}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

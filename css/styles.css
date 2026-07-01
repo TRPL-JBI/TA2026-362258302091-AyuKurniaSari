@@ -1,0 +1,2121 @@
+/* ======================
+   LAYOUT
+====================== */
+/* body {
+    background: red !important;
+} */
+.akademikmonitor .am-wrap {
+  display: flex;
+  min-height: 70vh;
+}
+
+.akademikmonitor .am-sidebar {
+  width: 240px;
+  background: #ffffff;
+  border-right: 1px solid #eee;
+  padding: 18px 12px;
+}
+
+.akademikmonitor .am-sidebar .am-title {
+  font-weight: 700;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: #111;
+}
+
+.akademikmonitor .am-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.akademikmonitor .am-menu li a {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 13px;
+}
+
+.akademikmonitor .am-menu li a:hover {
+  background: #f5f7fb;
+}
+
+.akademikmonitor .am-menu li a.active {
+  background: #eef4ff;
+  color: #1b59d1;
+  font-weight: 600;
+}
+
+.akademikmonitor .am-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.akademikmonitor .am-breadcrumb {
+  color: #888;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.akademikmonitor .am-h1 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.akademikmonitor .am-sub {
+  margin-top: 6px;
+  color: #666;
+  font-size: 13px;
+}
+
+/* ======================
+   CARD
+====================== */
+
+/* .am-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 16px;
+} */
+.akademikmonitor .am-card {
+  background: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.116);
+}
+
+/* ======================
+   BUTTONS
+====================== */
+
+.akademikmonitor .am-btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.akademikmonitor .am-btn-primary {
+  background: #1b59d1;
+  color: #fff;
+}
+
+.akademikmonitor .am-btn-template {
+  background: #1f7a3b;
+  color: #fff;
+}
+
+.akademikmonitor .am-btn-secondary {
+  background: #f7f6ee;
+  color: #333;
+
+}
+.akademikmonitor .am-btn-edit {
+  background: #ff9204;
+  color: #333;
+}
+
+.akademikmonitor .am-btn-ghost {
+  background: transparent;
+  border: 1px solid #ddd;
+  color: #333;
+}
+
+/* ======================
+   TABLE DESKTOP - FINAL STABLE
+====================== */
+.akademikmonitor .am-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 16px;
+  table-layout: fixed;
+  background: white;
+  /* border-radius: 14px; */
+  overflow: hidden;
+}
+
+/* HEADER */
+/* .am-table thead {
+  background: linear-gradient(#4545468c);
+  color: white;
+} */
+
+.akademikmonitor .am-table th {
+  padding: 14px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+.akademikmonitor .am-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.akademikmonitor .am-table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+  margin-top: 10px;
+  table-layout: auto;
+  background: #fff;
+}
+
+.akademikmonitor .am-table th,
+.akademikmonitor .am-table td {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 12px 10px;
+  font-size: 13px;
+  text-align: left;
+  vertical-align: middle;
+  /* white-space: nowrap; */
+}
+.akademikmonitor .am-table th {
+  font-weight: 700;
+  letter-spacing: .2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #111827;
+}
+.akademikmonitor .am-table td {
+  white-space: nowrap;
+  color: #1f2937;
+}
+/* Ellipsis hanya untuk kolom selain aksi */
+.akademikmonitor .am-table td:not(:last-child) {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.akademikmonitor .am-table th:first-child,
+.akademikmonitor .am-table td:first-child {
+  width: 60px;
+  text-align: center;
+}
+
+/* Kolom aksi */
+.akademikmonitor .am-table th:last-child,
+.akademikmonitor .am-table td:last-child {
+  width: 140px;
+  min-width: 140px;
+  white-space: nowrap;
+  overflow: visible;
+}
+.akademikmonitor .am-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.akademikmonitor .am-row-actions .am-btn {
+  white-space: nowrap;
+}
+/* Supaya tombol tidak mendorong keluar */
+/* .akademikmonitor .am-table td:last-child {
+  display: flex;
+  gap: 8px;
+} */
+
+/* ======================
+   TOOLBAR
+====================== */
+
+.akademikmonitor .am-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.akademikmonitor .am-toolbar-left,
+.akademikmonitor .am-toolbar-right {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ======================
+   TABLE ACTIONS
+====================== */
+
+.akademikmonitor .am-table th:last-child,
+.akademikmonitor .am-table td:last-child {
+  width: 220px;
+  white-space: normal;
+  overflow: visible;
+}
+
+.akademikmonitor .am-row-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.akademikmonitor .am-empty-state {
+  color: #888;
+  text-align: center;
+  padding: 18px 12px;
+}
+
+/* ======================
+   MODAL ACTIONS
+====================== */
+
+.akademikmonitor .am-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.akademikmonitor .am-field {
+  margin-bottom: 14px;
+}
+
+.akademikmonitor .am-help-text {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #777;
+}
+
+.akademikmonitor .am-modal-sm {
+  max-width: 520px;
+}
+
+.akademikmonitor .am-input-file {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 13px;
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+
+@media (max-width: 768px) {
+
+  .akademikmonitor .am-table {
+    min-width: 0;
+  }
+
+  .akademikmonitor .am-table thead {
+    display: none;
+  }
+
+  .akademikmonitor .am-table,
+  .akademikmonitor .am-table tbody,
+  .akademikmonitor .am-table tr,
+  .akademikmonitor .am-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .akademikmonitor .am-table tr {
+    background: #fff;
+    margin-bottom: 14px;
+    padding: 14px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  .akademikmonitor .am-table td {
+    border: none;
+    padding: 7px 0;
+    white-space: normal;
+    max-width: none;
+    overflow: visible;
+    text-overflow: unset;
+  }
+
+  .akademikmonitor .am-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+    margin-bottom: 2px;
+  }
+
+  .akademikmonitor .am-table td:last-child {
+    width: 100%;
+    min-width: 0;
+    margin-top: 8px;
+  }
+
+  .akademikmonitor .am-row-actions {
+    flex-wrap: wrap;
+  }
+
+  .akademikmonitor .am-row-actions .am-btn {
+    width: 100%;
+  }
+}
+
+
+/* ======================
+   BADGE & ACTIONS
+====================== */
+
+.akademikmonitor .am-badge {
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: #eef1f7;
+}
+
+.akademikmonitor .am-badge.on { background: #e8f6ee; color: #1f7a3b; }
+.akademikmonitor .am-badge.off { background: #fff1f1; color: #b42318; }
+
+.akademikmonitor .am-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 16px;
+  
+}
+
+/* ======================
+   TABS
+====================== */
+
+.akademikmonitor .am-tabs {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.akademikmonitor .am-tab {
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  background: #f1f3f5;
+  color: #333;
+  font-size: 13px;
+}
+
+.akademikmonitor .am-tab.active {
+  background: #1b59d1;
+  color: white;
+}
+
+/* ======================
+   MODAL
+====================== */
+
+.akademikmonitor .am-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.akademikmonitor .am-modal {
+  width: 420px;
+  max-width: 95vw;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.2);
+}
+
+.akademikmonitor .am-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.akademikmonitor .am-modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.akademikmonitor .am-close {
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.akademikmonitor .am-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* ======================
+   RESPONSIVE MOBILE
+====================== */
+
+@media (max-width: 768px) {
+
+  .akademikmonitor .am-wrap {
+    flex-direction: column;
+  }
+
+  .akademikmonitor .am-sidebar {
+    display: none;
+  }
+
+  .akademikmonitor .am-content {
+    width: 100%;
+    padding: 14px;
+  }
+
+  .akademikmonitor .am-table thead {
+    display: none;
+  }
+
+  .akademikmonitor .am-table th,
+  .akademikmonitor .am-table td {
+    width: 100% !important;
+  }
+
+  .akademikmonitor .am-table,
+  .akademikmonitor .am-table tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .akademikmonitor .am-table tr {
+    display: block;
+    background: #fff;
+    margin-bottom: 16px;
+    padding: 14px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  .akademikmonitor .am-table td {
+    display: block;
+    border: none;
+    padding: 6px 0;
+    white-space: normal;
+  }
+
+  .akademikmonitor .am-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #777;
+    margin-bottom: 2px;
+  }
+
+  .akademikmonitor .am-table td:last-child {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .akademikmonitor .am-btn {
+    width: 100%;
+  }
+}
+
+
+/* FORM ELEMENTS */
+.akademikmonitor .am-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.akademikmonitor .am-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.akademikmonitor .am-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 13px;
+  background: #fff;
+}
+
+.akademikmonitor .am-input:focus {
+  outline: none;
+  border-color: #1b59d1;
+  box-shadow: 0 0 0 3px rgba(27, 89, 209, 0.15);
+}
+
+.akademikmonitor .am-help {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.akademikmonitor .am-checkboxes {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+
+
+
+
+
+
+/* ======================
+   TELEGRAM CONNECT
+====================== */
+
+.akademikmonitor .am-telegram-wrapper {
+  max-width: 720px;
+  margin: 30px auto;
+}
+
+.akademikmonitor .am-telegram-wrapper h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.akademikmonitor .am-telegram-wrapper p {
+  font-size: 14px;
+  color: #555;
+}
+
+.akademikmonitor .am-note {
+  background: #f7f7f7;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 13px;
+  color: #666;
+}
+
+.akademikmonitor .am-card ol {
+  margin-top: 15px;
+  margin-bottom: 25px;
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+.akademikmonitor .am-btn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* Telegram button */
+
+.akademikmonitor .am-telegram-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #e8f0ff;
+  color: #2f5fd7;
+
+  padding: 14px 28px;
+
+  border-radius: 12px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition: all 0.2s ease;
+}
+
+.akademikmonitor .am-telegram-btn:hover {
+  background: #dce7ff;
+  text-decoration: none;
+}
+
+.akademikmonitor .am-telegram-btn i {
+  font-size: 18px;
+}
+.am-card:hover{
+ transform: translateY(-2px);
+}
+
+/* ======================
+   TELEGRAM CONNECT PAGE
+====================== */
+
+.akademikmonitor .am-telegram-wrapper {
+
+  max-width: 760px;       /* batas lebar card */
+  margin: 40px auto;      /* center halaman */
+
+}
+
+.akademikmonitor .am-card {
+
+  padding: 28px 32px;
+
+}
+
+/* note box */
+
+.akademikmonitor .am-note {
+
+  background: #f3f5f7;
+  border-radius: 8px;
+  padding: 14px 16px;
+  border: 1px solid #e5e7eb;
+  margin: 18px 0;
+
+}
+
+/* list spacing */
+
+.akademikmonitor .am-card ol {
+
+  margin-top: 12px;
+  margin-bottom: 28px;
+
+}
+
+/* button wrapper */
+
+.akademikmonitor .am-btn-wrapper {
+
+  display: flex;
+  justify-content: center;
+
+}
+
+/* telegram button */
+
+.akademikmonitor .am-telegram-btn {
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #e7edf4;
+  color: #2f5fd7;
+
+  padding: 16px 32px;
+
+  border-radius: 10px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition: 0.2s;
+
+}
+
+.akademikmonitor .am-telegram-btn:hover {
+
+  background: #dde6ef;
+
+}
+
+/* telegram icon */
+
+.akademikmonitor .am-telegram-btn i {
+
+  font-size: 18px;
+
+}
+
+.am-card h3{
+  font-size:20px;
+  font-weight:700;
+}
+
+.am-card p{
+  font-size:14px;
+  color:#555;
+}
+
+
+
+/* detail rapo */
+.akademikmonitor .tab.active {
+    background: #1b59d1;
+    color: white;
+}
+/* 🔥 TAB SYSTEM FIX */
+.akademikmonitor .tab-content {
+    display: none;
+}
+
+.akademikmonitor .tab-content.active {
+    display: block;
+}
+.akademikmonitor .tab {
+    cursor: pointer;
+}
+
+.rapor-list {
+    list-style-type: decimal;
+    list-style-position: outside;
+    padding-left: 30px;
+}
+
+.rapor-sublist {
+    list-style-type: lower-alpha;
+    padding-left: 0px;
+    /* margin: 0; */
+}
+
+/*  */
+
+/* layout utama */
+.row {
+    display: grid;
+    grid-template-columns: 500px 1fr;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+
+
+.rapor-list {
+    list-style-position: outside;
+    padding-left: 30px;
+}
+
+.rapor-list li {
+    padding-left: 15px; /* jarak antara angka dan teks */
+}
+
+
+
+
+
+/* ======================
+   MOBILE SIDEBAR
+====================== */
+
+.akademikmonitor .am-mobile-topbar {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.akademikmonitor .am-mobile-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.akademikmonitor .am-hamburger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #dbe2ea;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.akademikmonitor .am-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.akademikmonitor .am-sidebar-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 8px;
+  background: #f3f4f6;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.akademikmonitor .am-sidebar-overlay {
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .akademikmonitor .am-mobile-topbar {
+    display: flex;
+  }
+
+  .akademikmonitor .am-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    z-index: 9998;
+  }
+
+  .akademikmonitor .am-sidebar {
+    display: block; /* penting */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    max-width: 85vw;
+    height: 100vh;
+    z-index: 9999;
+    background: #fff;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.18);
+    border-radius: 0 16px 16px 0;
+    padding-top: 18px;
+  }
+
+  .akademikmonitor .am-sidebar-close {
+    display: inline-flex;
+  }
+
+  .akademikmonitor.sidebar-open .am-sidebar {
+    transform: translateX(0);
+  }
+
+  .akademikmonitor.sidebar-open .am-sidebar-overlay {
+    display: block;
+  }
+}
+
+/* ======================
+   ADMIN AKADEMIK - UI PATCH
+====================== */
+.akademikmonitor .am-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.akademikmonitor .am-section-title {
+  margin: 18px 0 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #222;
+}
+
+.akademikmonitor .am-section-title:first-child {
+  margin-top: 0;
+}
+
+.akademikmonitor .am-action-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.akademikmonitor .am-table-wide-actions th:last-child,
+.akademikmonitor .am-table-wide-actions td:last-child {
+  width: 420px;
+}
+
+.akademikmonitor .am-card form .am-label,
+.akademikmonitor .am-form-group .am-label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
+.akademikmonitor .am-card form .am-actions {
+  margin-top: 18px;
+}
+
+@media (max-width: 991px) {
+  .akademikmonitor .am-table-wide-actions th:last-child,
+  .akademikmonitor .am-table-wide-actions td:last-child {
+    width: 320px;
+  }
+}
+
+.am-page-layout {
+    width: 100%;
+}
+
+.am-page-main {
+    width: 100%;
+}
+
+.am-page-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.am-card-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.am-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: inherit;
+}
+
+.am-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.am-search-form {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.am-search-input {
+    width: 220px;
+    height: 36px;
+    padding: 8px 10px;
+    border: 1px solid #d7dce3;
+    border-right: 0;
+    border-radius: 8px 0 0 8px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.am-search-button {
+    height: 36px;
+    min-width: 38px;
+    border: 1px solid #d7dce3;
+    border-radius: 0 8px 8px 0;
+    background: transparent;
+    cursor: pointer;
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .am-page-title-row {
+        flex-direction: column;
+    }
+
+    .am-card-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .am-card-actions {
+        width: 100%;
+    }
+
+    .am-search-form {
+        width: 100%;
+    }
+
+    .am-search-input {
+        width: 100%;
+    }
+}
+
+
+.am-page-heading {
+    margin-bottom: 18px;
+}
+
+.am-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.am-list-title {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: inherit;
+    white-space: nowrap;
+}
+
+.am-list-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    flex-wrap: wrap;
+}
+
+.am-search-form {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.am-search-input {
+    width: 230px;
+    height: 36px;
+    padding: 8px 10px;
+    border: 1px solid #d7dce3;
+    border-right: 0;
+    border-radius: 8px 0 0 8px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.am-search-button {
+    height: 36px;
+    min-width: 38px;
+    border: 1px solid #d7dce3;
+    border-radius: 0 8px 8px 0;
+    background: transparent;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.am-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.am-table {
+    width: 100%;
+    table-layout: auto;
+}
+
+.am-table th,
+.am-table td {
+    white-space: nowrap;
+}
+
+.am-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .am-list-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .am-list-title {
+        white-space: normal;
+    }
+
+    .am-list-actions {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .am-search-form {
+        width: 100%;
+    }
+
+    .am-search-input {
+        width: 100%;
+    }
+}
+
+
+.am-section-title {
+    margin: 22px 0 12px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.am-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.am-list-title {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: inherit;
+    white-space: nowrap;
+}
+
+.am-list-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    flex-wrap: wrap;
+}
+
+.am-search-form {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.am-search-input {
+    width: 230px;
+    height: 36px;
+    padding: 8px 10px;
+    border: 1px solid #d7dce3;
+    border-right: 0;
+    border-radius: 8px 0 0 8px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.am-search-button {
+    height: 36px;
+    min-width: 38px;
+    border: 1px solid #d7dce3;
+    border-radius: 0 8px 8px 0;
+    background: transparent;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.am-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.am-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.am-table {
+    width: 100%;
+    table-layout: auto;
+}
+
+@media (max-width: 768px) {
+    .am-list-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .am-list-title {
+        white-space: normal;
+    }
+
+    .am-list-actions {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .am-search-form {
+        width: 100%;
+    }
+
+    .am-search-input {
+        width: 100%;
+    }
+}
+
+
+.am-btn-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 34px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 10px;
+    background: #dc2626;
+    color: #fff !important;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.am-btn-danger:hover,
+.am-btn-danger:focus {
+    background: #b91c1c;
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+
+.akademikmonitor .am-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.akademikmonitor .am-list-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: .3px;
+}
+
+.akademikmonitor .am-list-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.akademikmonitor .am-search-form {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.akademikmonitor .am-search-input {
+  min-width: 220px;
+  height: 38px;
+  border: 1px solid #ddd;
+  border-radius: 10px 0 0 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  outline: none;
+}
+
+.akademikmonitor .am-search-button {
+  height: 38px;
+  min-width: 42px;
+  border: 0;
+  border-radius: 0 10px 10px 0;
+  background: #1b59d1;
+  color: #fff;
+  cursor: pointer;
+}
+
+.akademikmonitor .am-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.akademikmonitor .am-btn:hover {
+  text-decoration: none !important;
+  filter: brightness(.97);
+}
+
+.akademikmonitor .am-btn-danger {
+  background: #dc3545;
+  color: #fff;
+}
+
+.akademikmonitor .am-action-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.akademikmonitor .am-row-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.akademikmonitor .am-table-actions-lg th:last-child,
+.akademikmonitor .am-table-actions-lg td:last-child {
+  width: 300px;
+  white-space: normal;
+  overflow: visible;
+}
+
+.akademikmonitor .am-form-group {
+  margin-bottom: 14px;
+}
+
+.akademikmonitor .am-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.akademikmonitor .am-input {
+  width: 100%;
+  max-width: 520px;
+}
+
+@media (max-width: 768px) {
+  .akademikmonitor .am-list-header {
+    align-items: stretch;
+  }
+
+  .akademikmonitor .am-list-actions,
+  .akademikmonitor .am-search-form,
+  .akademikmonitor .am-search-input,
+  .akademikmonitor .am-search-button,
+  .akademikmonitor .am-list-actions .am-btn {
+    width: 100%;
+  }
+
+  .akademikmonitor .am-search-input {
+    min-width: 0;
+  }
+
+  .akademikmonitor .am-action-stack,
+  .akademikmonitor .am-row-actions,
+  .akademikmonitor .am-row-actions .am-btn {
+    width: 100%;
+  }
+}
+
+.akademikmonitor .am-row-actions-nowrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.akademikmonitor .am-row-actions-nowrap .am-btn {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.akademikmonitor .am-table-actions-lg th:last-child,
+.akademikmonitor .am-table-actions-lg td:last-child {
+  width: 420px;
+  min-width: 420px;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.akademikmonitor .am-table-wrap {
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .akademikmonitor .am-row-actions-nowrap {
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+
+  .akademikmonitor .am-table-actions-lg th:last-child,
+  .akademikmonitor .am-table-actions-lg td:last-child {
+    width: auto;
+    min-width: 0;
+    white-space: normal;
+  }
+}
+
+.akademikmonitor .am-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.akademikmonitor .am-list-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: .3px;
+}
+
+.akademikmonitor .am-list-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.akademikmonitor .am-search-form {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.akademikmonitor .am-search-input {
+  min-width: 220px;
+  height: 38px;
+  border: 1px solid #ddd;
+  border-radius: 10px 0 0 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  outline: none;
+}
+
+.akademikmonitor .am-search-button {
+  height: 38px;
+  min-width: 42px;
+  border: 0;
+  border-radius: 0 10px 10px 0;
+  background: #1b59d1;
+  color: #fff;
+  cursor: pointer;
+}
+
+.akademikmonitor .am-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none !important;
+  white-space: nowrap;
+  border: 0;
+  cursor: pointer;
+}
+
+.akademikmonitor .am-btn:hover {
+  text-decoration: none !important;
+  filter: brightness(.97);
+}
+
+.akademikmonitor .am-btn-primary {
+  background: #1b59d1;
+  color: #fff;
+}
+
+.akademikmonitor .am-btn-secondary {
+  background: #f5f2ec;
+  color: #222;
+}
+
+.akademikmonitor .am-btn-edit {
+  background: #ff8a00;
+  color: #fff;
+}
+
+.akademikmonitor .am-btn-danger {
+  background: #dc3545;
+  color: #fff;
+}
+
+.akademikmonitor .am-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.akademikmonitor .am-row-actions-nowrap {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.akademikmonitor .am-table-actions-lg th:last-child,
+.akademikmonitor .am-table-actions-lg td:last-child {
+  width: 380px;
+  min-width: 380px;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.akademikmonitor .am-table-wrap {
+  overflow-x: auto;
+}
+
+.akademikmonitor .am-form-group {
+  margin-bottom: 14px;
+}
+
+.akademikmonitor .am-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.akademikmonitor .am-input {
+  width: 100%;
+  max-width: 520px;
+  min-height: 38px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  outline: none;
+}
+
+.akademikmonitor .am-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+@media (max-width: 768px) {
+  .akademikmonitor .am-list-header {
+    align-items: stretch;
+  }
+
+  .akademikmonitor .am-list-actions,
+  .akademikmonitor .am-search-form,
+  .akademikmonitor .am-search-input,
+  .akademikmonitor .am-search-button,
+  .akademikmonitor .am-list-actions .am-btn {
+    width: 100%;
+  }
+
+  .akademikmonitor .am-search-input {
+    min-width: 0;
+  }
+
+  .akademikmonitor .am-row-actions-nowrap {
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+
+  .akademikmonitor .am-row-actions-nowrap .am-btn {
+    flex: 1 1 auto;
+  }
+
+  .akademikmonitor .am-table-actions-lg th:last-child,
+  .akademikmonitor .am-table-actions-lg td:last-child {
+    width: auto;
+    min-width: 0;
+    white-space: normal;
+  }
+}
+
+.akademikmonitor .am-alert {
+  padding: 14px 16px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+
+.akademikmonitor .am-alert ul {
+  margin: 8px 0 0 18px;
+  padding: 0;
+}
+
+.akademikmonitor .am-alert-success {
+  background: #e8fff1;
+  color: #126234;
+  border: 1px solid #b9efcd;
+}
+
+.akademikmonitor .am-alert-warning {
+  background: #fff8e6;
+  color: #7a4d00;
+  border: 1px solid #f5d98b;
+}
+
+.akademikmonitor .am-alert-danger {
+  background: #fff0f0;
+  color: #8a1f1f;
+  border: 1px solid #f1b5b5;
+}
+
+.akademikmonitor .am-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #111827;
+}
+
+.akademikmonitor .am-info-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.akademikmonitor .am-info-item {
+  background: #f8fafc;
+  border: 1px solid #edf0f5;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.akademikmonitor .am-info-label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.akademikmonitor .am-info-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.akademikmonitor .am-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.akademikmonitor .am-badge-success {
+  background: #e8fff1;
+  color: #126234;
+}
+
+.akademikmonitor .am-badge-warning {
+  background: #fff8e6;
+  color: #7a4d00;
+}
+
+@media (max-width: 992px) {
+  .akademikmonitor .am-info-grid {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .akademikmonitor .am-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ======================
+   JURUSAN PAGE FIX
+====================== */
+
+.akademikmonitor .am-page-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.akademikmonitor .am-table-jurusan {
+  table-layout: fixed;
+}
+
+.akademikmonitor .am-table-jurusan th,
+.akademikmonitor .am-table-jurusan td {
+  vertical-align: middle;
+}
+
+.akademikmonitor .am-table-jurusan td {
+  white-space: nowrap;
+}
+
+.akademikmonitor .am-table-jurusan td:not(.am-cell-actions) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.akademikmonitor .am-col-actions {
+  width: 360px;
+}
+
+.akademikmonitor .am-cell-actions {
+  white-space: normal !important;
+  overflow: visible !important;
+}
+
+.akademikmonitor .am-action-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.akademikmonitor .am-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.akademikmonitor .am-btn-soft {
+  background: #efede7;
+  color: #333;
+}
+
+.akademikmonitor .am-btn-danger {
+  background: #e53935;
+  color: #fff;
+}
+
+.akademikmonitor .am-summary-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.akademikmonitor .am-badge-mapel {
+  background: #e6f6e9;
+  color: #2e7d32;
+}
+
+.akademikmonitor .am-badge-cp {
+  background: #eef1f7;
+  color: #44546a;
+}
+
+.akademikmonitor .am-badge-tp {
+  background: #fff3dc;
+  color: #9a6b00;
+}
+
+@media (max-width: 768px) {
+  .akademikmonitor .am-page-heading {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .akademikmonitor .am-col-actions {
+    width: auto;
+  }
+
+  .akademikmonitor .am-action-list {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .akademikmonitor .am-action-list .am-btn {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   FINAL OVERRIDE - MANAJEMEN JURUSAN ACTION BUTTONS
+   Taruh paling bawah styles.css
+========================================================= */
+
+.akademikmonitor .am-table.am-table-jurusan {
+  table-layout: fixed !important;
+  min-width: 980px;
+}
+
+.akademikmonitor .am-table.am-table-jurusan th:nth-child(1),
+.akademikmonitor .am-table.am-table-jurusan td:nth-child(1) {
+  width: 60px !important;
+}
+
+.akademikmonitor .am-table.am-table-jurusan th:nth-child(2),
+.akademikmonitor .am-table.am-table-jurusan td:nth-child(2) {
+  width: 90px !important;
+}
+
+.akademikmonitor .am-table.am-table-jurusan th:nth-child(3),
+.akademikmonitor .am-table.am-table-jurusan td:nth-child(3) {
+  width: 180px !important;
+}
+
+.akademikmonitor .am-table.am-table-jurusan th:nth-child(4),
+.akademikmonitor .am-table.am-table-jurusan td:nth-child(4) {
+  width: 210px !important;
+}
+
+/* Ini yang paling penting: lawan rule global th:last-child / td:last-child */
+.akademikmonitor .am-table.am-table-jurusan th.am-col-actions,
+.akademikmonitor .am-table.am-table-jurusan td.am-cell-actions,
+.akademikmonitor .am-table.am-table-jurusan th:last-child,
+.akademikmonitor .am-table.am-table-jurusan td:last-child {
+  width: 460px !important;
+  min-width: 460px !important;
+  max-width: 460px !important;
+  white-space: normal !important;
+  overflow: visible !important;
+}
+
+/* Jangan biarkan td aksi ikut ellipsis */
+.akademikmonitor .am-table.am-table-jurusan td.am-cell-actions {
+  display: table-cell !important;
+  vertical-align: middle !important;
+}
+
+/* Tombol aksi rapi menyamping, boleh turun kalau ruang kurang */
+.akademikmonitor .am-table.am-table-jurusan .am-action-list {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  width: 100% !important;
+}
+
+/* Ukuran tombol diperkecil supaya 5 tombol muat rapi */
+.akademikmonitor .am-table.am-table-jurusan .am-action-list .am-btn {
+  width: auto !important;
+  min-width: auto !important;
+  min-height: 32px !important;
+  padding: 7px 11px !important;
+  font-size: 11px !important;
+  line-height: 1.1 !important;
+  border-radius: 8px !important;
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+}
+
+/* Tombol hapus turun ke baris kedua tapi tetap rapi, bukan numpuk */
+.akademikmonitor .am-table.am-table-jurusan .am-action-list .am-btn-danger {
+  margin-top: 2px !important;
+}
+
+/* Ringkasan jangan bikin kolom melebar */
+.akademikmonitor .am-table.am-table-jurusan .am-summary-badges {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+}
+
+.akademikmonitor .am-table.am-table-jurusan .am-badge {
+  padding: 5px 8px !important;
+  font-size: 11px !important;
+}
+
+/* Mobile/tablet tetap aman */
+@media (max-width: 768px) {
+  .akademikmonitor .am-table.am-table-jurusan {
+    min-width: 0 !important;
+  }
+
+  .akademikmonitor .am-table.am-table-jurusan th.am-col-actions,
+  .akademikmonitor .am-table.am-table-jurusan td.am-cell-actions,
+  .akademikmonitor .am-table.am-table-jurusan th:last-child,
+  .akademikmonitor .am-table.am-table-jurusan td:last-child {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  .akademikmonitor .am-table.am-table-jurusan .am-action-list {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .akademikmonitor .am-table.am-table-jurusan .am-action-list .am-btn {
+    width: 100% !important;
+  }
+}
+
+/* ======================
+   SET KURIKULUM PAGE
+====================== */
+
+.akademikmonitor .am-table-setkurikulum {
+  table-layout: fixed;
+}
+
+.akademikmonitor .am-table-setkurikulum th,
+.akademikmonitor .am-table-setkurikulum td {
+  vertical-align: middle;
+}
+
+.akademikmonitor .am-table-setkurikulum td {
+  white-space: nowrap;
+}
+
+.akademikmonitor .am-table-setkurikulum td:nth-child(2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.akademikmonitor .am-btn-sm {
+  min-height: 32px;
+  padding: 7px 12px;
+  font-size: 12px;
+  border-radius: 8px;
+}
+
+
+/* =========================================================
+   DETAIL RAPOR - DATA DIRI STABLE LAYOUT
+   Jangan pakai class .row karena bentrok dengan Bootstrap/Moodle.
+========================================================= */
+
+.akademikmonitor .am-rapor-biodata {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.akademikmonitor .am-rapor-row {
+    display: grid;
+    grid-template-columns: 48px minmax(230px, 36%) 20px minmax(0, 1fr);
+    align-items: start;
+    min-height: 38px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.akademikmonitor .am-rapor-row:last-child {
+    border-bottom: 0;
+}
+
+.akademikmonitor .am-rapor-no,
+.akademikmonitor .am-rapor-label,
+.akademikmonitor .am-rapor-separator,
+.akademikmonitor .am-rapor-value {
+    padding: 9px 10px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: #111827;
+}
+
+.akademikmonitor .am-rapor-no {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.akademikmonitor .am-rapor-label {
+    white-space: normal;
+}
+
+.akademikmonitor .am-rapor-separator {
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.akademikmonitor .am-rapor-value {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+.akademikmonitor .am-rapor-group-row {
+    background: #fafafa;
+    font-weight: 600;
+}
+
+.akademikmonitor .am-rapor-sub-row .am-rapor-no {
+    padding-left: 18px;
+}
+
+.akademikmonitor .am-rapor-sub-row .am-rapor-label {
+    padding-left: 24px;
+}
+
+/* Matikan style lama khusus data diri agar tidak bentrok. */
+.akademikmonitor .rapor-list,
+.akademikmonitor .rapor-sublist {
+    margin: 0;
+    padding: 0;
+}
+
+.akademikmonitor .rapor-list li,
+.akademikmonitor .rapor-sublist li {
+    padding-left: 0;
+}
+
+/* Jangan biarkan .row global mengganggu data diri baru. */
+.akademikmonitor .am-rapor-biodata .row {
+    display: unset;
+    grid-template-columns: none;
+    padding: 0;
+    border-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .akademikmonitor .am-rapor-row {
+        grid-template-columns: 42px minmax(0, 1fr);
+        row-gap: 0;
+        padding: 8px 0;
+    }
+
+    .akademikmonitor .am-rapor-no {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+
+    .akademikmonitor .am-rapor-label {
+        grid-column: 2;
+        grid-row: 1;
+        padding-bottom: 2px;
+        font-weight: 600;
+    }
+
+    .akademikmonitor .am-rapor-separator {
+        display: none;
+    }
+
+    .akademikmonitor .am-rapor-value {
+        grid-column: 2;
+        grid-row: 2;
+        padding-top: 0;
+        color: #374151;
+    }
+
+    .akademikmonitor .am-rapor-sub-row .am-rapor-label {
+        padding-left: 10px;
+    }
+}
+.select2-container {
+    width: 100% !important;
+    min-width: 220px;
+}
+
+.select2-selection--single {
+    height: 38px !important;
+    display: flex !important;
+    align-items: center;
+    border-radius: 6px !important;
+}
+
+.select2-selection__rendered {
+    line-height: 36px !important;
+}
+
+.select2-selection__arrow {
+    height: 36px !important;
+}

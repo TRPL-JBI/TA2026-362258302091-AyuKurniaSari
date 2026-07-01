@@ -1,0 +1,47 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button" class="am-hamburger" data-action="open-sidebar" aria-label="Buka menu">☰</button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">Akademik / Jurusan / Detail / Edit</div>
+      <h1 class="am-h1">Set Detail Mata Pelajaran</h1>
+      <div class="am-sub">Atur tingkat kelas, jam pelajaran, dan KKTP untuk mata pelajaran.</div>
+
+      <div class="am-card am-form-card">
+        <h3>{{nama}}</h3>
+        <form method="post" action="{{action_url}}">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+
+          <div class="am-form-group">
+            <label class="am-label">Tingkat Kelas</label>
+            <select name="tingkat" class="am-input">
+              <option value="X" {{#tingkat_x}}selected{{/tingkat_x}}>X</option>
+              <option value="XI" {{#tingkat_xi}}selected{{/tingkat_xi}}>XI</option>
+              <option value="XII" {{#tingkat_xii}}selected{{/tingkat_xii}}>XII</option>
+            </select>
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label">Jam Pelajaran</label>
+            <input type="text" name="jam" class="am-input" value="{{jam}}" placeholder="Contoh: 4">
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label">KKTP</label>
+            <input type="number" name="kktp" class="am-input" value="{{kktp}}" min="0" max="100">
+          </div>
+
+          <div class="am-actions">
+            <a href="{{back_url}}" class="am-btn am-btn-secondary">Kembali</a>
+            <button class="am-btn am-btn-primary" type="submit">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,149 @@
+<div class="akademikmonitor">
+    <div class="am-page">
+        <div class="am-layout">
+
+            {{> local_akademikmonitor/walikelas/sidebar}}
+
+            <div class="am-content">
+                <div class="am-mobile-topbar">
+                    <button type="button"
+                            class="am-hamburger"
+                            data-action="open-sidebar"
+                            aria-label="Buka menu">☰</button>
+                    <div class="am-mobile-title">Menu Akademik</div>
+                </div>
+
+                <div class="am-breadcrumb">/ Monitoring Presensi</div>
+
+                <h2 class="am-h1">Monitoring Presensi</h2>
+
+                <div class="am-sub">
+                    Pantau presensi siswa kelas <strong>{{kelas}}</strong> berdasarkan course dan sesi presensi dari plugin Attendance.
+                </div>
+
+                {{#periodfilter}}
+                    {{> local_akademikmonitor/walikelas/period_filter}}
+                {{/periodfilter}}
+
+                <form method="get"
+                      action="/local/akademikmonitor/pages/walikelas/presensi/index.php"
+                      class="filter-section"
+                      style="margin-top:12px;">
+
+                    <input type="hidden" name="semester" value="{{selectedsemester}}">
+                    <input type="hidden" name="tahunajaranid" value="{{selectedtahunajaranid}}">
+
+                    <label for="filter-course" style="font-weight:600;margin-bottom:6px;display:block;">
+                        Pilih Course / Mata Pelajaran
+                    </label>
+
+                    <select id="filter-course"
+                            name="courseid"
+                            class="form-control"
+                            onchange="this.form.submit()">
+
+                        {{^courses}}
+                            <option value="">Belum ada course mapel</option>
+                        {{/courses}}
+
+                        {{#courses}}
+                            <option value="{{id}}" {{#is_selected}}selected{{/is_selected}}>
+                                {{nama_mapel}}
+                            </option>
+                        {{/courses}}
+                    </select>
+                </form>
+
+                <div class="am-card" style="margin-top:14px;">
+                    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+                        <div>
+                            <div style="font-size:13px;color:#64748b;">Course dipilih</div>
+                            <div style="font-weight:700;">{{selected_course_name}}</div>
+                        </div>
+
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                            <div class="am-mini-stat">
+                                <div class="am-mini-stat-label">Jumlah Siswa</div>
+                                <div class="am-mini-stat-value">{{total_students}}</div>
+                            </div>
+
+                            <div class="am-mini-stat">
+                                <div class="am-mini-stat-label">Jumlah Pertemuan</div>
+                                <div class="am-mini-stat-value">{{total_sessions}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-wrapper" style="margin-top:14px;">
+                    <table class="table table-striped table-bordered am-presensi-table">
+                        <thead>
+                            <tr>
+                                <th class="am-sticky-name">Nama Siswa</th>
+
+                            {{#columns}}
+                            <th>
+                                {{description}}
+                                <br>
+                                <small>{{date}}</small>
+                            </th>
+                            {{/columns}}
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {{#rows}}
+                                <tr>
+                                    <td class="am-sticky-name">{{nama}}</td>
+
+                                    {{#presensi_list}}
+                                    <td>
+                                        <span
+                                            class="am-presensi-badge {{class}}"
+                                            title="{{title}}">
+                                            {{label}}
+                                        </span>
+                                    </td>
+                                    {{/presensi_list}}
+                                </tr>
+                            {{/rows}}
+
+                            {{^rows}}
+                                <tr>
+                                    <td colspan="100%" style="text-align:center;">
+                                        Tidak ada data siswa untuk kelas ini.
+                                    </td>
+                                </tr>
+                            {{/rows}}
+
+                            {{^columns}}
+                                {{#rows}}
+                                {{/rows}}
+                            {{/columns}}
+                        </tbody>
+                    </table>
+
+                    {{^columns}}
+                        <div class="am-empty-state">
+                            Belum ada sesi presensi pada course yang dipilih.
+                            Tambahkan sesi presensi terlebih dahulu melalui aktivitas Attendance di course Moodle.
+                        </div>
+                    {{/columns}}
+                                    <div class="am-presensi-legend-card">
+                    <div class="am-presensi-legend-title">Keterangan Status Presensi</div>
+
+                    <div class="am-presensi-legend-list">
+                        {{#status_legend}}
+                            <div class="am-presensi-legend-item">
+                                <span class="am-presensi-badge {{class}}">{{label}}</span>
+                                <span class="am-presensi-legend-desc">{{description}}</span>
+                            </div>
+                        {{/status_legend}}
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

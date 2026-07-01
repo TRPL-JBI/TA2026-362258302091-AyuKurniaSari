@@ -1,0 +1,99 @@
+ <div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+      <div class="am-breadcrumb">/ Ekstrakurikuler</div>
+      <h2 class="am-h1">Ekstrakurikuler</h2>
+      <div class="am-sub">Kelola ekstrakurikuler yang ada di sekolah.</div>
+
+      <div class="am-card">
+        <table class="am-table">
+          <thead>
+            <tr>
+              <th>Nama Ekstrakurikuler</th>
+              <th>Pembina</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#rows}}
+            <tr>
+              <td>{{nama}}</td>
+              <td>{{pembina}}</td>
+              <td>
+                <button class="am-btn am-btn-secondary" type="button"
+                  data-action="edit"
+                  data-id="{{id}}"
+                  data-nama="{{nama}}"
+                  data-pembina="{{id_pembina}}"
+                >edit</button>
+
+                <button class="am-btn am-btn-ghost" type="button"
+                  data-action="toggle"
+                  data-id="{{id}}"
+                >{{toggle_text}}</button>
+
+                <span class="am-badge {{badge_class}}">{{badge_text}}</span>
+              </td>
+            </tr>
+            {{/rows}}
+            {{^rows}}
+            <tr><td colspan="3" style="color:#888;">Belum ada data ekskul.</td></tr>
+            {{/rows}}
+          </tbody>
+        </table>
+
+        <div class="am-actions">
+          <button class="am-btn am-btn-primary" type="button" data-action="open-add">Tambah</button>
+        </div>
+      </div>
+
+      <input type="hidden" id="am-sesskey" value="{{sesskey}}">
+      <input type="hidden" id="am-ajaxurl" value="{{ajaxurl}}">
+
+      <!-- MODAL (ADD/EDIT) -->
+      <div class="am-modal-overlay" id="am-modal">
+        <div class="am-modal">
+          <div class="am-modal-header">
+            <h3 class="am-modal-title" id="m-title">Tambah Ekstrakurikuler</h3>
+            <button class="am-close" type="button" data-action="close-modal">✕</button>
+          </div>
+
+          <div class="am-grid">
+            <div>
+              <label class="am-label">Nama Ekstrakurikuler</label>
+              <input class="am-input" id="m-nama" placeholder="contoh: Pramuka">
+            </div>
+
+            <div style="width:100%; display:block;">
+              <label class="am-label">Pembina</label>
+              <select class="am-input am-searchable" id="m-pembinaid">
+                <option value="0">-- Pilih Pembina --</option>
+                {{#pembina_options}}
+                  <option value="{{id}}">{{label}}</option>
+                {{/pembina_options}}
+              </select>
+              <div class="am-help">Pilih pembina</div>
+            </div>
+          </div>
+
+          <div class="am-actions">
+            <button class="am-btn am-btn-primary" type="button" data-action="save">Simpan</button>
+          </div>
+
+          <input type="hidden" id="m-id" value="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button" class="am-hamburger" data-action="open-sidebar" aria-label="Buka menu">☰</button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Manajemen Jurusan / Capaian Pembelajaran / Import CSV</div>
+
+      <div class="am-page-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h1 class="am-h1">Import Capaian Pembelajaran via CSV</h1>
+          <div class="am-sub">
+            Upload file CSV untuk menambahkan CP secara massal ke mata pelajaran <strong>{{nama_mapel}}</strong>
+            — Jurusan <strong>{{nama_jurusan}}</strong>, Tingkat <strong>{{tingkat}}</strong>.
+          </div>
+        </div>
+        <a href="{{back_url}}" class="am-btn am-btn-secondary">Kembali ke Daftar CP</a>
+      </div>
+
+      {{#has_result}}
+      <div class="am-card" style="border-left:4px solid {{#is_success}}#22c55e{{/is_success}}{{#is_error}}#ef4444{{/is_error}};">
+        <p style="margin:0;font-weight:600;">{{result_msg}}</p>
+        {{#has_row_errors}}
+        <ul style="margin-top:10px;padding-left:20px;font-size:13px;color:#6b7280;">
+          {{#row_errors}}<li>{{msg}}</li>{{/row_errors}}
+        </ul>
+        {{/has_row_errors}}
+      </div>
+      {{/has_result}}
+
+      {{! Format CSV }}
+      <div class="am-card">
+        <div class="am-section-title">Format CSV</div>
+        <div class="am-sub" style="margin-bottom:12px;">
+          File CSV harus memiliki header di baris pertama. Kolom yang digunakan:
+        </div>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;font-family:monospace;font-size:13px;margin-bottom:16px;">
+          deskripsi_cp<br>
+          Pada akhir fase ini peserta didik mampu memahami konsep dasar pemrograman prosedural...<br>
+          Peserta didik mampu mengidentifikasi dan menerapkan algoritma dasar dalam penyelesaian masalah...
+        </div>
+        <div class="am-sub">
+          <strong>deskripsi_cp</strong> — teks CP lengkap per baris. Satu baris = satu CP.<br>
+          Baris yang deskripsinya kosong akan dilewati secara otomatis.
+        </div>
+        <div style="margin-top:14px;">
+          <a href="data:text/csv;charset=utf-8,deskripsi_cp%0APeserta%20didik%20mampu%20memahami%20konsep%20dasar..."
+             download="template_cp.csv"
+             class="am-btn am-btn-secondary am-btn-sm">
+            ⬇ Download Template CSV
+          </a>
+        </div>
+      </div>
+
+      {{! Form upload }}
+      <div class="am-card">
+        <div class="am-section-title">Upload File CSV</div>
+
+        <form method="post" action="{{action_url}}" enctype="multipart/form-data">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="kmid" value="{{kmid}}">
+
+          <div class="am-form-group" style="margin-bottom:16px;">
+            <label class="am-label">File CSV <span style="color:#ef4444;">*</span></label>
+            <input type="file" name="csvfile" class="am-input" accept=".csv,text/csv" required>
+          </div>
+
+          <div class="am-form-group" style="margin-bottom:20px;">
+            <label class="am-label">Jika CP sudah ada (deskripsi sama persis)</label>
+            <select name="dupmode" class="am-input" style="max-width:300px;">
+              <option value="skip">Lewati (biarkan data lama)</option>
+              <option value="update">Perbarui data yang sudah ada</option>
+            </select>
+          </div>
+
+          <button type="submit" class="am-btn am-btn-primary">Upload & Import CP</button>
+        </form>
+      </div>
+
+      {{! Panduan }}
+      <div class="am-card">
+        <div class="am-section-title">Panduan</div>
+        <ul style="margin:0;padding-left:20px;color:#6b7280;line-height:2;">
+          <li>Simpan file Excel sebagai <strong>CSV UTF-8</strong> sebelum diupload.</li>
+          <li>Satu baris = satu Capaian Pembelajaran.</li>
+          <li>CP yang sudah ada (deskripsi sama persis) akan dilewati atau diperbarui sesuai pilihan.</li>
+          <li>Setelah import, buka masing-masing CP untuk menambahkan Tujuan Pembelajaran (TP).</li>
+          <li>Guru juga bisa menambahkan TP mandiri melalui menu khusus guru.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>

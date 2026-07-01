@@ -1,0 +1,626 @@
+<div class="akademikmonitor">
+  <div class="am-layout">
+    {{> local_akademikmonitor/walikelas/sidebar}}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Raport / Detail</div>
+      <h2 class="am-h1">Detail Raport</h2>
+
+      {{#readonlyperiod}}
+      <div class="am-alert am-alert-info">
+        Tahun ajaran ini berada dalam mode arsip. Data rapor dapat dilihat, tetapi tidak dapat diubah.
+      </div>
+      {{/readonlyperiod}}
+
+      <div class="am-header">
+        <h3>Detail Rapor {{nama}}</h3>
+
+        <div class="am-header-actions">
+          {{! <button class="btn">Kunci Rapor</button> }}
+
+          <a href="{{exportexcel}}" class="am-btn am-btn-template">
+            📊 Export Excel
+          </a>
+
+          <a href="{{exportpdf}}" class="am-btn am-btn-danger">
+            🧾 Export PDF
+          </a>
+        </div>
+      </div>
+
+      <div class="am-tabs">
+        <button type="button" class="tab" data-tab="data">Data Diri</button>
+        <button type="button" class="tab" data-tab="akademik">Nilai Akademik</button>
+        <button type="button" class="tab" data-tab="catatan">Catatan Akademik</button>
+        <button type="button" class="tab" data-tab="kokurikuler">Kokurikuler</button>
+        {{#show_pkl}}
+        <button type="button" class="tab" data-tab="pkl">PKL</button>
+        {{/show_pkl}}
+        <button type="button" class="tab" data-tab="ekskul">Ekstrakurikuler</button>
+        <button type="button" class="tab" data-tab="ketidakhadiran">Ketidakhadiran</button>
+        <button type="button" class="tab" data-tab="keputusan">Kenaikan Kelas</button>
+      </div>
+
+      <div class="am-content-box">
+
+<div id="data" class="tab-content active">
+  <div class="am-rapor-biodata">
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">1.</div>
+      <div class="am-rapor-label">Nama Peserta Didik</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{nama}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">2.</div>
+      <div class="am-rapor-label">Nomor Induk Siswa Nasional</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{nisn}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">3.</div>
+      <div class="am-rapor-label">Nomor Induk Sekolah</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{nis}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">4.</div>
+      <div class="am-rapor-label">Tempat Tanggal Lahir</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{tempatlahir}}, {{tanggal_lahir}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">5.</div>
+      <div class="am-rapor-label">Jenis Kelamin</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{jk}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">6.</div>
+      <div class="am-rapor-label">Agama</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{agama}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">7.</div>
+      <div class="am-rapor-label">Status dalam Keluarga</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{status}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">8.</div>
+      <div class="am-rapor-label">Anak Ke</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{anak_ke}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">9.</div>
+      <div class="am-rapor-label">Alamat Peserta Didik</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{alamat_peserta_didik}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">10.</div>
+      <div class="am-rapor-label">Nomor Telepon Rumah</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{telepon_rumah}}</div>
+    </div>
+
+    <div class="am-rapor-row am-rapor-group-row">
+      <div class="am-rapor-no">11.</div>
+      <div class="am-rapor-label">Diterima di sekolah ini</div>
+      <div class="am-rapor-separator"></div>
+      <div class="am-rapor-value"></div>
+    </div>
+
+    <div class="am-rapor-row am-rapor-sub-row">
+      <div class="am-rapor-no">a.</div>
+      <div class="am-rapor-label">Di Kelas</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{diterima_di_kelas}}</div>
+    </div>
+
+    <div class="am-rapor-row am-rapor-sub-row">
+      <div class="am-rapor-no">b.</div>
+      <div class="am-rapor-label">Pada Tanggal</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{tanggal_diterima}}</div>
+    </div>
+
+    <div class="am-rapor-row am-rapor-group-row">
+      <div class="am-rapor-no">12.</div>
+      <div class="am-rapor-label">Nama Orang Tua</div>
+      <div class="am-rapor-separator"></div>
+      <div class="am-rapor-value"></div>
+    </div>
+
+    <div class="am-rapor-row am-rapor-sub-row">
+      <div class="am-rapor-no">a.</div>
+      <div class="am-rapor-label">Ayah</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{nama_ayah}}</div>
+    </div>
+
+    <div class="am-rapor-row am-rapor-sub-row">
+      <div class="am-rapor-no">b.</div>
+      <div class="am-rapor-label">Ibu</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{nama_ibu}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">13.</div>
+      <div class="am-rapor-label">Alamat Orang Tua</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{alamat_orang_tua}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">14.</div>
+      <div class="am-rapor-label">Nomor Telepon Rumah</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{telepon_orang_tua}}</div>
+    </div>
+
+    <div class="am-rapor-row am-rapor-group-row">
+      <div class="am-rapor-no">15.</div>
+      <div class="am-rapor-label">Pekerjaan Orang Tua</div>
+      <div class="am-rapor-separator"></div>
+      <div class="am-rapor-value"></div>
+    </div>
+
+    <div class="am-rapor-row am-rapor-sub-row">
+      <div class="am-rapor-no">a.</div>
+      <div class="am-rapor-label">Ayah</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{pekerjaan_ayah}}</div>
+    </div>
+
+    <div class="am-rapor-row am-rapor-sub-row">
+      <div class="am-rapor-no">b.</div>
+      <div class="am-rapor-label">Ibu</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{pekerjaan_ibu}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">16.</div>
+      <div class="am-rapor-label">Nama Wali Peserta Didik</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{nama_wali}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">17.</div>
+      <div class="am-rapor-label">Alamat Wali Peserta Didik</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{alamat_wali}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">18.</div>
+      <div class="am-rapor-label">Nomor Telepon Wali</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{telepon_wali}}</div>
+    </div>
+
+    <div class="am-rapor-row">
+      <div class="am-rapor-no">19.</div>
+      <div class="am-rapor-label">Pekerjaan Wali Peserta Didik</div>
+      <div class="am-rapor-separator">:</div>
+      <div class="am-rapor-value">{{pekerjaan_wali}}</div>
+    </div>
+
+  </div>
+</div>
+
+        <div id="akademik" class="tab-content">
+          {{#has_nilai_akademik}}
+          <div class="am-content-box">
+            <div class="am-table-wrap">
+              <table class="am-table">
+                <thead>
+                  <tr>
+                    <th style="width:60px;">No</th>
+                    <th style="width:280px;">Mata Pelajaran</th>
+                    <th style="width:140px;">Nilai Akhir</th>
+                    <th>Capaian Kompetensi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#nilai_akademik}}
+                  <tr>
+                    <td data-label="No">{{no}}</td>
+                    <td data-label="Mata Pelajaran">{{mata_pelajaran}}</td>
+                    <td data-label="Nilai Akhir">{{nilai_akhir}}</td>
+                    <td data-label="Capaian Kompetensi">
+                      <div style="padding-bottom:8px; margin-bottom:8px; border-bottom:1px solid #ddd;">
+                        {{capaian_atas}}
+                      </div>
+                      <div>
+                        {{capaian_bawah}}
+                      </div>
+                    </td>
+                  </tr>
+                  {{/nilai_akademik}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {{/has_nilai_akademik}}
+
+          {{#empty_nilai_akademik}}
+          <div class="am-content-box">
+            <p>Belum ada data nilai akademik.</p>
+          </div>
+          {{/empty_nilai_akademik}}
+        </div>
+
+        <div id="catatan" class="tab-content">
+          <div class="am-content-box">
+            <h5>Catatan Akademik</h5>
+            <div id="catatan-text">{{catatan}}</div>
+          </div>
+
+          {{#caneditperiod}}
+          <div class="catatan-actions" style="margin-top:12px; display:flex; justify-content:flex-end;">
+            <button type="button"
+                    class="am-btn am-btn-primary"
+                    id="btn-edit-catatan">
+              Edit Catatan
+            </button>
+          </div>
+          {{/caneditperiod}}
+        </div>
+        <div id="kokurikuler" class="tab-content">
+          <div class="am-content-box">
+            <h5>Kokurikuler</h5>
+            <div id="kokurikuler-text">{{kokurikuler}}</div>
+          </div>
+
+          {{#caneditperiod}}
+          <div class="catatan-actions" style="margin-top:12px; display:flex; justify-content:flex-end;">
+            <button type="button"
+                    class="am-btn am-btn-primary"
+                    id="btn-edit-kokurikuler">
+              Edit Kokurikuler
+            </button>
+          </div>
+          {{/caneditperiod}}
+        </div>
+        {{#show_pkl}}
+        <div id="pkl" class="tab-content">
+          <div class="am-table-wrap">
+            <table class="am-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Mitra Du/Di</th>
+                  <th>Alamat</th>
+                  <th>Waktu</th>
+                  <th>Nilai</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#pkl}}
+                <tr>
+                  <td data-label="No">{{no}}</td>
+                  <td data-label="Mitra Du/Di">{{nama}}</td>
+                  <td data-label="Alamat">{{alamat}}</td>
+                  <td data-label="Waktu">{{waktu_mulai}} s.d. {{waktu_selesai}}</td>
+                  <td data-label="Nilai">{{nilai}}</td>
+                </tr>
+                {{/pkl}}
+
+                {{^pkl}}
+                <tr>
+                  <td colspan="5" class="am-empty-state">Belum ada data PKL.</td>
+                </tr>
+                {{/pkl}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {{/show_pkl}}
+
+        <div id="ekskul" class="tab-content">
+          <div class="am-table-wrap">
+            <table class="am-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Kegiatan Ekstrakurikuler</th>
+                  <th>Predikat</th>
+                  <th>Keterangan</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#ekskul}}
+                <tr>
+                  <td data-label="No">{{no}}</td>
+                  <td data-label="Kegiatan Ekstrakurikuler">{{nama}}</td>
+                  <td data-label="Predikat">{{predikat}}</td>
+                  <td data-label="Keterangan">{{keterangan}}</td>
+                </tr>
+                {{/ekskul}}
+
+                {{^ekskul}}
+                <tr>
+                  <td colspan="4" class="am-empty-state">Belum ada data ekstrakurikuler.</td>
+                </tr>
+                {{/ekskul}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="ketidakhadiran" class="tab-content">
+          <div class="am-content-box">
+            <h5>Ketidakhadiran</h5>
+
+            {{#ketidakhadiran_auto}}
+            <div class="am-alert am-alert-info" style="margin-bottom:12px;">
+              Ketidakhadiran awal dihitung otomatis dari presensi Moodle per hari.
+              Jika ada penyesuaian, wali kelas masih dapat mengubah lalu menyimpan data ini.
+            </div>
+            {{/ketidakhadiran_auto}}
+
+            {{#ketidakhadiran_manual}}
+            <div class="am-alert am-alert-warning" style="margin-bottom:12px;">
+              Ketidakhadiran menggunakan data manual dari wali kelas.
+            </div>
+            {{/ketidakhadiran_manual}}
+
+            {{#ketidakhadiran_empty}}
+            <div class="am-alert am-alert-info" style="margin-bottom:12px;">
+              Belum ada data presensi otomatis maupun data manual ketidakhadiran.
+            </div>
+            {{/ketidakhadiran_empty}}
+
+            <div class="am-table-wrap">
+              <table class="am-table">
+                <tbody>
+                  <tr>
+                    <td rowspan="3"
+                        data-label="Jenis"
+                        style="vertical-align: middle; text-align: center;">
+                      Ketidakhadiran
+                    </td>
+
+                    <td data-label="Keterangan"
+                        style="vertical-align: middle; text-align: center;">
+                      Sakit
+                    </td>
+
+                    <td data-label="Jumlah"
+                        style="vertical-align: middle;">
+                      <input type="number"
+                            class="am-input"
+                            id="hadir-sakit"
+                            {{#readonlyperiod}}disabled{{/readonlyperiod}}
+                            value="{{sakit}}"
+                            min="0"
+                            style="max-width:100px;">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td data-label="Keterangan"
+                        style="vertical-align: middle; text-align: center;">
+                      Izin
+                    </td>
+
+                    <td data-label="Jumlah"
+                        style="vertical-align: middle;">
+                      <input type="number"
+                            class="am-input"
+                            id="hadir-izin"
+                            {{#readonlyperiod}}disabled{{/readonlyperiod}}
+                            value="{{izin}}"
+                            min="0"
+                            style="max-width:100px;">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td data-label="Keterangan"
+                        style="vertical-align: middle; text-align: center;">
+                      Tanpa Keterangan
+                    </td>
+
+                    <td data-label="Jumlah"
+                        style="vertical-align: middle;">
+                      <input type="number"
+                            class="am-input"
+                            id="hadir-alfa"
+                            {{#readonlyperiod}}disabled{{/readonlyperiod}}
+                            value="{{alfa}}"
+                            min="0"
+                            style="max-width:100px;">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {{#caneditperiod}}
+            <div class="ketidakhadiran-actions"
+                style="margin-top:12px; display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap;">
+
+              {{#ketidakhadiran_manual}}
+              <form method="post" action="{{reset_ketidakhadiran_url}}" style="margin:0;">
+                <input type="hidden" name="sesskey" value="{{sesskey}}">
+                <input type="hidden" name="action" value="resetketidakhadiran">
+
+                <button type="submit" class="am-btn am-btn-ghost">
+                  Kembali ke Data Attendance
+                </button>
+              </form>
+              {{/ketidakhadiran_manual}}
+
+              <button type="button"
+                      class="am-btn am-btn-primary"
+                      id="save-ketidakhadiran">
+                Simpan Manual
+              </button>
+            </div>
+            {{/caneditperiod}}
+          </div>
+        </div>
+
+        <div id="keputusan" class="tab-content">
+          <div class="am-content-box">
+            <h5>Kenaikan Kelas</h5>
+            <div id="keputusan-text">{{keputusan}}</div>
+          </div>
+
+          {{#caneditperiod}}
+          <div class="keputusan-actions" style="margin-top:12px; display:flex; justify-content:flex-end;">
+            <button type="button"
+                    class="am-btn am-btn-primary"
+                    id="btn-edit-keputusan">
+              Edit Keputusan
+            </button>
+          </div>
+          {{/caneditperiod}}
+        </div>
+
+      </div>
+
+      {{#caneditperiod}}
+      <div class="am-modal-overlay" id="modal-catatan">
+        <div class="am-modal">
+          <div class="am-modal-header">
+            <h3 class="am-modal-title">Edit Catatan</h3>
+
+            <button class="am-close"
+                    type="button"
+                    id="close-modal">
+              ✕
+            </button>
+          </div>
+
+          <div class="am-field">
+            <label class="am-label" for="input-catatan">Catatan Akademik</label>
+
+            <textarea id="input-catatan"
+                      class="am-input"
+                      rows="6"
+                      style="min-height:130px; resize:vertical;"
+                      placeholder="Masukkan catatan akademik">{{catatan}}</textarea>
+          </div>
+
+          <div class="am-modal-actions">
+            <button class="am-btn am-btn-ghost"
+                    type="button"
+                    id="cancel-catatan">
+              Batal
+            </button>
+
+            <button class="am-btn am-btn-primary"
+                    type="button"
+                    id="save-catatan">
+              Simpan
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="am-modal-overlay" id="modal-kokurikuler">
+        <div class="am-modal">
+          <div class="am-modal-header">
+            <h3 class="am-modal-title">Edit Kokurikuler</h3>
+
+            <button class="am-close"
+                    type="button"
+                    id="close-modal-kokurikuler">
+              ✕
+            </button>
+          </div>
+
+          <div class="am-field">
+            <label class="am-label" for="input-kokurikuler">Kokurikuler</label>
+
+            <textarea id="input-kokurikuler"
+                      class="am-input"
+                      rows="6"
+                      style="min-height:130px; resize:vertical;"
+                      placeholder="Masukkan catatan kokurikuler">{{kokurikuler}}</textarea>
+          </div>
+
+          <div class="am-modal-actions">
+            <button class="am-btn am-btn-ghost"
+                    type="button"
+                    id="cancel-kokurikuler">
+              Batal
+            </button>
+
+            <button class="am-btn am-btn-primary"
+                    type="button"
+                    id="save-kokurikuler">
+              Simpan
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="am-modal-overlay" id="modal-keputusan">
+        <div class="am-modal">
+          <div class="am-modal-header">
+            <h3 class="am-modal-title">Edit Keputusan</h3>
+
+            <button class="am-close"
+                    type="button"
+                    id="close-modal-keputusan">
+              ✕
+            </button>
+          </div>
+
+          <div class="am-field">
+            <label class="am-label" for="input-keputusan">Kenaikan Kelas</label>
+
+            <textarea id="input-keputusan"
+                      class="am-input"
+                      rows="6"
+                      style="min-height:130px; resize:vertical;"
+                      placeholder="Masukkan keputusan kenaikan kelas">{{keputusan}}</textarea>
+          </div>
+
+          <div class="am-modal-actions">
+            <button class="am-btn am-btn-ghost"
+                    type="button"
+                    id="cancel-keputusan">
+              Batal
+            </button>
+
+            <button class="am-btn am-btn-primary"
+                    type="button"
+                    id="save-keputusan">
+              Simpan
+            </button>
+          </div>
+        </div>
+      </div>
+      {{/caneditperiod}}
+
+    </div>
+  </div>
+</div>

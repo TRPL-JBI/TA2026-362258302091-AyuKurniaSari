@@ -1,0 +1,84 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-breadcrumb">/ Kartu Ujian</div>
+
+      <div class="am-page-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h1 class="am-h1">Kartu Ujian</h1>
+          <div class="am-sub">Kelola kartu ujian per kelas. Kartu digenerate otomatis untuk siswa yang layak.</div>
+        </div>
+        <a href="{{add_url}}" class="am-btn am-btn-primary">+ Tambah Kartu Ujian</a>
+      </div>
+
+      {{#has_items}}
+        {{#groups}}
+        <div style="margin-bottom:26px;">
+          <h3 style="margin:0 0 10px;font-size:18px;font-weight:700;">Tahun Ajaran {{tahun}}</h3>
+          <div class="am-table-wrap">
+            <table class="am-table">
+              <thead>
+                <tr>
+                  <th style="width:50px;">No</th>
+                  <th>Nama Ujian</th>
+                  <th>Kelas</th>
+                  <th>Jurusan</th>
+                  <th style="width:100px;">Semester</th>
+                  <th style="width:110px;">Status</th>
+                  <th style="width:200px;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#items}}
+                <tr>
+                  <td data-label="No">{{no}}</td>
+                  <td data-label="Nama Ujian"><strong>{{nama_ujian}}</strong></td>
+                  <td data-label="Kelas">{{nama_kelas}}</td>
+                  <td data-label="Jurusan">{{nama_jurusan}}</td>
+                  <td data-label="Semester">{{semester}}</td>
+                  <td data-label="Status">
+                    {{#is_published}}
+                      <span style="background:#d1fae5;color:#065f46;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;">Dipublikasikan</span>
+                    {{/is_published}}
+                    {{#is_draft}}
+                      <span style="background:#fef3c7;color:#92400e;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;">Draft</span>
+                    {{/is_draft}}
+                  </td>
+                  <td data-label="Aksi">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <a href="{{detail_url}}" class="am-btn am-btn-primary am-btn-sm">Detail</a>
+                      <a href="{{edit_url}}" class="am-btn am-btn-edit am-btn-sm">Edit</a>
+                      <form action="{{delete_action}}" method="post" style="display:inline;"
+                            onsubmit="return confirm('Hapus kartu ujian ini beserta semua data siswa?');">
+
+                          <input type="hidden" name="sesskey" value="{{delete_sesskey}}">
+                          <input type="hidden" name="id" value="{{delete_id}}">
+
+                          <button type="submit" class="am-btn am-btn-danger am-btn-sm">
+                              Hapus
+                          </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+                {{/items}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {{/groups}}
+      {{/has_items}}
+
+      {{^has_items}}
+      <div class="am-card am-empty-state" style="text-align:center;padding:48px 24px;">
+        <div style="font-size:48px;margin-bottom:12px;">📋</div>
+        <h3 style="margin:0 0 8px;">Belum Ada Kartu Ujian</h3>
+        <p class="am-sub" style="margin:0 0 16px;">Tambahkan kartu ujian baru untuk mulai mengelola peserta ujian.</p>
+        <a href="{{add_url}}" class="am-btn am-btn-primary">+ Tambah Kartu Ujian</a>
+      </div>
+      {{/has_items}}
+    </div>
+  </div>
+</div>

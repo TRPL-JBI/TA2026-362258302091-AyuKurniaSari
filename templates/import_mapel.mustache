@@ -1,0 +1,85 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button" class="am-hamburger" data-action="open-sidebar" aria-label="Buka menu">☰</button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Mata Pelajaran / Import CSV</div>
+
+      <div class="am-page-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h1 class="am-h1">Import Mata Pelajaran via CSV</h1>
+          <div class="am-sub">Upload file CSV untuk menambahkan data mata pelajaran secara massal. Berguna saat pergantian kurikulum atau perubahan daftar mata pelajaran.</div>
+        </div>
+        <a href="{{back_url}}" class="am-btn am-btn-secondary">Kembali ke Daftar</a>
+      </div>
+
+      {{#has_result}}
+      <div class="am-card" style="border-left:4px solid {{#is_success}}#22c55e{{/is_success}}{{#is_error}}#ef4444{{/is_error}};">
+        <p style="margin:0;font-weight:600;">{{result_msg}}</p>
+        {{#has_row_errors}}
+        <ul style="margin-top:10px;padding-left:20px;font-size:13px;color:#6b7280;">
+          {{#row_errors}}<li>{{msg}}</li>{{/row_errors}}
+        </ul>
+        {{/has_row_errors}}
+      </div>
+      {{/has_result}}
+
+      <div class="am-card">
+        <div class="am-section-title">Format CSV</div>
+        <div class="am-sub" style="margin-bottom:12px;">
+          File CSV harus memiliki header di baris pertama. Kolom yang didukung:
+        </div>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;font-family:monospace;font-size:13px;margin-bottom:16px;">
+          kategori,nama_mapel<br>
+          umum,Bahasa Indonesia<br>
+          umum,Matematika<br>
+          kejuruan,Pemrograman Web<br>
+          kejuruan,Basis Data
+        </div>
+        <div class="am-sub">
+          <strong>kategori</strong> bisa berisi: <code>umum</code>, <code>kejuruan</code>, atau nama kategori lain sesuai kebutuhan.<br>
+          Jika kolom kategori tidak ada, default akan menggunakan <code>kejuruan</code>.
+        </div>
+      </div>
+
+      <div class="am-card">
+        <div class="am-section-title">Upload File CSV</div>
+
+        <form method="post" action="{{action_url}}" enctype="multipart/form-data">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+
+          <div class="am-form-group" style="margin-bottom:16px;">
+            <label class="am-label">File CSV <span style="color:#ef4444;">*</span></label>
+            <input type="file" name="csvfile" class="am-input" accept=".csv,text/csv" required>
+          </div>
+
+          <div class="am-form-group" style="margin-bottom:20px;">
+            <label class="am-label">Jika data sudah ada</label>
+            <select name="dupmode" class="am-input" style="max-width:300px;">
+              <option value="skip">Lewati (biarkan data lama)</option>
+              <option value="update">Perbarui data yang sudah ada</option>
+            </select>
+          </div>
+
+          <button type="submit" class="am-btn am-btn-primary">Upload & Import</button>
+        </form>
+      </div>
+
+      <div class="am-card">
+        <div class="am-section-title">Panduan</div>
+        <ul style="margin:0;padding-left:20px;color:#6b7280;line-height:2;">
+          <li>Simpan file Excel sebagai CSV (UTF-8 atau ANSI).</li>
+          <li>Pastikan kolom <strong>nama_mapel</strong> terisi; kolom yang kosong akan dilewati.</li>
+          <li>Data duplikat (nama + kategori sama persis) akan dilewati atau diperbarui sesuai pilihan di atas.</li>
+          <li>Setelah import, set mapel ke jurusan melalui menu <strong>Manajemen Jurusan → Set Mapel</strong>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>

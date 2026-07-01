@@ -1,0 +1,126 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Pengaturan KKTP</div>
+
+      <h2 class="am-h1">Pengaturan KKTP</h2>
+
+      <div class="am-sub">
+        Atur ambang batas nilai KKTP. Nilai KKTP diatur setiap mata pelajaran.
+      </div>
+
+      <div class="am-card">
+
+      <form method="get"
+            action=""
+            class="am-period-filter"
+            style="margin:8px 0 16px 0;">
+
+        <label class="am-label" style="display:block; margin:0 0 6px 0;">
+          Daftar Ambang Batas Nilai KKTP
+        </label>
+
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <select name="jurusanid"
+                  class="form-control"
+                  style="width:160px; max-width:100%;"
+                  onchange="this.form.submit()">
+            {{#jurusan_options}}
+              <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                {{name}}
+              </option>
+            {{/jurusan_options}}
+          </select>
+
+          <select name="tingkat"
+                  class="form-control"
+                  style="width:110px; max-width:100%;"
+                  onchange="this.form.submit()">
+            {{#tingkat_options}}
+              <option value="{{value}}" {{#selected}}selected{{/selected}}>
+                {{label}}
+              </option>
+            {{/tingkat_options}}
+          </select>
+        </div>
+
+      </form>
+
+        <form method="post" action="">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="jurusanid" value="{{jurusanid}}">
+          <input type="hidden" name="tingkat" value="{{tingkat}}">
+
+          <div class="am-table-wrap">
+            <table class="am-table">
+              <thead>
+                <tr>
+                  <th>Mata Pelajaran</th>
+                  <th>Jurusan</th>
+                  <th>Kelas</th>
+                  <th>Nilai KKTP</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {{#rows}}
+                  <tr>
+                    <td data-label="Mata Pelajaran">{{mapel}}</td>
+                    <td data-label="Jurusan">{{jurusan}}</td>
+                    <td data-label="Kelas">{{tingkat}}</td>
+                    <td data-label="Nilai KKTP">
+                      <select name="kktp[{{kmid}}]"
+                              class="form-control"
+                              style="max-width:80px;">
+                        {{#kktp_options}}
+                          <option value="{{value}}" {{#selected}}selected{{/selected}}>
+                            {{label}}
+                          </option>
+                        {{/kktp_options}}
+                      </select>
+                    </td>
+                  </tr>
+                {{/rows}}
+
+                {{^rows}}
+                  <tr>
+                    <td colspan="4" style="color:#888;">
+                      Belum ada data. Dummy data harusnya otomatis saat install.
+                    </td>
+                  </tr>
+                {{/rows}}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="am-actions">
+            <a class="am-btn am-btn-secondary"
+               href="{{kktp_url}}?jurusanid={{jurusanid}}&tingkat={{tingkat}}">
+              BATAL
+            </a>
+
+            <button class="am-btn am-btn-primary"
+                    type="submit"
+                    name="save"
+                    value="1">
+              SIMPAN
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

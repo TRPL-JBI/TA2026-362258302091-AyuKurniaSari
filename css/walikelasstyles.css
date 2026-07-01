@@ -1,0 +1,608 @@
+/* Layout utama */
+.akademikmonitor .am-layout{
+    display: flex;
+}
+
+.akademikmonitor .am-sidebar{
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.akademikmonitor .am-content{
+    flex: 1;
+    padding-left: 24px;
+}
+
+/* Scroll tabel jika terlalu lebar */
+.akademikmonitor .am-table-scroll{
+    overflow-x: auto;
+}
+
+/* Supaya setiap mapel tetap satu baris */
+.akademikmonitor .am-course{
+    white-space: nowrap;
+    margin-bottom: 4px;
+}
+
+/* .am-modal-overlay{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.5);
+
+    display:none; 
+
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+} */
+
+.akademikmonitor .am-modal{
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    width:320px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.akademikmonitor .am-modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.akademikmonitor .am-close{
+    border:none;
+    background:none;
+    font-size:18px;
+    cursor:pointer;
+}
+.akademikmonitor .am-modal-overlay{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.5);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+.akademikmonitor .table th:nth-child(1),
+.akademikmonitor .table td:nth-child(1) {
+    width: auto;
+    text-align: left;
+}
+
+/* .akademikmonitor .table th:last-child,
+.akademikmonitor .table td:last-child {
+    width: px;
+    text-align: center;
+} */
+.akademikmonitor .table th:last-child,
+.akademikmonitor .table td:last-child {
+    width: auto;
+    text-align: left;
+}
+.akademikmonitor .table thead th {
+    background: #f5f7fa;
+    font-weight: 600;
+    border-bottom: 2px solid #cfd8dc;
+}
+.akademikmonitor table.table {
+    border-collapse: collapse;
+}
+
+.akademikmonitor table.table th,
+.akademikmonitor table.table td {
+    border: 1px solid #cfd8dc !important;
+    padding: 8px;
+    vertical-align: middle;
+}
+
+.akademikmonitor table.table thead th {
+    background: #f5f7fa;
+    font-weight: 600;
+}
+.akademikmonitor .am-btn-edit {
+    padding: 4px 10px;
+    border: 1px solid #3b82f6;
+    background: #3b82f6;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.akademikmonitor .am-btn-edit:hover {
+    background: #2563eb;
+}
+.akademikmonitor .am-input:disabled{
+    background:#f3f4f6;
+    cursor:not-allowed;
+}
+
+
+
+
+/* kasih warna export excel dan pdf */
+.akademikmonitor .am-header-actions .btn {
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    color: #fff;
+}
+
+.akademikmonitor .am-header-actions .btn-success {
+    background: #198754;
+    color: #fff;
+}
+
+.akademikmonitor .am-header-actions .btn-success:hover {
+    background: #157347;
+    color: #fff;
+    text-decoration: none;
+}
+
+.akademikmonitor .am-header-actions .btn-danger {
+    background: #dc3545;
+    color: #fff;
+}
+
+.akademikmonitor .am-header-actions .btn-danger:hover {
+    background: #bb2d3b;
+    color: #fff;
+    text-decoration: none;
+}
+
+.akademikmonitor .am-header-actions .btn-secondary {
+    background: #6c757d;
+    color: #fff;
+}
+
+.akademikmonitor .am-header-actions .btn-secondary:hover {
+    background: #5c636a;
+    color: #fff;
+    text-decoration: none;
+}
+
+
+
+
+
+
+/* WRAPPER UTAMA */
+.akademikmonitor .am-raport {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f5f5f5;
+    padding: 15px;
+}
+
+/* HEADER */
+.akademikmonitor .am-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.akademikmonitor .am-header h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.akademikmonitor .am-header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* BUTTON */
+.akademikmonitor .btn {
+    background: #e0e0e0;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.akademikmonitor .btn:hover {
+    background: #d5d5d5;
+}
+
+/* TAB */
+.akademikmonitor .am-tabs {
+    display: flex;
+    gap: 5px;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.akademikmonitor .tab {
+    padding: 8px 15px;
+    background: #e9e9e9;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    font-size: 14px;
+}
+
+.akademikmonitor .tab.active {
+    background: #fff;
+    border-bottom: 2px solid #fff;
+    font-weight: bold;
+}
+
+/* CONTENT BOX */
+.akademikmonitor .am-content-box {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* TAB CONTENT */
+.akademikmonitor .tab-content {
+    display: none;
+}
+
+.akademikmonitor .tab-content.active {
+    display: block;
+}
+
+/* TABLE DATA DIRI */
+.akademikmonitor .am-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+.akademikmonitor .am-table td {
+    padding: 6px 10px;
+    vertical-align: top;
+}
+
+/* LABEL KIRI */
+.akademikmonitor .am-table td:first-child {
+    width: 250px;
+    color: #555;
+}
+
+/* VALUE KANAN */
+.akademikmonitor .am-table td:last-child {
+    font-weight: 500;
+}
+
+/* PKL & EKSKUL LIST */
+.akademikmonitor .tab-content p {
+    margin: 5px 0;
+}
+
+/* RESPONSIVE (BIAR GA PECAH) */
+@media (max-width: 768px) {
+    .akademikmonitor .am-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .akademikmonitor .am-tabs {
+        flex-wrap: wrap;
+    }
+}
+
+
+
+/* ======================
+   FULL WIDTH FIX
+====================== */
+
+/* Biar konten benar-benar full */
+.akademikmonitor .am-content {
+    padding: 10px 20px;
+    max-width: 100%;
+}
+
+/* Card diperlebar */
+.akademikmonitor .am-content-box {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Kalau mau super full (tanpa batas moodle) */
+#page.drawers .main-inner {
+    max-width: 100% !important;
+}
+.row {
+    display: grid;
+    grid-template-columns: 300px 20px 1fr;
+    align-items: start;
+    padding: 8px 0;
+}
+
+.catatan-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.keputusan-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.ketidakhadiran-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+#ketidakhadiran input {
+    width: 80px;
+    padding: 5px;
+}
+
+
+.am-report-page {
+    width: 100%;
+}
+
+.am-report-breadcrumb {
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #777;
+}
+
+.am-report-header {
+    margin-bottom: 10px;
+}
+
+.am-report-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.am-report-title {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.am-report-subtitle {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+}
+
+.am-report-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+}
+
+.am-report-toolbar-left {
+    min-width: 220px;
+}
+
+.am-student-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.am-report-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.am-report-filter-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.am-filter-select {
+    min-width: 150px;
+    height: 38px;
+    border-radius: 8px;
+}
+
+.am-report-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.am-report-actions .btn {
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+.am-presensi-table th,
+.am-presensi-table td {
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.am-presensi-table .am-sticky-name {
+    text-align: left;
+    min-width: 220px;
+    position: sticky;
+    left: 0;
+    background: #fff;
+    z-index: 2;
+}
+
+.am-presensi-table thead .am-sticky-name {
+    z-index: 3;
+}
+
+.am-presensi-table th small {
+    display: block;
+    margin-top: 3px;
+    color: #64748b;
+    font-weight: 400;
+}
+
+.am-presensi-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 76px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.am-presensi-present {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.am-presensi-absent {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.am-presensi-late {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.am-presensi-excused {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.am-presensi-info {
+    background: #e0f2fe;
+    color: #075985;
+}
+
+.am-presensi-empty {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.am-mini-stat {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 10px 14px;
+    min-width: 130px;
+    background: #f8fafc;
+}
+
+.am-mini-stat-label {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.am-mini-stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.am-empty-state {
+    margin-top: 12px;
+    padding: 14px;
+    border-radius: 12px;
+    background: #f8fafc;
+    color: #64748b;
+    text-align: center;
+}
+.am-presensi-guru-table th,
+.am-presensi-guru-table td {
+    text-align: left;
+}
+
+.am-presensi-guru-table th:nth-child(3),
+.am-presensi-guru-table td:nth-child(3) {
+    text-align: center;
+    width: 180px;
+}
+
+.am-presensi-guru-table th:nth-child(2),
+.am-presensi-guru-table td:nth-child(2) {
+    width: 180px;
+    white-space: nowrap;
+}
+.am-presensi-legend-card {
+    margin-top: 14px;
+    padding: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.am-presensi-legend-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 12px;
+}
+
+.am-presensi-legend-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 18px;
+}
+
+.am-presensi-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.am-presensi-legend-desc {
+    font-size: 13px;
+    color: #475569;
+}
+
+@media (max-width: 768px) {
+    .am-presensi-legend-list {
+        grid-template-columns: 1fr;
+    }
+
+    .am-presensi-legend-item {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+    }
+}
+
+.nilai-baik{
+    color:#16a34a;
+}
+
+.nilai-kurang{
+    color:#dc2626;
+    font-weight:600;
+}

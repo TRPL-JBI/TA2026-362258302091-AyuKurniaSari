@@ -1,0 +1,257 @@
+<div class="akademikmonitor">
+  <div class="am-layout">
+    {{> local_akademikmonitor/walikelas/sidebar}}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      {{#kelas}}
+      <div class="am-breadcrumb">/ Ekstrakurikuler Siswa</div>
+      <h2 class="am-h1">Ekstrakurikuler Siswa</h2>
+      <div class="am-sub">
+        Kelola data ekstrakurikuler siswa untuk kelas {{nama}}.
+      </div>
+
+      {{#readonlyperiod}}
+      <div class="am-alert am-alert-info">
+        Tahun ajaran ini berada dalam mode arsip. Data ekstrakurikuler dapat dilihat, tetapi tidak dapat diubah.
+      </div>
+      {{/readonlyperiod}}
+
+      <div class="am-toolbar">
+        <div class="am-toolbar-left">
+          {{#caneditperiod}}
+          <button type="button"
+                  class="am-btn am-btn-primary"
+                  data-action="open-import">
+            Import CSV
+          </button>
+          {{/caneditperiod}}
+
+          <a class="am-btn am-btn-template"
+             href="/local/akademikmonitor/pages/walikelas/ekskul/download_template.php">
+            Download Template CSV
+          </a>
+
+          <a class="am-btn am-btn-template"
+            href="/local/akademikmonitor/pages/walikelas/ekskul/export_excel.php?kelasid={{currentkelasid}}&semester={{selectedsemester}}&tahunajaranid={{selected_tahunajaranid}}&sesskey={{sesskey}}">
+            Export Excel
+          </a>
+        </div>
+
+        {{#caneditperiod}}
+        <div class="am-actions">
+          <button type="button"
+                  class="am-btn am-btn-primary"
+                  data-action="open-add"
+                  data-kelasid="{{kelasid}}">
+            Tambah Peserta Ekskul
+          </button>
+        </div>
+        {{/caneditperiod}}
+      </div>
+
+      <div class="am-card">
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>NISN</th>
+                <th>Ekstrakurikuler</th>
+                <th>Predikat</th>
+                <th>Keterangan</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#siswa}}
+                {{#ekskullist}}
+                <tr>
+                  {{#isfirst}}
+                    <td rowspan="{{rowspan}}" data-label="No">{{siswa_no}}</td>
+                    <td rowspan="{{rowspan}}" data-label="Nama">{{siswa_nama}}</td>
+                    <td rowspan="{{rowspan}}" data-label="NISN">{{siswa_nisn}}</td>
+                  {{/isfirst}}
+
+                  <td data-label="Ekstrakurikuler">{{nama}}</td>
+                  <td data-label="Predikat">{{predikat}}</td>
+                  <td data-label="Keterangan">{{keterangan}}</td>
+                  <td data-label="Aksi">
+                    <div class="am-row-actions">
+                      {{#caneditperiod}}
+                      <button class="am-btn am-btn-edit"
+                              type="button"
+                              data-action="edit"
+                              data-userid="{{userid}}"
+                              data-kelasid="{{kelasid}}"
+                              data-ekskulid="{{ekskulid}}"
+                              data-predikat="{{predikat}}"
+                              data-nisn="{{siswa_nisn}}"
+                              data-nama="{{siswa_nama}}"
+                              data-semester="{{semester}}">
+                        Edit
+                      </button>
+                      {{/caneditperiod}}
+                      <button class="am-btn am-btn-danger"
+                            type="button"
+                            data-action="delete"
+                            data-userid="{{userid}}"
+                            data-kelasid="{{kelasid}}"
+                            data-ekskulid="{{ekskulid}}"
+                            data-semester="{{semester}}">
+                      Hapus
+                    </button>
+                    </div>
+                  </td>
+                </tr>
+                {{/ekskullist}}
+              {{/siswa}}
+
+              {{^siswa}}
+              <tr>
+                <td colspan="7" class="am-empty-state">
+                  Belum ada data ekstrakurikuler siswa.
+                </td>
+              </tr>
+              {{/siswa}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {{/kelas}}
+
+      <input type="hidden" id="am-ajaxurl" value="{{ajaxurl}}">
+      <input type="hidden" id="am-sesskey" value="{{sesskey}}">
+
+      {{#caneditperiod}}
+      <div class="am-modal-overlay" id="am-modal">
+        <div class="am-modal">
+          <div class="am-modal-header">
+            <h3 class="am-modal-title" id="m-title">Tambah Peserta Ekskul</h3>
+            <button class="am-close"
+                    type="button"
+                    data-action="close-modal">
+              ✕
+            </button>
+          </div>
+
+          <div class="am-grid">
+            <div>
+              <label class="am-label">Nama Siswa</label>
+              <select class="am-input" id="m-userid">
+                <option value="">-- Pilih Siswa --</option>
+                {{#siswa_options}}
+                  <option value="{{id}}" data-nisn="{{nisn}}">
+                    {{nama}}
+                  </option>
+                {{/siswa_options}}
+              </select>
+            </div>
+
+            <div>
+              <label class="am-label">NISN</label>
+              <input class="am-input" id="m-nisn" readonly>
+            </div>
+
+            <div>
+              <label class="am-label">Ekstrakurikuler</label>
+              <select class="am-input" id="m-ekskulid">
+                <option value="">-- Pilih Ekskul --</option>
+                {{#ekskul_options}}
+                  <option value="{{id}}">{{nama}}</option>
+                {{/ekskul_options}}
+              </select>
+            </div>
+
+            <div>
+              <label class="am-label">Predikat</label>
+              <select class="am-input" id="m-predikat">
+                <option value="">-- Pilih Predikat --</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="am-modal-actions">
+            <button class="am-btn am-btn-ghost"
+                    type="button"
+                    data-action="close-modal">
+              Batal
+            </button>
+
+            <button class="am-btn am-btn-primary"
+                    type="button"
+                    data-action="save">
+              Simpan
+            </button>
+          </div>
+
+          <input type="hidden" id="m-kelasid" value="">
+          <input type="hidden" id="m-semester" value="{{selectedsemester}}">
+        </div>
+      </div>
+
+      <div class="am-modal-overlay" id="am-import-modal">
+        <div class="am-modal am-modal-sm">
+          <div class="am-modal-header">
+            <h3 class="am-modal-title">Import Data Ekskul Siswa</h3>
+            <button class="am-close"
+                    type="button"
+                    data-action="close-import">
+              ✕
+            </button>
+          </div>
+
+          <form method="post"
+                action="/local/akademikmonitor/pages/walikelas/ekskul/import_csv.php"
+                enctype="multipart/form-data"
+                class="am-import-modal-form">
+            <input type="hidden" name="sesskey" value="{{sesskey}}">
+            <input type="hidden" name="kelasid" value="{{currentkelasid}}">
+            <input type="hidden" name="semester" value="{{selectedsemester}}">
+
+            <div class="am-field">
+              <label class="am-label">Pilih File CSV</label>
+              <input type="file"
+                     name="csvfile"
+                     class="am-input-file"
+                     accept=".csv"
+                     required>
+              <div class="am-help-text">
+                Format yang didukung: CSV
+              </div>
+            </div>
+
+            <div class="am-modal-actions">
+              <button type="button"
+                      class="am-btn am-btn-ghost"
+                      data-action="close-import">
+                Batal
+              </button>
+
+              <button type="submit"
+                      class="am-btn am-btn-primary">
+                Upload & Import
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      {{/caneditperiod}}
+
+    </div>
+  </div>
+</div>

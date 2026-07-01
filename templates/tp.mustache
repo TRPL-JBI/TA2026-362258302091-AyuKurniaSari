@@ -1,0 +1,196 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button" class="am-hamburger" data-action="open-sidebar" aria-label="Buka menu">☰</button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+
+      <div class="am-page-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <div class="am-breadcrumb">/ Manajemen Jurusan / Tujuan Pembelajaran</div>
+          <h1 class="am-h1">Tujuan Pembelajaran</h1>
+          <div class="am-sub">Tambah beberapa TP sekaligus berdasarkan CP yang dipilih.</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <a href="{{export_url}}" class="am-btn am-btn-success" title="Export seluruh TP pada mapel ini ke Excel">
+            ⬇ Export Excel
+          </a>
+          <a href="{{export_pdf_url}}" class="am-btn am-btn-secondary" title="Export TP ke PDF sesuai format Analisis CP dan ATP">
+            ⬇ Export PDF
+          </a>
+          <a href="/local/akademikmonitor/pages/jurusan/import_tp.php?kmid={{kmid}}&cpid={{cpid}}"
+             class="am-btn am-btn-primary" title="Import TP via CSV untuk CP ini">
+            ⬆ Import TP
+          </a>
+          <a href="{{back_url}}" class="am-btn am-btn-secondary">Kembali</a>
+        </div>
+      </div>
+
+      {{! Info panel mapel/kurikulum }}
+      <div class="am-card" style="background:#f0f9ff;border-left:4px solid #3b82f6;padding:14px 18px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;font-size:13px;">
+          <div><span style="color:#6b7280;">Mata Pelajaran</span><br><strong>{{nama_mapel}}</strong></div>
+          <div><span style="color:#6b7280;">Jurusan</span><br><strong>{{nama_jurusan}}</strong></div>
+          <div><span style="color:#6b7280;">Kurikulum</span><br><strong>{{nama_kurikulum}}</strong></div>
+          <div><span style="color:#6b7280;">Tahun Ajaran</span><br><strong>{{tahun_ajaran}}</strong></div>
+          <div><span style="color:#6b7280;">Tingkat</span><br><strong>{{tingkat}}</strong></div>
+          <div><span style="color:#6b7280;">KKTP</span><br><strong>{{kktp}}</strong></div>
+        </div>
+      </div>
+
+      <div class="am-card" style="border-left:4px solid #10b981;">
+        <div class="am-section-title">Filter Course</div>
+        <form id="tp-filter-form" method="get" action="{{filter_url}}" style="display:grid;grid-template-columns:minmax(260px,560px) auto;gap:12px;align-items:end;">
+          <input type="hidden" name="kmid" value="{{kmid}}">
+          <input type="hidden" name="cpid" value="{{cpid}}">
+          <div>
+            <label class="am-label">Course / Kelas / Guru</label>
+            <select name="filtercourseid" class="am-input">
+              <option value="0">Pilih course / kelas</option>
+              {{#course_filter_options}}
+              <option value="{{id}}" {{#selected}}selected{{/selected}}>{{label}}</option>
+              {{/course_filter_options}}
+            </select>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="submit"
+                      class="am-btn am-btn-primary">
+                  Cari
+              </button>
+
+              <a href="/local/akademikmonitor/pages/jurusan/tujuan_pembelajaran.php?kmid={{kmid}}&cpid={{cpid}}"
+                class="am-btn am-btn-secondary">
+                  Reset
+              </a>
+          </div>
+        </form>
+
+        {{#has_selected_course_info}}
+        <div style="margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:12px 14px;">
+          {{#selected_course_info}}
+          <div><span style="color:#6b7280;font-size:12px;">Guru Pengampu</span><br><strong>{{teacher_names}}</strong></div>
+          <div><span style="color:#6b7280;font-size:12px;">Kelas / Course</span><br><strong>{{kelas_name}}</strong></div>
+          <div><span style="color:#6b7280;font-size:12px;">Jurusan</span><br><strong>{{jurusan_name}}</strong></div>
+          {{/selected_course_info}}
+        </div>
+        {{/has_selected_course_info}}
+      </div>
+
+      <div class="am-card">
+        <p><b>Capaian Pembelajaran</b></p>
+        <p class="am-sub">{{cp}}</p>
+        <p><b>JP:</b> {{jp}}</p>
+
+        <form method="post" action="{{{action_url}}}">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="cpid" value="{{cpid}}">
+          <input type="hidden" name="filtercourseid" value="{{filtercourseid}}">
+
+          <div id="tp-container">
+            <div class="tp-item">
+              <div class="am-row" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;">
+                <input type="text" name="konten[]" class="am-input" placeholder="Konten">
+                <input type="text" name="kompetensi[]" class="am-input" placeholder="Kompetensi">
+                <input type="text" name="dpl[]" class="am-input" placeholder="DPL">
+                <input type="text" name="atp[]" class="am-input" placeholder="ATP">
+              </div>
+              <textarea name="deskripsi[]" class="am-input" placeholder="Tujuan Pembelajaran" style="margin-top:10px;"></textarea>
+            </div>
+          </div>
+
+          <div class="am-actions">
+            <button type="button" onclick="addTP()" class="am-btn am-btn-secondary">+ Tambah Baris</button>
+            <button type="submit" class="am-btn am-btn-primary">Simpan Semua</button>
+          </div>
+        </form>
+      </div>
+
+      {{#groups}}
+      <div class="am-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+          <h3 style="margin:0;">{{konten}}</h3>
+          {{#jp_konten}}
+          <span style="background:#1F4E79;color:#fff;border-radius:6px;padding:3px 12px;font-size:13px;font-weight:600;">
+            JP: {{jp_konten}}
+          </span>
+          {{/jp_konten}}
+        </div>
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th style="width:40px;">No</th>
+                <th>Kompetensi</th>
+                <th>DPL</th>
+                <th>ATP</th>
+                <th>Tujuan</th>
+                <th style="width:100px;text-align:center;">Status</th>
+                <th style="width:150px;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#rows}}
+              <tr>
+                <td data-label="No">{{no}}</td>
+                <td data-label="Kompetensi">{{kompetensi}}</td>
+                <td data-label="DPL">{{dpl}}</td>
+                <td data-label="ATP"><strong>{{atp}}</strong></td>
+                <td data-label="Tujuan">{{deskripsi}}</td>
+                <td data-label="Status" style="text-align:center;">
+                  <span style="display:inline-block;background:{{status_color}};color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;font-weight:600;white-space:nowrap;">
+                    {{status_label}}
+                  </span>
+                </td>
+                <td data-label="Aksi">
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                    <a href="{{{edit_url}}}" class="am-btn am-btn-edit am-btn-sm">Edit</a>
+                    {{#can_delete}}
+                    <a href="{{{delete_url}}}" class="am-btn am-btn-danger am-btn-sm"
+                       onclick="return confirm('Hapus TP ini? Aksi ini tidak dapat dibatalkan.')">
+                      Hapus
+                    </a>
+                    {{/can_delete}}
+                    {{^can_delete}}
+                    <span class="am-btn am-btn-sm"
+                          style="background:#e5e7eb;color:#9ca3af;cursor:not-allowed;"
+                          title="{{#tp_bernilai}}TP sudah memiliki nilai di gradebook{{/tp_bernilai}}{{^tp_bernilai}}TP sudah terhubung ke course{{/tp_bernilai}}">
+                      Hapus
+                    </span>
+                    {{/can_delete}}
+                  </div>
+                </td>
+              </tr>
+              {{/rows}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {{/groups}}
+
+      {{^has_groups}}
+      <div class="am-card am-empty-state" style="text-align:center;">Belum ada data TP.</div>
+      {{/has_groups}}
+    </div>
+  </div>
+</div>
+
+<script>
+function addTP() {
+    var container = document.getElementById('tp-container');
+    var html = `
+    <div class="tp-item" style="margin-top:15px;border-top:1px solid #e5e7eb;padding-top:15px;">
+        <div class="am-row" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;">
+            <input type="text" name="konten[]" class="am-input" placeholder="Konten">
+            <input type="text" name="kompetensi[]" class="am-input" placeholder="Kompetensi">
+            <input type="text" name="dpl[]" class="am-input" placeholder="DPL">
+            <input type="text" name="atp[]" class="am-input" placeholder="ATP">
+        </div>
+        <textarea name="deskripsi[]" class="am-input" placeholder="Tujuan Pembelajaran" style="margin-top:10px;"></textarea>
+    </div>`;
+    container.insertAdjacentHTML('beforeend', html);
+}
+</script>

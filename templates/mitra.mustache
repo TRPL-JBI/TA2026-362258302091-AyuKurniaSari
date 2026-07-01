@@ -1,0 +1,219 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button"
+                class="am-hamburger"
+                data-action="open-sidebar"
+                aria-label="Buka menu">
+          ☰
+        </button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-breadcrumb">/ Mitra DU/DI</div>
+      <h2 class="am-h1">Mitra DU/DI</h2>
+      <div class="am-sub">
+        Kelola daftar Mitra yang bekerja sama dengan sekolah.
+      </div>
+
+      <div class="am-toolbar">
+        <div class="am-toolbar-left">
+          <button type="button"
+                  class="am-btn am-btn-primary"
+                  data-action="open-import">
+            Import CSV
+          </button>
+
+          <a href="{{template_csv_url}}"
+             class="am-btn am-btn-template">
+            Download Template CSV
+          </a>
+        </div>
+
+        {{#is_active_view}}
+        <div class="am-actions">
+          <button class="am-btn am-btn-primary"
+                  type="button"
+                  data-action="open-add">
+            Tambah Mitra
+          </button>
+        </div>
+        {{/is_active_view}}
+      </div>
+
+      <div class="am-card">
+        <div class="am-tabs">
+          <a href="{{active_url}}"
+             class="am-tab {{#is_active_view}}active{{/is_active_view}}">
+            Aktif
+          </a>
+
+          <a href="{{archived_url}}"
+             class="am-tab {{#is_archived_view}}active{{/is_archived_view}}">
+            Arsip
+          </a>
+        </div>
+
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th>Nama Mitra</th>
+                <th>Alamat</th>
+                <th>Kontak</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#rows}}
+              <tr>
+                <td data-label="Nama Mitra">{{nama}}</td>
+                <td data-label="Alamat">{{alamat}}</td>
+                <td data-label="Kontak">{{kontak}}</td>
+                <td data-label="Aksi">
+                  <div class="am-row-actions">
+                    <button class="am-btn am-btn-edit"
+                            type="button"
+                            data-action="edit"
+                            data-id="{{id}}"
+                            data-nama="{{nama}}"
+                            data-alamat="{{alamat}}"
+                            data-kontak="{{kontak}}">
+                      Edit
+                    </button>
+
+                    <button class="am-btn am-btn-ghost"
+                            type="button"
+                            data-action="toggle"
+                            data-id="{{id}}">
+                      {{toggle_text}}
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              {{/rows}}
+
+              {{^rows}}
+              <tr>
+                <td colspan="4" class="am-empty-state">
+                  Belum ada data mitra.
+                </td>
+              </tr>
+              {{/rows}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <input type="hidden" id="am-sesskey" value="{{sesskey}}">
+      <input type="hidden" id="am-ajaxurl" value="{{ajaxurl}}">
+
+      <!-- MODAL TAMBAH / EDIT -->
+      <div class="am-modal-overlay" id="am-modal">
+        <div class="am-modal">
+          <div class="am-modal-header">
+            <h3 class="am-modal-title" id="m-title">
+              Tambah Data Mitra
+            </h3>
+            <button class="am-close"
+                    type="button"
+                    data-action="close-modal">
+              ✕
+            </button>
+          </div>
+
+          <div class="am-grid">
+            <div>
+              <label class="am-label">Nama Mitra</label>
+              <input class="am-input"
+                     id="m-nama"
+                     placeholder="Contoh: PT Maju Makmur">
+            </div>
+
+            <div>
+              <label class="am-label">Alamat Mitra</label>
+              <input class="am-input"
+                     id="m-alamat"
+                     placeholder="Contoh: Banyuwangi">
+            </div>
+
+            <div>
+              <label class="am-label">Kontak Mitra</label>
+              <input class="am-input"
+                     id="m-kontak"
+                     placeholder="Contoh: 08123456789">
+            </div>
+          </div>
+
+          <div class="am-modal-actions">
+            <button class="am-btn am-btn-ghost"
+                    type="button"
+                    data-action="close-modal">
+              Batal
+            </button>
+
+            <button class="am-btn am-btn-primary"
+                    type="button"
+                    data-action="save">
+              Simpan
+            </button>
+          </div>
+
+          <input type="hidden" id="m-id" value="">
+        </div>
+      </div>
+
+      <!-- MODAL IMPORT CSV -->
+      <div class="am-modal-overlay" id="am-import-modal">
+        <div class="am-modal am-modal-sm">
+          <div class="am-modal-header">
+            <h3 class="am-modal-title">Import Data Mitra</h3>
+            <button class="am-close"
+                    type="button"
+                    data-action="close-import">
+              ✕
+            </button>
+          </div>
+
+          <form method="post"
+                action="{{import_url}}"
+                enctype="multipart/form-data"
+                class="am-import-modal-form">
+            <input type="hidden" name="action" value="import_mitra">
+            <input type="hidden" name="sesskey" value="{{sesskey}}">
+
+            <div class="am-field">
+              <label class="am-label">Pilih File CSV</label>
+              <input type="file"
+                     name="fileimport"
+                     class="am-input-file"
+                     accept=".csv"
+                     required>
+              <div class="am-help-text">
+                Gunakan template CSV yang sudah disediakan. Buka di Excel, isi data per kolom, lalu simpan kembali sebagai CSV.
+              </div>
+            </div>
+
+            <div class="am-modal-actions">
+              <button type="button"
+                      class="am-btn am-btn-ghost"
+                      data-action="close-import">
+                Batal
+              </button>
+
+              <button type="submit"
+                      class="am-btn am-btn-primary">
+                Upload & Import
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

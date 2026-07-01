@@ -1,0 +1,178 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-breadcrumb">/ Manajemen Jurusan / Set Mapel</div>
+
+      <div class="am-page-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h1 class="am-h1">Daftar Mapel Jurusan {{nama_jurusan}} - {{nama_kurikulum}}</h1>
+          <div class="am-sub">
+            Tahun ajaran: <strong>{{tahun_ajaran}}</strong>
+            {{#kode_jurusan}} · Kode jurusan: <strong>{{kode_jurusan}}</strong>{{/kode_jurusan}}
+          </div>
+        </div>
+
+        <div class="am-list-actions" style="display:flex;gap:8px;flex-wrap:wrap;">
+          <a href="{{set_kurikulum_url}}" class="am-btn am-btn-secondary">Set Kurikulum</a>
+          <a href="{{back_url}}" class="am-btn am-btn-secondary">Kembali</a>
+        </div>
+      </div>
+
+      {{!-- Form tambah banyak mapel sekaligus (seperti tujuan pembelajaran) --}}
+      <div class="am-card" style="margin-bottom:16px;">
+        <div class="am-section-title">Tambah Mata Pelajaran ke Jurusan</div>
+        <div class="am-sub" style="margin-bottom:14px;">
+          Klik <strong>+ Tambah Baris</strong> untuk menambahkan beberapa mapel sekaligus dalam satu kali simpan.
+        </div>
+
+        <form method="post" action="{{action_url}}" id="form-setmapel-multi">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+          <input type="hidden" name="mode" value="multi">
+
+          <div id="setmapel-container">
+            <div class="setmapel-row" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:10px;">
+              <div class="am-form-group" style="margin:0;">
+                <label class="am-label">Mata Pelajaran</label>
+                <select name="id_mapel[]" class="am-input" required>
+                  <option value="">Pilih mapel</option>
+                  {{#mapel_options}}
+                  <option value="{{id}}">{{nama}}</option>
+                  {{/mapel_options}}
+                </select>
+              </div>
+              <div class="am-form-group" style="margin:0;">
+                <label class="am-label">Tingkat</label>
+                <select name="tingkat[]" class="am-input" required>
+                  {{#tingkat_options}}
+                  <option value="{{value}}">{{label}}</option>
+                  {{/tingkat_options}}
+                </select>
+              </div>
+              <div class="am-form-group" style="margin:0;">
+                <label class="am-label">Jam Pelajaran</label>
+                <input type="text" name="jam_pelajaran[]" class="am-input" placeholder="4">
+              </div>
+              <div class="am-form-group" style="margin:0;">
+                <label class="am-label">KKTP</label>
+                <input type="number" name="kktp[]" class="am-input" min="0" max="100" value="75">
+              </div>
+              <div style="padding-top:22px;">
+                <span style="display:inline-block;width:36px;"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="am-actions" style="margin-top:14px;">
+            <button type="button" onclick="addSetmapelRow()" class="am-btn am-btn-secondary">+ Tambah Baris</button>
+            <button type="submit" class="am-btn am-btn-primary">Simpan Semua</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="am-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+          <div>
+            <div class="am-section-title">Daftar Mata Pelajaran</div>
+            <div class="am-sub">Halaman ini tidak membuat course. Course dibuat dari Manajemen Kelas agar alurnya tetap aman untuk wali kelas dan raport.</div>
+          </div>
+          <input type="search" class="form-control" placeholder="Cari..." style="max-width:260px;" oninput="filterMapelTable(this.value)">
+        </div>
+
+        <div class="am-table-wrap">
+          <table class="am-table" id="tbl-mapel-jurusan">
+            <thead>
+              <tr>
+                <th style="width:60px;">No</th>
+                <th>Mata Pelajaran</th>
+                <th style="width:120px;">Tingkat</th>
+                <th style="width:150px;">Jam Pelajaran</th>
+                <th style="width:100px;">KKTP</th>
+                <th style="width:80px;">CP</th>
+                <th style="width:80px;">TP</th>
+                <th style="width:280px;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#items}}
+              <tr>
+                <td data-label="No">{{no}}</td>
+                <td data-label="Mata Pelajaran"><strong>{{nama_mapel}}</strong></td>
+                <td data-label="Tingkat">{{tingkat}}</td>
+                <td data-label="Jam Pelajaran">{{jam_pelajaran}}</td>
+                <td data-label="KKTP">{{kktp}}</td>
+                <td data-label="CP">{{total_cp}}</td>
+                <td data-label="TP">{{total_tp}}</td>
+                <td data-label="Aksi">
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                    <a href="{{set_detail_url}}" class="am-btn am-btn-secondary am-btn-sm">Set Detail</a>
+                    <a href="{{cp_url}}" class="am-btn am-btn-primary am-btn-sm">CP</a>
+                    {{#has_tp_url}}
+                    <a href="{{tp_url}}" class="am-btn am-btn-secondary am-btn-sm">TP</a>
+                    {{/has_tp_url}}
+                    <a href="{{delete_url}}" class="am-btn am-btn-danger am-btn-sm" onclick="return confirm('Hapus mapel ini dari jurusan? Aksi ini juga menghapus CP dan TP terkait.')">Hapus</a>
+                  </div>
+                </td>
+              </tr>
+              {{/items}}
+
+              {{^items}}
+              <tr>
+                <td colspan="8" class="am-empty-state" style="text-align:center;padding:24px;">
+                  Belum ada mata pelajaran pada kurikulum jurusan ini.
+                </td>
+              </tr>
+              {{/items}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Template baris untuk tambah multi-mapel
+var mapelOptions = {{{mapel_options_json}}};
+var tingkatOptions = {{{tingkat_options_json}}};
+
+function buildSelectMapel(name) {
+    var opts = '<option value="">Pilih mapel</option>';
+    mapelOptions.forEach(function(m) {
+        opts += '<option value="' + m.id + '">' + m.nama.replace(/</g,'&lt;') + '</option>';
+    });
+    return '<select name="' + name + '" class="am-input" required>' + opts + '</select>';
+}
+
+function buildSelectTingkat(name) {
+    var opts = '';
+    tingkatOptions.forEach(function(t) {
+        opts += '<option value="' + t.value + '">' + t.label + '</option>';
+    });
+    return '<select name="' + name + '" class="am-input" required>' + opts + '</select>';
+}
+
+function addSetmapelRow() {
+    var container = document.getElementById('setmapel-container');
+    var div = document.createElement('div');
+    div.className = 'setmapel-row';
+    div.style.cssText = 'display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:10px;border-top:1px solid #e5e7eb;padding-top:10px;';
+    div.innerHTML =
+        '<div class="am-form-group" style="margin:0;">' + buildSelectMapel('id_mapel[]') + '</div>' +
+        '<div class="am-form-group" style="margin:0;">' + buildSelectTingkat('tingkat[]') + '</div>' +
+        '<div class="am-form-group" style="margin:0;"><input type="text" name="jam_pelajaran[]" class="am-input" placeholder="4"></div>' +
+        '<div class="am-form-group" style="margin:0;"><input type="number" name="kktp[]" class="am-input" min="0" max="100" value="75"></div>' +
+        '<div style="padding-bottom:2px;"><button type="button" onclick="this.closest(\'.setmapel-row\').remove()" class="am-btn am-btn-danger am-btn-sm" title="Hapus baris">✕</button></div>';
+    container.appendChild(div);
+}
+
+function filterMapelTable(q) {
+    q = q.toLowerCase();
+    var rows = document.querySelectorAll('#tbl-mapel-jurusan tbody tr');
+    rows.forEach(function(row) {
+        var text = row.textContent.toLowerCase();
+        row.style.display = q === '' || text.includes(q) ? '' : 'none';
+    });
+}
+</script>

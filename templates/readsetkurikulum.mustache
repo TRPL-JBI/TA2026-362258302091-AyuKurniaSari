@@ -1,0 +1,51 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-mobile-topbar">
+        <button type="button" class="am-hamburger" data-action="open-sidebar" aria-label="Buka menu">☰</button>
+        <div class="am-mobile-title">Menu Akademik</div>
+      </div>
+
+      <div class="am-page-head">
+        <div>
+          <div class="am-breadcrumb">Akademik / Jurusan / Detail Kurikulum</div>
+          <h1 class="am-h1">Detail Kurikulum</h1>
+          <div class="am-sub"><strong>{{jurusan}}</strong> — {{kurikulum}} / {{tahun}}</div>
+        </div>
+        <a href="{{edit_url}}" class="am-btn am-btn-primary">Edit Kurikulum</a>
+      </div>
+
+      {{#list}}
+      <div class="am-section-title"><span>🏫</span><h3>Tingkat {{tingkat}}</h3></div>
+      <div class="am-card">
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Mata Pelajaran</th>
+                <th>Jam</th>
+                <th>KKTP</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#items}}
+              <tr>
+                <td data-label="No">{{no}}</td>
+                <td data-label="Mata Pelajaran"><strong>{{nama}}</strong></td>
+                <td data-label="Jam">{{jam}}</td>
+                <td data-label="KKTP">{{kktp}}</td>
+                <td data-label="Aksi"><div class="am-row-actions"><a href="{{detail_url}}" class="am-btn am-btn-edit">Set Detail</a></div></td>
+              </tr>
+              {{/items}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {{/list}}
+    </div>
+  </div>
+</div>

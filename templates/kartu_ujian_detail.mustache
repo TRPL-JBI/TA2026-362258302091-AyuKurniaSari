@@ -1,0 +1,248 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-breadcrumb">/ Kartu Ujian / Detail</div>
+
+      <div class="am-page-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h1 class="am-h1">{{nama_ujian}}</h1>
+          <div class="am-sub">{{nama_kelas}} · {{nama_jurusan}} · {{tahun_ajaran}} · Semester {{semester}}</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <a href="{{edit_url}}" class="am-btn am-btn-edit">Edit</a>
+          <a href="{{back_url}}" class="am-btn am-btn-secondary">Kembali</a>
+        </div>
+      </div>
+
+      <!-- INFO KARTU -->
+      <div class="am-card" style="margin-bottom:16px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+          <div>
+            <div class="am-sub" style="font-size:11px;">Kurikulum</div>
+            <div style="font-weight:600;">{{nama_kurikulum}}</div>
+          </div>
+          <div>
+            <div class="am-sub" style="font-size:11px;">Wali Kelas</div>
+            <div style="font-weight:600;">{{wali_kelas}}</div>
+          </div>
+          <div>
+            <div class="am-sub" style="font-size:11px;">Penandatangan</div>
+            <div style="font-weight:600;">{{penandatangan}}</div>
+          </div>
+          <div>
+            <div class="am-sub" style="font-size:11px;">Status</div>
+            <div>
+              {{#is_published}}
+                <span style="background:#d1fae5;color:#065f46;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:700;">✓ Dipublikasikan</span>
+              {{/is_published}}
+              {{#is_draft}}
+                <span style="background:#fef3c7;color:#92400e;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:700;">Draft</span>
+              {{/is_draft}}
+            </div>
+          </div>
+        </div>
+
+        <!-- Tombol aksi publish / generate -->
+        <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;border-top:1px solid #e5e7eb;padding-top:14px;">
+          {{#is_draft}}
+          <a href="{{generate_url}}" class="am-btn am-btn-primary"
+             onclick="return confirm('Generate kartu ujian untuk semua siswa yang memenuhi syarat? Syarat: semua nilai akhir mapel harus >= KKTP.')">
+            ⚙ Generate Kartu Ujian
+          </a>
+          <a href="{{publish_url}}" class="am-btn am-btn-primary" style="background:#059669;"
+             onclick="return confirm('Publikasikan kartu ujian? Siswa yang mendapat kartu akan bisa mengunduh dari profil mereka.')">
+            📢 Publikasikan Kartu Ujian
+          </a>
+          {{/is_draft}}
+          {{#is_published}}
+          <a href="{{generate_url}}" class="am-btn am-btn-secondary"
+             onclick="return confirm('Re-generate kartu ujian? Kartu siswa yang sudah ada tidak akan dihapus.')">
+            ⚙ Re-Generate
+          </a>
+          <a href="{{unpublish_url}}" class="am-btn am-btn-secondary"
+             onclick="return confirm('Tarik kembali ke draft? Siswa tidak akan bisa mengunduh kartu sementara.')">
+            Tarik ke Draft
+          </a>
+          {{/is_published}}
+        </div>
+
+        {{#is_draft}}
+        <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:10px 14px;margin-top:12px;font-size:12px;color:#92400e;">
+          <strong>ℹ️ Alur:</strong> Generate kartu terlebih dahulu → cek daftar siswa di bawah → lalu Publikasikan agar siswa bisa mengunduh kartu dari profil mereka.
+        </div>
+        {{/is_draft}}
+      </div>
+
+      <div class="am-card" style="margin-bottom:16px;">
+        <div class="am-section-title">Ringkasan Kelayakan</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:10px;">
+          <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px;">
+            <div class="am-sub" style="font-size:11px;">Course terbaca</div>
+            <div style="font-size:20px;font-weight:700;">{{course_count}}</div>
+          </div>
+          <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px;">
+            <div class="am-sub" style="font-size:11px;">Memenuhi syarat</div>
+            <div style="font-size:20px;font-weight:700;color:#166534;">{{eligible_count}}</div>
+          </div>
+          <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px;">
+            <div class="am-sub" style="font-size:11px;">Belum memenuhi</div>
+            <div style="font-size:20px;font-weight:700;color:#991b1b;">{{not_eligible_count}}</div>
+          </div>
+          <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px;">
+            <div class="am-sub" style="font-size:11px;">Kartu tergenerate</div>
+            <div style="font-size:20px;font-weight:700;color:#1d4ed8;">{{generated_count}}</div>
+          </div>
+        </div>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:10px 14px;margin-top:12px;font-size:12px;color:#334155;">
+          <strong>Aturan cetak:</strong> semua nilai akhir mapel harus ≥ KKTP masing-masing. Presensi/alpa tidak digunakan sebagai syarat kartu ujian.
+        </div>
+      </div>
+
+      <!-- DAFTAR SISWA -->
+      <div class="am-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+          <div>
+            <div class="am-section-title">Daftar Siswa</div>
+            <div class="am-sub">Siswa layak cetak kartu jika semua nilai akhir mapel minimal sama dengan KKTP. Jika ada nilai di bawah KKTP, mapelnya ditampilkan pada kolom alasan.</div>
+          </div>
+          <input type="search" id="cari-siswa" class="form-control" placeholder="Cari siswa..." style="max-width:240px;">
+        </div>
+
+        <div class="am-table-wrap">
+          <table class="am-table" id="tabel-siswa">
+            <thead>
+              <tr>
+                <th style="width:50px;">No</th>
+                <th>Nama Siswa</th>
+                <th style="width:120px;">NIS/NISN</th>
+                {{! <th style="width:100px;">Rata-rata Nilai</th> }}
+                
+                <th style="width:120px;">Status</th>
+                <th>Mapel di bawah KKTP</th>
+                <th style="width:160px;">Kartu</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#siswa}}
+              <tr>
+   <td data-label="No">{{no}}</td>
+<td data-label="Nama"><strong>{{fullname}}</strong></td>
+<td data-label="NISN">{{nisn}}</td>
+
+<td data-label="Status">
+  {{#layak}}
+    <span style="background:#d1fae5;color:#065f46;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:600;">✓ Layak Ujian</span>
+  {{/layak}}
+
+  {{#manual_allowed}}
+    <span style="background:#dbeafe;color:#1d4ed8;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:600;">✓ Diloloskan Admin</span>
+  {{/manual_allowed}}
+
+  {{#tidak_layak}}
+    <span style="background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:600;">✗ Tidak Layak</span>
+  {{/tidak_layak}}
+</td>
+
+<td data-label="Alasan" style="font-size:12px;color:#475569;">
+  {{#layak}}
+    <span style="color:#166534;font-weight:600;">Semua nilai memenuhi KKTP.</span>
+  {{/layak}}
+
+  {{#manual_allowed}}
+    <div style="color:#1d4ed8;font-weight:600;margin-bottom:6px;">Diloloskan admin meskipun ada nilai di bawah KKTP.</div>
+  {{/manual_allowed}}
+
+  {{#has_below_kktp}}
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      {{#below_kktp}}
+        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:7px 9px;">
+          <div style="font-weight:700;color:#991b1b;">{{mapel}}</div>
+          <div style="margin-top:2px;">
+            Nilai:
+            <strong style="color:#991b1b;">{{nilai}}</strong>
+            <span style="color:#64748b;">&lt;</span>
+            KKTP:
+            <strong>{{kktp}}</strong>
+          </div>
+        </div>
+      {{/below_kktp}}
+    </div>
+  {{/has_below_kktp}}
+
+  {{#has_nilai_belum_lengkap}}
+    <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px;">
+      {{#nilai_belum_lengkap_rows}}
+        <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:7px 9px;">
+          <div style="font-weight:700;color:#9a3412;">{{mapel}}</div>
+          <div>Nilai belum tersedia.</div>
+        </div>
+      {{/nilai_belum_lengkap_rows}}
+    </div>
+  {{/has_nilai_belum_lengkap}}
+
+  {{#tidak_layak}}
+    {{^has_below_kktp}}
+      {{^has_nilai_belum_lengkap}}
+        <span>{{alasan}}</span>
+      {{/has_nilai_belum_lengkap}}
+    {{/has_below_kktp}}
+  {{/tidak_layak}}
+</td>
+
+<td data-label="Kartu">            
+  {{#has_kartu}}
+    <a href="{{download_url}}" class="am-btn am-btn-primary am-btn-sm">⬇ Download</a>
+
+    {{#manual_allowed}}
+      <a href="{{revoke_url}}" class="am-btn am-btn-secondary am-btn-sm"
+         style="margin-top:4px;background:#f59e0b;color:#fff;"
+         onclick="return confirm('Batalkan lolos manual untuk siswa ini?')">
+        Batalkan
+      </a>
+    {{/manual_allowed}}
+  {{/has_kartu}}
+
+  {{^has_kartu}}
+    {{#layak}}
+      <span style="color:#6b7280;font-size:12px;">Belum digenerate</span>
+    {{/layak}}
+
+    {{#tidak_layak}}
+      <a href="{{allow_url}}" class="am-btn am-btn-primary am-btn-sm"
+         style="background:#2563eb;"
+         onclick="return confirm('Loloskan siswa ini secara manual walaupun nilainya masih di bawah KKTP?')">
+        Loloskan 
+      </a>
+    {{/tidak_layak}}
+  {{/has_kartu}}
+</td>
+              </tr>
+              {{/siswa}}
+              {{^has_siswa}}
+              <tr>
+                <td colspan="6" class="am-empty-state" style="text-align:center;padding:24px;">Belum ada peserta di kelas ini.</td>
+              </tr>
+              {{/has_siswa}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var cari = document.getElementById('cari-siswa');
+  if (cari) {
+    cari.addEventListener('input', function() {
+      var q = this.value.toLowerCase();
+      document.querySelectorAll('#tabel-siswa tbody tr').forEach(function(r) {
+        r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    });
+  }
+})();
+</script>

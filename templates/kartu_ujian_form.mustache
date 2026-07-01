@@ -1,0 +1,60 @@
+<div class="akademikmonitor">
+  <div class="am-wrap">
+    {{> local_akademikmonitor/sidebar }}
+
+    <div class="am-content">
+      <div class="am-breadcrumb">/ Kartu Ujian / {{#is_edit}}Edit{{/is_edit}}{{^is_edit}}Tambah{{/is_edit}}</div>
+
+      <div class="am-page-heading" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h1 class="am-h1">{{#is_edit}}Edit{{/is_edit}}{{^is_edit}}Tambah{{/is_edit}} Kartu Ujian</h1>
+          <div class="am-sub">Isi data kartu ujian. Tahun ajaran dan kurikulum diambil otomatis dari kelas yang dipilih.</div>
+        </div>
+        <a href="{{back_url}}" class="am-btn am-btn-secondary">Kembali</a>
+      </div>
+
+      <div class="am-card">
+        <form method="post" action="{{action_url}}">
+          <input type="hidden" name="sesskey" value="{{sesskey}}">
+
+          <div class="am-form-group">
+            <label class="am-label">Nama Ujian <span style="color:red;">*</span></label>
+            <input type="text" name="nama_ujian" class="am-input" value="{{nama_ujian}}" placeholder="cth: Ujian Akhir Semester Ganjil" required>
+            <div class="am-hint">Nama ujian yang akan tercetak di kartu, misal: Sumatif Akhir Semester, Ujian Kompetensi, dll.</div>
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label">Kelas <span style="color:red;">*</span></label>
+            <select name="id_kelas" class="am-input" required>
+              <option value="">Pilih Kelas</option>
+              {{#kelas_options}}
+              <option value="{{id}}" {{#selected}}selected{{/selected}}>{{label}}</option>
+              {{/kelas_options}}
+            </select>
+            <div class="am-hint">Tahun ajaran dan kurikulum akan diambil otomatis dari kelas yang dipilih.</div>
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-label">Semester <span style="color:red;">*</span></label>
+            <select name="semester" class="am-input" required>
+              {{#semester_options}}
+              <option value="{{value}}" {{#selected}}selected{{/selected}}>{{label}}</option>
+              {{/semester_options}}
+            </select>
+          </div>
+
+<div class="am-form-group">
+  <label class="am-label">Jabatan Penandatangan</label>
+  <input type="text" name="penandatangan" class="am-input" value="{{penandatangan}}" placeholder="Kepala Sekolah">
+  <div class="am-hint">Isi jabatan penandatangan, misalnya Kepala Sekolah. Nama kepala sekolah diambil dari pengaturan plugin.</div>
+</div>
+
+          <div style="display:flex;gap:10px;margin-top:20px;">
+            <button type="submit" class="am-btn am-btn-primary">Simpan</button>
+            <a href="{{back_url}}" class="am-btn am-btn-secondary">Batal</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

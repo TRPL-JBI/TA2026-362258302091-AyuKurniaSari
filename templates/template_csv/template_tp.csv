@@ -1,0 +1,7 @@
+konten;kompetensi;dpl;atp;deskripsi
+Pemrograman Dasar;Memahami variabel dan tipe data;3.1;ATP-1;Peserta didik dapat mendefinisikan dan menggunakan variabel dengan tipe data yang sesuai
+Pemrograman Dasar;Membuat ekspresi aritmatika;3.2;ATP-2;Peserta didik dapat menuliskan dan mengevaluasi ekspresi aritmatika sederhana
+Percabangan;Memahami struktur if-else;4.1;ATP-3;Peserta didik dapat membuat program dengan percabangan if-else untuk kondisi sederhana
+Percabangan;Memahami switch-case;4.2;ATP-4;Peserta didik dapat menggunakan struktur switch-case untuk kondisi berganda
+Perulangan;Memahami for loop;5.1;ATP-5;Peserta didik dapat membuat program dengan perulangan for untuk kasus yang sudah ditentukan jumlah iterasinya
+Perulangan;Memahami while loop;5.2;ATP-6;Peserta didik dapat membuat program dengan perulangan while untuk kondisi yang tidak diketahui jumlah iterasinya
