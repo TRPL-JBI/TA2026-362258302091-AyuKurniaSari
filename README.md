@@ -31,50 +31,51 @@ Plugin ini dikembangkan sebagai bagian dari penelitian **Tugas Akhir Program Stu
 Plugin menyediakan berbagai fitur untuk mendukung pengelolaan akademik sekolah.
 
 ### Dashboard 
-- Ringkasan informasi menu
+Berisi Ringkasan informasi menu
 
 ### Master Data
-- Tahun Ajaran
-- Jurusan
-- Kelas
-- Mata Pelajaran
-- Kurikulum
-- Mitra
-- Ekskul
+1. Tahun Ajaran
+2. Jurusan
+3. Kelas
+4. Mata Pelajaran
+5. Kurikulum
+6. Mitra
+7. Ekskul
 
 ### Pembelajaran
-- Generate Course Moodle
-- Mapping Course
-- Capaian Pembelajaran (CP)
-- Tujuan Pembelajaran (TP)
-- KKTP
-- Kartu Ujian
+1. Generate Course Moodle
+2. Mapping Course
+3. Capaian Pembelajaran (CP)
+4. Tujuan Pembelajaran (TP)
+5. KKTP
+6. Kartu Ujian
 
 ### Monitoring
-- Notifikasi Otomatis Telegram
-- Pengingat Ujian dan Deadline
-- Monitoring Nilai
-- Monitoring Presensi Siswa
-- Monitoring Presensi Guru
+1. Notifikasi Otomatis Telegram
+2. Pengingat Ujian dan Deadline
+3. Monitoring Nilai
+4. Monitoring Presensi Siswa
+5. Monitoring Presensi Guru
 
 ### Wali Kelas
-- Dashboard Wali Kelas
-- Monitoring Akademik
-- Monitoring Presensi
-- PKL (Untuk Kelas 12)
-- Ekstrakurikuler
-- Rapor
+1. Dashboard Wali Kelas
+2. Monitoring Akademik
+3. Monitoring Presensi
+4. PKL (Untuk Kelas 12)
+5. Ekstrakurikuler
+6. Rapor
 
 ### Guru
-- Mengelola Tujuan Pembelajaran
+1. Mengelola Tujuan Pembelajaran
 
 ### Semua User
-- Menghubungkan Akun Telegram
+1. Menghubungkan Akun Telegram
+2. Mendapatkan Notifikasi Otomatis
 
 ### Integrasi
-- Moodle Gradebook
-- Moodle Attendance
-- Telegram Bot Notification
+1. Moodle Gradebook
+2. Moodle Attendance
+3. Telegram Bot Notification
 
 ---
 
@@ -94,10 +95,10 @@ Plugin menyediakan berbagai fitur untuk mendukung pengelolaan akademik sekolah.
 
 # Persyaratan
 
-- Moodle **5.1.3**
-- PHP **8.2** atau lebih baru
-- MySQL / MariaDB
-- Web Server Apache atau Nginx
+1. Moodle **5.1.3**
+2. PHP **8.2** atau lebih baru
+3. MySQL / MariaDB
+4. Web Server Apache atau Nginx
 
 ---
 
@@ -164,11 +165,11 @@ hingga proses selesai.
 
 ---
 # Instalasi cara ke 2
-- download repository bentuk zip
-- buka moodle admin
-- masuk ke site administrator -> plugin -> install plugin
-- masukkan zip plugin
-- klik install
+1. download repository bentuk zip
+2. buka moodle admin
+3. masuk ke site administrator -> plugin -> install plugin
+4. masukkan zip plugin
+5. klik install
 
 # Konfigurasi Awal
 
@@ -228,35 +229,35 @@ Plugin mendukung beberapa peran pengguna.
 
 ### Administrator
 
-- Mengelola data master
-- Mengatur kurikulum
-- Generate Course
-- Mapping Course
-- Mengatur KKTP
-- Mengelola Telegram
+1. Mengelola data master
+2. Mengatur kurikulum
+3. Generate Course
+4. Mapping Course
+5. Mengatur KKTP
+6. Mengelola Telegram
 
 ### Guru
 
-- Mengelola aktivitas pembelajaran
-- Menginput nilai
-- Menginput presensi
+1. Mengelola aktivitas pembelajaran
+2. Menginput nilai
+3. Menginput presensi
 
 ### Wali Kelas
 
-- Monitoring akademik siswa
-- Monitoring presensi
-- Mengelola rapor
-- Monitoring PKL
-- Monitoring ekstrakurikuler
+1. Monitoring akademik siswa
+2. Monitoring presensi
+3. Mengelola rapor
+4. Monitoring PKL
+5. Monitoring ekstrakurikuler
 
 ### Siswa
 
-- Melihat perkembangan nilai
-- Melihat presensi
-- Melihat status ketuntasan
+1. Melihat perkembangan nilai
+2. Melihat presensi
+3. Melihat status ketuntasan
 
 ### Semua User
-- Menyambungkan Akun Telegram untuk mendapatkan notifikasi otomatis
+Menyambungkan Akun Telegram untuk mendapatkan notifikasi otomatis
 ---
 
 # Kontribusi
@@ -276,6 +277,9 @@ Plugin ini dikembangkan untuk keperluan penelitian dan pengembangan sistem monit
 **Ayu Kurnia Sari dan Tri Eva Yunia**
 
 Program Studi Teknologi Rekayasa Perangkat Lunak
+
 Jurusan Bisnis dan Informatika
+
 Politeknik Negeri Banyuwangi
+
 2026
