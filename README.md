@@ -16,7 +16,7 @@ Plugin ini dikembangkan sebagai bagian dari penelitian **Tugas Akhir Program Stu
 
 Plugin menyediakan berbagai fitur untuk mendukung pengelolaan akademik sekolah.
 
-### Dashboard Admin
+### Dashboard 
 - Ringkasan informasi menu
 
 ### Master Data
@@ -34,6 +34,7 @@ Plugin menyediakan berbagai fitur untuk mendukung pengelolaan akademik sekolah.
 - Capaian Pembelajaran (CP)
 - Tujuan Pembelajaran (TP)
 - KKTP
+- Kartu Ujian
 
 ### Monitoring
 - Notifikasi Otomatis Telegram
@@ -46,9 +47,15 @@ Plugin menyediakan berbagai fitur untuk mendukung pengelolaan akademik sekolah.
 - Dashboard Wali Kelas
 - Monitoring Akademik
 - Monitoring Presensi
-- PKL
+- PKL (Untuk Kelas 12)
 - Ekstrakurikuler
 - Rapor
+
+### Guru
+- Mengelola Tujuan Pembelajaran
+
+### Semua User
+- Menghubungkan Akun Telegram
 
 ### Integrasi
 - Moodle Gradebook
@@ -153,16 +160,19 @@ hingga proses selesai.
 
 Setelah instalasi selesai, lakukan konfigurasi berikut.
 
-1. Tambahkan Tahun Ajaran
-2. Tambahkan Jurusan
-3. Tambahkan Mata Pelajaran
-4. Buat Kurikulum
-5. Tambahkan Kelas
-6. Tambahkan Peserta Kelas
-7. Generate Course
-8. Mapping Course
-9. Atur KKTP
-10. Input CP dan TP
+
+1. Atur Pengaturan Akademik Monitoring
+2. Masukkan Informasi Sekolah
+3. Tambahkan Tahun Ajaran
+4. Tambahkan Jurusan
+5. Tambahkan Mata Pelajaran
+6. Buat Kurikulum
+7. Tambahkan Kelas
+8. Tambahkan Peserta Kelas
+9. Generate Course
+10. Mapping Course
+11. Atur KKTP
+12. Input CP dan TP
 
 Setelah seluruh konfigurasi selesai, plugin siap digunakan.
 
